@@ -10,7 +10,7 @@ Korean Sub for CS285 2021 fall lecture
 - [Instructor and GSIs](http://rail.eecs.berkeley.edu/deeprlcourse/staff/)
 
 ## Announcements
-Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 있다면 공부하시는 분들에게 도움이 될 것 같아 만든 프로젝트 입니다. 
+Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 있다면 공부하시는 분들에게 도움이 될 것 같아 만든 프로젝트 입니다. 저희의 번역 자막을 이용하실 분들께서는 프로젝트의 [번역 기준](./term.md)을 참고해주시면 감사하겠습니다.
 
 > 관련해서 [CS231n](https://github.com/visionNoob/CS231N_17_KOR_SUB) 프로젝트에서 많은 참고를 하여 시작하게 되었으므로 CS231n 한글번역 프로젝트 관계자분들께 감사드립니다.
 
@@ -27,16 +27,19 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
     - Real Name [@github nick](https://github.com/github_address) 
     - Real Name [@github nick](https://github.com/github_address) 
 
-|No.|Lecture|Contributor|
-|-|-|-|
-|1|L1, Part 1|-|
-|2|L1, Part 2|-|
-|3|L1, Part 3|@curieuxjy|
-|4|L1, Part 4|-|
-|5|L2, Part 1|-|
-|6|L2, Part 2|-|
-|7|L2, Part 3|-|
-|8|L2, Part 4|-|
+|No.|Lecture|Duration|Subtitile|Contributor|
+|--|----------|-----|-|-|
+| 1|L1, Part 1|10:16|[English]()<p>[Korean]()|@karl6885|
+| 2|L1, Part 2|12:36|[English]()<p>[Korean]()|@CheolJ|
+| 3|L1, Part 3|10:11|[English]()<p>[Korean]()|@curieuxjy|
+| 4|L1, Part 4|11:15|[English]()<p>[Korean]()|@hoyajigi|
+| 5|L2, Part 1|23:26|[English]()<p>[Korean]()|@hawk90 @BEMELON|
+| 6|L2, Part 2|15:28|[English]()<p>[Korean]()|@topchaebol|
+| 7|L2, Part 3|3:03|[English]()<p>[Korean]()|@tw0226|
+| 8|L2, Part 4|4:13|[English]()<p>[Korean]()|@tw0226|
+| 9|L2, Part 5|15:19|[English]()<p>[Korean]()|@junteken|
+|10|L2, Part 5|4:58|[English]()<p>[Korean]()|@pinga999|
+|11|L3, Part 1|3:45|[English]()<p>[Korean]()|@pinga999|
 
 
 ## Contact

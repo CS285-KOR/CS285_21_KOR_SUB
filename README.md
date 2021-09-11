@@ -19,7 +19,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 2. Kor.srt 파일을 다운 받습니다.
 3. 강의 영상으르 Kor.srt 파일과 함께 재생합니다.
 
-## Table of Contents(with Contributers)
+## Table of Contents(with Contributrs)
 
 - Contributors
     - Jungyeon Lee [@curieuxjy](https://github.com/curieuxjy) 

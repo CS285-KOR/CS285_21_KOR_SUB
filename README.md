@@ -29,17 +29,17 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 
 |No.|Lecture|Duration|Subtitile|Contributor|
 |--|----------|-----|-|-|
-| 1|L1, Part 1|10:16|[English]()<p>[Korean]()|@karl6885|
-| 2|L1, Part 2|12:36|[English]()<p>[Korean]()|@CheolJ|
-| 3|L1, Part 3|10:11|[English]()<p>[Korean]()|@curieuxjy|
-| 4|L1, Part 4|11:15|[English]()<p>[Korean]()|@hoyajigi|
-| 5|L2, Part 1|23:26|[English]()<p>[Korean]()|@hawk90 @BEMELON|
-| 6|L2, Part 2|15:28|[English]()<p>[Korean]()|@topchaebol|
-| 7|L2, Part 3|3:03|[English]()<p>[Korean]()|@tw0226|
-| 8|L2, Part 4|4:13|[English]()<p>[Korean]()|@tw0226|
-| 9|L2, Part 5|15:19|[English]()<p>[Korean]()|@junteken|
-|10|L2, Part 5|4:58|[English]()<p>[Korean]()|@pinga999|
-|11|L3, Part 1|3:45|[English]()<p>[Korean]()|@pinga999|
+| 1|[L1, Part 1](https://youtu.be/JHrlF10v2Og)|10:16|[English]()<p>[Korean]()|@karl6885|
+| 2|[L1, Part 2](https://youtu.be/IoF7D0qec0I)|12:36|[English]()<p>[Korean]()|@CheolJ|
+| 3|[L1, Part 3](https://youtu.be/BYoKE9yRy8g)|10:11|[English]()<p>[Korean]()|@curieuxjy|
+| 4|[L1, Part 4](https://youtu.be/xRmBEnI55es)|11:15|[English]()<p>[Korean]()|@hoyajigi|
+| 5|[L2, Part 1](https://youtu.be/HUzyjOsd2PA)|23:26|[English]()<p>[Korean]()|@hawk90 @BEMELON|
+| 6|[L2, Part 2](https://youtu.be/988gLurg01U)|15:28|[English]()<p>[Korean]()|@topchaebol|
+| 7|[L2, Part 3](https://youtu.be/H_z7vxGhsQk)|3:03|[English]()<p>[Korean]()|@tw0226|
+| 8|[L2, Part 4](https://youtu.be/ajAaM5FMRz4)|4:13|[English]()<p>[Korean]()|@tw0226|
+| 9|[L2, Part 5](https://youtu.be/e2PpdPC34kI)|15:19|[English]()<p>[Korean]()|@junteken|
+|10|[L2, Part 6](https://youtu.be/nM9f-5oQ86Y)|4:58|[English]()<p>[Korean]()|@pinga999|
+|11|[L3, Part 1](https://youtu.be/AOypIa_8RXg)|3:45|[English]()<p>[Korean]()|@pinga999|
 
 
 ## Contact

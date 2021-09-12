@@ -1,5 +1,5 @@
 
-# CS285_21_KOR_SUB <img align="left" width="10%" height="10%" src="./logo.png">
+# CS285_21_KOR_SUB <img align="left" width="13%" height="13%" src="./logo.png">
 
 Korean Sub for CS285 2021 fall lecture
 

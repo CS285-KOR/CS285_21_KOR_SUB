@@ -25,7 +25,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
     - Jungyeon Lee [@curieuxjy](https://github.com/curieuxjy) 
     - Yeongkyu Kim [@karl6885](https://github.com/karl6885)
     - Hyunseok Cho [@hoyajigi](https://github.com/hoyajigi) 
-    - Real Name [@github nick](https://github.com/github_address) 
+    - HanYoung Kim [@pinga999](https://github.com/pinga999) 
     - Real Name [@github nick](https://github.com/github_address) 
 
 |No.|Lecture|Duration|Subtitile|Contributor|

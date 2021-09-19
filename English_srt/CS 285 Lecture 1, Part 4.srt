@@ -1,0 +1,496 @@
+﻿1
+00:00:01,360 --> 00:00:04,000
+so for the last portion of this first lecture module
+
+2
+00:00:04,000 --> 00:00:09,840
+i'd like to come back to a question that i asked earlier how do we build intelligent machines
+
+3
+00:00:09,840 --> 00:00:19,039
+if we really want to think about this problem kind of as engineers if we forget everything that we know about learning reinforcement learning and so on
+
+4
+00:00:19,039 --> 00:00:22,640
+and you have to build an intelligent machine where would you start
+
+5
+00:00:22,640 --> 00:00:29,359
+maybe a very logical place to start is to think about all of the things that the brain has to do the human brain
+
+6
+00:00:29,359 --> 00:00:31,359
+think of them as independent modules
+
+7
+00:00:31,359 --> 00:00:42,800
+and try to program in modules that do that breaking up the brain into individual parts and thinking about their function is a very old study and you know that goes back before even the modern cientific era
+
+8
+00:00:42,800 --> 00:00:46,879
+of course today's understanding is a little more sophisticated than it was in the 19th century
+
+9
+00:00:46,879 --> 00:00:52,399
+but there's still a lot of work trying to anatomically chop up the brain into parts with different functions
+
+10
+00:00:52,399 --> 00:00:59,039
+so then it's very tempting as an engineer to think about building individual computer components to reproduce those functions
+
+11
+00:00:59,039 --> 00:01:00,719
+but this quickly becomes very difficult
+
+12
+00:01:00,719 --> 00:01:05,680
+because there are a lot of these parts implementing each of them is very hard
+
+13
+00:01:05,680 --> 00:01:11,439
+and implementing all of them might require an inordinate amount of work
+
+14
+00:01:11,439 --> 00:01:17,119
+what if we instead consider whether learning could be seen as the basis of intelligence
+
+15
+00:01:17,119 --> 00:01:24,640
+i'm going to make an argument for why this might be true this is not by any means a widely accepted or universally accepted opinion
+
+16
+00:01:24,640 --> 00:01:29,040
+but perhaps you know we can just entertain that notion and see where it leads us
+
+17
+00:01:29,040 --> 00:01:32,799
+one way we could argue for this notion is to say well there are some things that we can all do like walking
+
+18
+00:01:32,799 --> 00:01:37,040
+but there are some other things that clearly we have to learn
+
+19
+00:01:37,040 --> 00:01:42,240
+because there's no way that humans could through evolution be prepared for things like driving a car
+
+20
+00:01:42,240 --> 00:01:45,360
+cars weren't around when we evolved
+
+21
+00:01:45,360 --> 00:01:48,399
+so the argument here would be that we can learn a huge variety of things
+
+22
+00:01:48,399 --> 00:01:53,439
+so that second category some things we can only learn it's a very large category there's a huge variety of things we can learn
+
+23
+00:01:53,439 --> 00:01:55,600
+including extremely difficult things
+
+24
+00:01:55,600 --> 00:02:02,880
+and while there might be some things that we could argue or innate the range of things we can learn is so broad that perhaps it basically captures everything that we care about
+
+25
+00:02:02,880 --> 00:02:07,920
+and those things that are innate we could have learned them also if they weren't an age to begin with
+
+26
+00:02:07,920 --> 00:02:14,160
+so therefore our learning mechanisms are likely powerful enough to do basically everything that we associate with intelligence
+
+27
+00:02:14,160 --> 00:02:18,080
+maybe you agree or disagree with this notion but if you humor this notion for a second
+
+28
+00:02:18,080 --> 00:02:26,480
+we could think about how we'd use it to refine our plan for building intelligence
+
+29
+00:02:26,480 --> 00:02:36,000
+now we could simply take this recipe and use it to instead of designing the functionality of each module instead design a learning algorithm for each module so we say well okay
+
+30
+00:02:36,000 --> 00:02:39,280
+we're not going to implement the visual cortex of the motor cortex by hand
+
+31
+00:02:39,280 --> 00:02:42,319
+what we'll instead implement is a learning algorithm for the visual cortex
+
+32
+00:02:42,384 --> 00:02:45,350
+and a separate algorithm for the motor cortex
+
+33
+00:02:45,350 --> 00:02:51,680
+this kind of thing was a dominant way of thinking about machine learning in the 90s and early 2000s
+
+34
+00:02:51,680 --> 00:02:56,959
+but what if we hypothesize that perhaps there's a single flexible algorithm that can do all of these things
+
+35
+00:02:56,959 --> 00:03:00,159
+perhaps not only is learning the basis of intelligence
+
+36
+00:03:00,159 --> 00:03:04,239
+but instead but in fact learning with a single powerful algorithm as the basis of intelligence
+
+37
+00:03:04,239 --> 00:03:07,360
+it's a very provocative notion but it's also a very appealing one
+
+38
+00:03:07,360 --> 00:03:09,440
+because it suggests that we could save ourselves a lot of work
+
+39
+00:03:09,440 --> 00:03:18,000
+instead of designing a separate algorithm for each module we simply design one algorithm that is broad enough and flexible enough to acquire all these capabilities
+
+40
+00:03:18,000 --> 00:03:25,040
+and there is a bit of evidence a bit of circumstantial evidence to suggest that something like this might in fact be close to what's going on in the real brain
+
+41
+00:03:25,040 --> 00:03:33,680
+these are these pieces of evidence they all have the general flavor of illustrating some degree of flexibility that is unusual or unexpected
+
+42
+00:03:33,680 --> 00:03:41,120
+for instance you could acquire this degree of visual acuity by using your tongue you could take a camera with electrodes attached to it
+
+43
+00:03:41,120 --> 00:03:42,799
+and place those electrodes on your tongue
+
+44
+00:03:42,799 --> 00:03:44,640
+and then close your eyes
+
+45
+00:03:44,640 --> 00:03:47,200
+or if you're blind try to use your tongue to see
+
+46
+00:03:47,200 --> 00:03:49,599
+and then perform some tests of visual acuity
+
+47
+00:03:49,599 --> 00:03:54,720
+and you will in fact with a fair bit of practice acquire degree of visual acuity with your tongue
+
+48
+00:03:54,720 --> 00:04:10,319
+a more extreme experiment this is sometimes referred to as the thera rewiring experiment was performed on animals on fairness where the ferret's optic nerve was disconnected from the visual cortex and reconnected to the auditory cortex surgically when the fair was very very young
+
+49
+00:04:10,319 --> 00:04:11,519
+then the ferret grew up
+
+50
+00:04:11,519 --> 00:04:13,280
+and over the course of its development
+
+51
+00:04:13,280 --> 00:04:16,239
+it actually recovered a degree of visual acuity
+
+52
+00:04:16,239 --> 00:04:19,759
+which means that its auditory cortex was essentially learning how to see
+
+53
+00:04:19,759 --> 00:04:23,759
+so if different sensor cortexes can be repurposed to perform each other's jobs
+
+54
+00:04:23,759 --> 00:04:28,320
+perhaps in some sense they're all implementing the same flexible algorithm
+
+55
+00:04:28,320 --> 00:04:29,840
+we could take this idea even further
+
+56
+00:04:29,840 --> 00:04:32,320
+and hypothesize that not only sensory cortices
+
+57
+00:04:32,320 --> 00:04:36,880
+but a lot of the functionality of the brain could in fact be performed by a single flexible algorithm
+
+58
+00:04:36,880 --> 00:04:39,919
+we don't know if this is true but it's a very appealing notion
+
+59
+00:04:39,919 --> 00:04:43,680
+if in fact this is true we could ask what kind of algorithm could it be
+
+60
+00:04:43,680 --> 00:04:46,800
+what must the single algorithm be able to do
+
+61
+00:04:46,800 --> 00:04:53,520
+it has to be able to interpret rich sensory inputs it has to deal with complex rich open world problems
+
+62
+00:04:53,520 --> 00:05:03,360
+and it has to choose complex actions which means it has to reason about decision making and control where have we seen that before well these are the two parts of deep reinforcement learning
+
+63
+00:05:03,360 --> 00:05:16,000
+the deep deals with handling complex open world inputs and the reinforcement learning provides the formalism for decision making and control
+
+64
+00:05:16,000 --> 00:05:27,520
+and in fact there is again some circumstantial evidence that both deep learning and reinforcement learning at least individually provide some sensible model of how the brain processes information
+
+65
+00:05:27,520 --> 00:05:40,960
+so this is a an older paper that's about a decade old at this point called unsupervised learning models of primer of primary cortical receptor fields and receptor field plasticity that tries to analyze the kind of features that are known to exist in the brain
+
+66
+00:05:40,960 --> 00:06:03,600
+and compares them to the kind of features that are observed in primate sensor corpses for example they take a simple stimuli like the these kind of you know grading type stimuli which are known to stimulate individual uh receptive fields in the visual cortex
+
+67
+00:06:03,600 --> 00:06:08,720
+and they analyze the kind of features that are learned from these stimuli by deep neural networks
+
+68
+00:06:08,720 --> 00:06:17,680
+and then they compare the statistics of those features to features that are known to exist in the primate visual cortex from experiments on monkeys
+
+69
+00:06:17,680 --> 00:06:28,880
+they do a similar experiment on auditory features so they expose a deep neural network to a range of auditory stimuli look at the statistics of the features that emerge and again compare those to the statistics of features in the brain
+
+70
+00:06:28,880 --> 00:06:38,800
+and they even have kind of a funny experiment on the sense of touch where they take human subjects they have them manipulate an object with a glove that's been dusted with some white dust
+
+71
+00:06:38,800 --> 00:06:49,680
+and they use where the dust was deposited on the glove to train a deep neural network to essentially represent touch sensing features
+
+72
+00:06:49,680 --> 00:06:57,919
+and they compare them to features that are known to exist from experiments on monkeys where a monkey's hand is placed on a drum with indentations
+
+73
+00:06:57,919 --> 00:07:05,280
+which rotates and then the monkey sense of touch is recorded from neurons in its brain and again they compare the statistics of these features
+
+74
+00:07:05,280 --> 00:07:08,960
+and find that the neural network learn features with similar statistics
+
+75
+00:07:08,960 --> 00:07:12,400
+now there are a few conclusions we might draw from these experiments
+
+76
+00:07:12,400 --> 00:07:18,880
+for example we might conclude that the deep neural network it works the same way the brain works
+
+77
+00:07:18,880 --> 00:07:23,360
+but i think there's actually a more simple explanation
+
+78
+00:07:23,360 --> 00:07:25,440
+it's probably not about the deep neural network per se
+
+79
+00:07:25,440 --> 00:07:34,000
+it's probably about the observation that any large heavily overparameterized model will discover features with these statistics
+
+80
+00:07:34,000 --> 00:07:35,599
+because they're just the right features for this data
+
+81
+00:07:35,599 --> 00:07:39,199
+so the features in some sense are perhaps a property of the data itself
+
+82
+00:07:39,199 --> 00:07:46,319
+and a powerful enough model regardless of its internal design would acquire those features because they're the right ones
+
+83
+00:07:46,319 --> 00:07:52,560
+there's also quite a bit of evidence in favor of reinforcement learning as a model of how the brain learns
+
+84
+00:07:52,560 --> 00:07:59,280
+and in fact reinforced learning was studied in psychology and neuroscience long before it was a field of studying computer science
+
+85
+00:07:59,280 --> 00:08:06,000
+so percepts that anticipate reward become associated with similar firing patterns as the reward itself this is a known observation
+
+86
+00:08:06,000 --> 00:08:09,360
+sometimes referred to as spectrum dependent plasticity
+
+87
+00:08:09,360 --> 00:08:12,800
+the basal ganglia appears to be related to the reward system in the brain
+
+88
+00:08:12,800 --> 00:08:22,000
+and model 3rl like adaptation is often a good fit for experimental data of animal adaptation but not always
+
+89
+00:08:22,000 --> 00:08:33,919
+all right so we might conclude from this i for some client that if in fact there is a single flexible algorithm that can acquire the broad range of behaviors that we associate with human intelligence
+
+90
+00:08:33,919 --> 00:08:37,839
+that algorithm perhaps ought to look a little bit like a reinforcement learning algorithm
+
+91
+00:08:37,839 --> 00:08:43,519
+and perhaps equipped with large high-capacity representations like deep models
+
+92
+00:08:43,519 --> 00:08:45,839
+so then we could say well what can deep learning and rl do well now
+
+93
+00:08:45,839 --> 00:08:47,440
+basically how close are we to that
+
+94
+00:08:47,440 --> 00:08:49,600
+and what seems to be missing
+
+95
+00:08:49,600 --> 00:08:52,080
+well current deep reinforcement learning algorithms are pretty good at somethings
+
+96
+00:08:52,080 --> 00:08:55,440
+they're good at acquiring a high degree of proficiency
+
+97
+00:08:55,440 --> 00:08:59,920
+and domains governed by simple known rules like board games and video games
+
+98
+00:08:59,920 --> 00:09:03,200
+they're good at learning simple skills with raw sensory input
+
+99
+00:09:03,200 --> 00:09:05,279
+given enough experience
+
+100
+00:09:05,279 --> 00:09:10,560
+and they're pretty good at learning to imitate given enough human-provided expert behavior
+
+101
+00:09:10,560 --> 00:09:16,480
+but they still fall short in a few very important ways compared to human intelligence or even animal intelligence
+
+102
+00:09:16,480 --> 00:09:18,720
+humans can learn incredibly quickly
+
+103
+00:09:18,720 --> 00:09:21,279
+deep reinforcement learning algorithms are not usually known for their efficiency
+
+104
+00:09:21,279 --> 00:09:24,240
+they usually require a very large amount of experience
+
+105
+00:09:24,240 --> 00:09:28,240
+and it may be because humans are very good at reusing past knowledge
+
+106
+00:09:28,240 --> 00:09:30,240
+so humans can adapt quickly
+
+107
+00:09:30,240 --> 00:09:34,399
+for instance this is a commonly done motor control experiment where a person moves a sliver
+
+108
+00:09:34,399 --> 00:09:37,680
+a perturbation is introduced requiring the person to react
+
+109
+00:09:37,680 --> 00:09:46,800
+and then the experimenter measures how many trials a human needs to learn how to overcome any perturbation introduced by the sliver in just a couple of trials
+
+110
+00:09:46,800 --> 00:09:55,600
+but chances are humans aren't learning entirely from scratch they have past experience with physical manipulation moving their bodies and with responding to perturbation forces
+
+111
+00:09:55,600 --> 00:09:58,640
+transfer learning in deep rl is still an open problem
+
+112
+00:09:58,640 --> 00:10:02,560
+but its goal is to essentially address this capability
+
+113
+00:10:02,560 --> 00:10:06,160
+it's also often not clear in reality what the reward function should be
+
+114
+00:10:06,160 --> 00:10:14,560
+so in classical reinforcement learning we typically assume the reward function is known and it's correct but in the real world it's far less clear
+
+115
+00:10:14,560 --> 00:10:22,079
+it's also not clear what the role of prediction should be so should we learn by modeling the entire world and then planning through that model
+
+116
+00:10:22,079 --> 00:10:24,079
+or should we learn directly from trial and error or should
+
+117
+00:10:24,079 --> 00:10:27,760
+we do a little bit of both
+
+118
+00:10:27,760 --> 00:10:30,800
+but to sum all this up
+
+119
+00:10:30,800 --> 00:10:44,720
+one of the things that deep reinforcement learning could potentially offer us is a way to think about the acquisition of intelligence in a more unified algorithmic way without having to think about designing individual algorithms or individual modules
+
+120
+00:10:44,720 --> 00:10:56,000
+but this is not by any means a new idea going from this kind of modular very complex model to a simple learning driven model is something that is in some sense as old as computer science itself
+
+121
+00:10:56,000 --> 00:11:02,320
+here's a quote that i like very much on this topic instead of trying to produce a program to simulate the adult mind
+
+122
+00:11:02,320 --> 00:11:11,680
+why not rather try to produce one which simulates the child's if this were then subjected to an appropriate course of education one would obtain the adult brain
+
+123
+00:11:11,680 --> 00:11:13,600
+who wrote this
+
+124
+00:11:13,600 --> 00:11:16,320
+Alan Turing
+

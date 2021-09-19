@@ -1,0 +1,186 @@
+﻿1
+00:00:01,881 --> 00:00:03,912
+now, in the next portion of today's lecture
+
+2
+00:00:04,310 --> 00:00:08,992
+let's talk about a little bit about some of the issues with imitation learning.
+
+3
+00:00:09,251 --> 00:00:12,849
+and motivate going towards more general objectives.
+
+4
+00:00:13,194 --> 00:00:16,447
+so what's the problem with imitation learning in general?
+
+5
+00:00:17,288 --> 00:00:21,712
+In imitation learning, 
+a human need sto provide data to show the machine how to act.
+
+6
+00:00:22,149 --> 00:00:25,913
+which is okay in some settings. 
+it's pretty easy for a person for example drive a car
+
+7
+00:00:26,385 --> 00:00:28,210
+but it can be difficult in other settings.
+
+8
+00:00:29,579 --> 00:00:34,752
+and the issue is that deep learning methods tend to work well when data is plentiful.
+
+9
+00:00:34,832 --> 00:00:37,764
+so if we're doing deep
+imitation learning, we really
+
+10
+00:00:37,788 --> 00:00:40,720
+need to somebody to
+provide large amounts of data.
+
+11
+00:00:40,819 --> 00:00:43,492
+humans are not good at
+providing some kinds of actions.
+
+12
+00:00:43,516 --> 00:00:49,817
+it's relatively easy for person to 
+walk down forest trail or even fly a quadrotor or drive  a car.
+
+13
+00:00:50,289 --> 00:00:56,292
+it's comparatively harder
+for a person to manually specify the road or
+velocities for a quadrotor.
+
+14
+00:00:56,551 --> 00:01:03,427
+and it can be extremely difficult for them to specify  all of the actions for some really high dimensional system like humanoid robot.
+
+15
+00:01:03,843 --> 00:01:14,804
+ you could imagine even more complex situations  like 
+for example dynamically setting prices for a large e-commerce operation where you have to integrate many different sources of data.
+
+16
+00:01:14,829 --> 00:01:20,527
+so you could imagine decision-making scenarios where it's extremely hard  for humans to provide near-optimal actions.
+
+17
+00:01:21,296 --> 00:01:25,271
+there's also little bit a conceptual qualm that we might have imitation learning.
+
+18
+00:01:25,403 --> 00:01:27,705
+which is that humans can actually learn autonomously.
+
+19
+00:01:28,499 --> 00:01:33,700
+wouldn't it be nice if our machines could do that too like you know maybe humans do need demonstarations to some degree.
+
+20
+00:01:33,724 --> 00:01:36,943
+  but it's also clear that
+humans can learn on their own.
+
+21
+00:01:37,452 --> 00:01:42,223
+if you learn on your own,
+you can get unlimited data from your own experience which can be very nice
+
+22
+00:01:42,243 --> 00:01:45,735
+and you can continously improve as you do the task more and more.
+
+23
+00:01:46,450 --> 00:01:48,493
+and that's what reinforcement learning aims to do.
+
+24
+00:01:48,950 --> 00:01:54,587
+but to make that possible, we have to actually define our objective. and so far, we've kind of avoided this question.
+
+25
+00:01:54,984 --> 00:02:03,096
+So we defined the terminology for mapping observations to actions but we haven't actually defined what it means to a good mapping versus a bad mapping.
+
+26
+00:02:04,339 --> 00:02:08,049
+if you imagine this tiger scenario from the beginning of this lecture,
+
+27
+00:02:08,136 --> 00:02:15,316
+you could say well, let's not worry about demonstrations, let's not worry about data, all you really want is not get eaten by a tiger.
+
+28
+00:02:16,906 --> 00:02:27,863
+you can express this mathematically as expected value of a delta function which is one if you're eaten by a tiger and zero otherwise so just minimize this delta function in expectation
+
+29
+00:02:28,528 --> 00:02:37,068
+and the expectation is over a distribution over states and this is the
+distribution over states induced by your policy and your transition probabilities.
+
+30
+00:02:37,092 --> 00:02:43,265
+so if we go back to that graphical model at the beginning of the lecture, 
+we just take the expected values under the graphical model.
+
+31
+00:02:45,109 --> 00:02:56,676
+we can write this more generally like this, we have an expected value under distribution over sequences of states and actions of the sum of the thing that we don't want which is this delta function
+
+32
+00:02:56,736 --> 00:03:06,527
+in general we can have a sum of any function we can have any cost function "c" on states and actions it could be on just states or it can be both states and actions.
+
+33
+00:03:06,552 --> 00:03:08,630
+and we want to minimize its expected value.
+
+34
+00:03:08,710 --> 00:03:14,158
+so this is the delta function for getting even by tiger then we're trying to avoid getting eaten by the tiger.
+
+35
+00:03:14,846 --> 00:03:20,929
+and in the literature, you might see this expressed as cost function c of st, at.
+
+36
+00:03:20,954 --> 00:03:24,957
+or equivalently as a reward function s_t, a_t.
+
+37
+00:03:25,057 --> 00:03:27,690
+we minimize costs and we maximize rewards
+
+38
+00:03:27,730 --> 00:03:30,330
+but otherwise they mean the same thing.
+
+39
+00:03:30,513 --> 00:03:41,956
+and to go back to the aside about terminology from before the reward notation is a little bit more common in the dynamic programming literature as well as the much of the modern reinforcemnet learning literature and t
+
+40
+00:03:41,976 --> 00:03:53,600
+that kind of has its roots in the study of dynamic programming in united states in the 1950s, whereas the use of costs has its roots in optimal control theory.
+
+41
+00:03:53,640 --> 00:04:01,544
+you know from work and optimal controls they're really the same thing the reward is just negative of the cost
+
+42
+00:04:01,604 --> 00:04:08,044
+i don't know if this reflects some difference
+in national character where optimisticamericans expect life to bring rewards while pessimistic russians costs and regrets.
+
+43
+00:04:08,068 --> 00:04:10,496
+but in the ends, they mean the same thing thing.
+

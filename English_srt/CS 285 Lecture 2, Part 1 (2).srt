@@ -1,0 +1,791 @@
+﻿1
+00:12:43,830 --> 00:12:49,600
+in general the answer is no and to give you a little bit of intuition
+
+2
+00:12:48,000 --> 00:12:55,510
+for why behavioral cloning might go wrong even while regular supervised learning would work
+
+3
+00:12:53,270 --> 00:13:00,000
+uh let's uh start with a very kind of abstract picture of a control problem
+
+4
+00:12:56,720 --> 00:13:05,760
+so i'll draw a lot of pictures like this in today's lecture
+
+5
+00:13:01,920 --> 00:13:10,560
+when i draw a picture like this  the axis on the left represents the state
+
+6
+00:13:08,950 --> 00:13:13,200
+now of course in general the state is not one-dimensional
+
+7
+00:13:12,000 --> 00:13:17,360
+but i'll have this axis be one-dimensional so that it's easier to visualize
+
+8
+00:13:15,270 --> 00:13:18,720
+and then the other axis represents time
+
+9
+00:13:17,360 --> 00:13:24,160
+so this black curve represents the trajectory through time at every point in time
+
+10
+00:13:21,920 --> 00:13:25,830
+there's a different value of the state
+
+11
+00:13:24,160 --> 00:13:29,680
+and let's say that this black trajectory represents our training data
+
+12
+00:13:28,070 --> 00:13:35,040
+so we're going to take this as our training data use it to train a policy
+
+13
+00:13:32,720 --> 00:13:39,680
+that goes from s to a and then we'll run that policy
+
+14
+00:13:37,200 --> 00:13:43,920
+so now in red i'm going to draw what this policy will do when we run it
+
+15
+00:13:41,830 --> 00:13:47,270
+initially the policy stays pretty close to the training data
+
+16
+00:13:45,600 --> 00:13:51,120
+because we're going to use a large neural network and will train it very well
+
+17
+00:13:48,720 --> 00:13:52,630
+but it does make some small mistakes
+
+18
+00:13:51,120 --> 00:13:57,830
+every learned model will make at least some small mistakes this is basically inevitable
+
+19
+00:13:55,760 --> 00:14:01,920
+the trouble is that when this model makes some small mistake
+
+20
+00:14:00,000 --> 00:14:05,600
+it will find itself in a state that's just a little bit different
+
+21
+00:14:03,360 --> 00:14:07,120
+than the states that it was trained on
+
+22
+00:14:05,600 --> 00:14:11,190
+and when it finds itself in a state that is unusual that is different from the training states
+
+23
+00:14:09,680 --> 00:14:15,600
+it'll make a bigger mistake because it doesn't quite know what to do there
+
+24
+00:14:13,120 --> 00:14:19,040
+and as these mistakes compound the state becomes more and more different
+
+25
+00:14:17,040 --> 00:14:20,880
+and the mistakes get bigger and bigger
+
+26
+00:14:19,040 --> 00:14:26,160
+until after a while the learned policy might end up doing something very different
+
+27
+00:14:24,000 --> 00:14:27,920
+from the demonstrated behavior
+
+28
+00:14:26,160 --> 00:14:29,360
+so you could imagine the car scenario
+
+29
+00:14:27,920 --> 00:14:31,920
+the car will veer a little to the left just a tiny bit
+
+30
+00:14:30,240 --> 00:14:33,360
+then see something unfamiliar and here
+
+31
+00:14:31,920 --> 00:14:37,040
+to the left a little more until eventually goes off the road
+
+32
+00:14:35,360 --> 00:14:44,320
+and we'll see we'll discard describe this phenomenon much more formally later on in in the lecture
+
+33
+00:14:41,920 --> 00:14:45,680
+but does this work in practice well
+
+34
+00:14:44,320 --> 00:14:47,760
+in practice actually sometimes it's pretty effective
+
+35
+00:14:45,680 --> 00:14:52,880
+so these videos are collected from a paper uh released by nvidia in 2016
+
+36
+00:14:51,510 --> 00:14:56,000
+and you can see that initially they had a lot of trouble with the system
+
+37
+00:14:54,070 --> 00:15:02,070
+it would kind of go off the road do some messy things run into cones
+
+38
+00:14:59,440 --> 00:15:04,800
+but after collecting a lot of data and using a few little tricks
+
+39
+00:15:03,600 --> 00:15:06,480
+they actually ended up with a system
+
+40
+00:15:04,800 --> 00:15:07,830
+that did something fairly sensible
+
+41
+00:15:06,480 --> 00:15:12,880
+that could autonomously drive between the cones
+
+42
+00:15:10,560 --> 00:15:18,560
+stay on the road and exhibit some you know fairly reasonable behavior
+
+43
+00:15:15,830 --> 00:15:22,560
+so why is that why is it that we can use behavioral cloning methods in practice
+
+44
+00:15:20,160 --> 00:15:26,320
+to train policies that actually do something fairly decent well
+
+45
+00:15:23,680 --> 00:15:30,390
+we'll discuss this in more detail in part two
+
+46
+00:15:28,240 --> 00:15:34,000
+but one of the things that i want to mention briefly now is
+
+47
+00:15:31,920 --> 00:15:39,680
+the particular technique that was used to address this issue in this paper by nvidia
+
+48
+00:15:37,750 --> 00:15:43,920
+so if we look at the paper and we look at the their description of their system
+
+49
+00:15:41,750 --> 00:15:48,070
+it mostly looks very much like what we expect so the there is a conv-net
+
+50
+00:15:45,120 --> 00:15:53,190
+the conv-net produces a steering angle
+
+51
+00:15:50,160 --> 00:16:00,070
+the you know the the car tracks that steering angle the conv-net takes this input
+
+52
+00:15:56,800 --> 00:16:03,120
+camera inputs but something that you might notice here is that
+
+53
+00:16:01,270 --> 00:16:06,000
+there's a center camera left camera and right camera
+
+54
+00:16:03,600 --> 00:16:08,630
+well it turns out that one of the tricks
+
+55
+00:16:07,120 --> 00:16:12,070
+that was used in this paper which turns out to be kind of important
+
+56
+00:16:10,390 --> 00:16:14,630
+is that you record three different camera images at the same time
+
+57
+00:16:13,680 --> 00:16:19,040
+one pointing forward one left and one right
+
+58
+00:16:17,440 --> 00:16:22,720
+the forward image is supervised with whatever steering angle the person had
+
+59
+00:16:20,720 --> 00:16:25,920
+the image looking to the left is supervised of the steering angle
+
+60
+00:16:24,390 --> 00:16:28,320
+that is a little bit to the right of what the person did
+
+61
+00:16:27,680 --> 00:16:32,160
+so that means that if the car saw an image that was going left off the road
+
+62
+00:16:30,390 --> 00:16:34,000
+it should steer to the right
+
+63
+00:16:32,160 --> 00:16:36,240
+and correspondingly the image pointed to
+
+64
+00:16:34,000 --> 00:16:39,440
+the right is supervised with a term to the left
+
+65
+00:16:37,680 --> 00:16:43,680
+now you can imagine how this particular trick in the special case of driving a car
+
+66
+00:16:42,160 --> 00:16:45,830
+would actually mitigate this drifting problem
+
+67
+00:16:43,680 --> 00:16:48,390
+because now these left and right images
+
+68
+00:16:46,480 --> 00:16:51,270
+are essentially teaching the policy how to correct little mistakes
+
+69
+00:16:50,160 --> 00:16:53,830
+and if i can correct those mistakes
+
+70
+00:16:51,270 --> 00:16:55,270
+then maybe they won't accumulate as much
+
+71
+00:16:53,830 --> 00:16:59,360
+now this is a special case of a more general principle
+
+72
+00:16:56,800 --> 00:17:03,360
+the more general principle is that while errors in the trajectory will compound
+
+73
+00:17:01,600 --> 00:17:05,030
+if you can somehow modify your training data
+
+74
+00:17:03,360 --> 00:17:07,910
+so that your training data illustrates little mistakes and
+
+75
+00:17:05,910 --> 00:17:11,360
+feedbacks to correct those mistakes
+
+76
+00:17:09,190 --> 00:17:14,950
+then perhaps the policy can learn those feedbacks and stabilize
+
+77
+00:17:13,670 --> 00:17:19,830
+and there are a number of different ways to do this some of them will discuss later on in the course
+
+78
+00:17:17,120 --> 00:17:24,880
+for example if you train a stable optimal feedback controller around the demonstration
+
+79
+00:17:22,950 --> 00:17:30,080
+and use that feedback controller as supervision you can actually get stable policies
+
+80
+00:17:28,960 --> 00:17:31,600
+that inherit that stability
+
+81
+00:17:30,080 --> 00:17:35,670
+or you can simply ask a person to potentially make mistakes and correct those mistakes
+
+82
+00:17:34,400 --> 00:17:37,520
+so there are little tricks like this
+
+83
+00:17:35,670 --> 00:17:39,840
+that we can use to try to patch the issue
+
+84
+00:17:40,790 --> 00:17:46,790
+but something that we could ask
+
+85
+00:17:44,640 --> 00:17:48,160
+also to derive a more general solution
+
+86
+00:17:46,790 --> 00:17:54,790
+is what's the kind of the underlying mathematical principle behind this drift
+
+87
+00:17:52,790 --> 00:17:57,360
+what's really going on here
+
+88
+00:17:54,790 --> 00:18:01,120
+well when we run the policy
+
+89
+00:17:57,360 --> 00:18:03,910
+we're sampling from pi theta a t given ot
+
+90
+00:18:01,120 --> 00:18:07,440
+and this distribution pi theta a t given ot
+
+91
+00:18:04,960 --> 00:18:08,080
+it was trained on some data distribution
+
+92
+00:18:07,440 --> 00:18:11,670
+and that data distribution we'll call it p data ot
+
+93
+00:18:10,320 --> 00:18:15,840
+this is basically the distribution of observations
+
+94
+00:18:12,720 --> 00:18:18,160
+seen in our training data
+
+95
+00:18:15,840 --> 00:18:19,280
+now we know from supervised learning theory that
+
+96
+00:18:18,160 --> 00:18:24,960
+when you train a particular model on a particular training distribution
+
+97
+00:18:22,720 --> 00:18:27,280
+and you get good training error and you don't over fit
+
+98
+00:18:24,960 --> 00:18:32,240
+fthen you would expect to also get good test error
+
+99
+00:18:30,400 --> 00:18:35,030
+if test points are drawn from the same distribution
+
+100
+00:18:32,240 --> 00:18:35,600
+so if we see new observations
+
+101
+00:18:35,030 --> 00:18:39,360
+that come from the same distribution as our training data
+
+102
+00:18:37,360 --> 00:18:42,400
+even if the observations themselves are not the same
+
+103
+00:18:40,240 --> 00:18:48,640
+we would expect our learned policy to produce the right action on those observations
+
+104
+00:18:45,910 --> 00:18:49,360
+however when we run our policy
+
+105
+00:18:48,640 --> 00:18:55,280
+the distribution over observations that we actually see is different
+
+106
+00:18:53,600 --> 00:18:58,640
+the observation over the the distribution of observations is different
+
+107
+00:18:57,200 --> 00:19:00,480
+because the policy takes different actions
+
+108
+00:18:58,640 --> 00:19:05,280
+which result in different observations
+
+109
+00:19:01,670 --> 00:19:08,960
+so after a while p pi theta o t
+
+110
+00:19:05,280 --> 00:19:10,240
+becomes very different from p data ot
+
+111
+00:19:08,960 --> 00:19:15,030
+and this is the reason for this compounding error problem
+
+112
+00:19:12,880 --> 00:19:19,360
+so can we somehow fix this can we make p data ot
+
+113
+00:19:16,160 --> 00:19:21,760
+equal to p pi theta ot if we could do this
+
+114
+00:19:20,080 --> 00:19:25,030
+then we know that our policy would produce good actions
+
+115
+00:19:23,280 --> 00:19:30,400
+simply from standard results in supervised learning theory
+
+116
+00:19:27,600 --> 00:19:34,480
+now one way to make p data ot equal to p pi theta ot
+
+117
+00:19:32,000 --> 00:19:36,160
+is to simply make the policy perfect
+
+118
+00:19:34,480 --> 00:19:39,670
+if the policy is perfect and it never makes mistakes
+
+119
+00:19:36,960 --> 00:19:42,880
+then these distributions will match
+
+120
+00:19:39,670 --> 00:19:45,840
+but that's of course very very hard
+
+121
+00:19:42,880 --> 00:19:48,640
+so what if instead of being clever about our policy
+
+122
+00:19:47,200 --> 00:19:53,760
+we're actually we can try to actually be clever about our data distribution
+
+123
+00:19:51,440 --> 00:19:55,440
+so let's maybe not change the policy in some clever way
+
+124
+00:19:53,760 --> 00:20:02,150
+but let's actually change our data to avoid this distributional shift problem
+
+125
+00:20:00,550 --> 00:20:08,480
+that's the basic idea behind a method called dagger
+
+126
+00:20:04,790 --> 00:20:11,440
+dagger stands for "Dataset Aggregation"
+
+127
+00:20:08,480 --> 00:20:12,640
+so in dagger, our goal is to collect training data
+
+128
+00:20:11,440 --> 00:20:18,790
+that comes from p pi theta ot instead of p data ot
+
+129
+00:20:16,400 --> 00:20:22,550
+because if we have observation action tuples
+
+130
+00:20:19,670 --> 00:20:26,960
+from p pi theta o t and we train on those observation action tuples
+
+131
+00:20:25,120 --> 00:20:31,760
+then the distributional shift problem will be gone
+
+132
+00:20:29,120 --> 00:20:33,030
+so here's how dagger accomplishes this
+
+133
+00:20:31,760 --> 00:20:36,400
+we're going to actually run
+
+134
+00:20:33,030 --> 00:20:38,640
+pi theta a t given ot
+
+135
+00:20:36,400 --> 00:20:40,960
+which will produce samples from p by theta ot
+
+136
+00:20:38,640 --> 00:20:47,120
+and then we'll request additional labels at those observations
+
+137
+00:20:44,000 --> 00:20:50,480
+so step one is to initialize our policy
+
+138
+00:20:47,120 --> 00:20:52,720
+by training on the human dataset
+
+139
+00:20:50,480 --> 00:20:54,240
+then we're going to run our policy to
+
+140
+00:20:52,720 --> 00:20:58,400
+collect an additional data set of observations
+
+141
+00:20:55,200 --> 00:21:00,000
+that i'm denoting here as d pi and
+
+142
+00:20:58,400 --> 00:21:03,520
+these observations now come from p by theta o t
+
+143
+00:21:00,000 --> 00:21:08,080
+then we'll ask a human to label all of these observations with optimal actions
+
+144
+00:21:06,320 --> 00:21:12,960
+so someone will literally watch the observations that the machine produced
+
+145
+00:21:11,280 --> 00:21:15,440
+and tell the machine what the optimal action
+
+146
+00:21:14,320 --> 00:21:18,880
+that they would have taken for those observations actually is
+
+147
+00:21:15,440 --> 00:21:19,840
+and then we will aggregate
+
+148
+00:21:18,880 --> 00:21:24,000
+we will actually merge these data sets
+
+149
+00:21:22,320 --> 00:21:25,670
+and then train the policy on it again
+
+150
+00:21:24,000 --> 00:21:28,880
+now when we train the policy again on this merged data set
+
+151
+00:21:27,760 --> 00:21:30,480
+the policy will change
+
+152
+00:21:28,880 --> 00:21:34,880
+which means that even though our observations in d pi came from p pi theta
+
+153
+00:21:32,400 --> 00:21:37,520
+now theta is different and p by theta is also different
+
+154
+00:21:35,440 --> 00:21:42,000
+so we have to repeat this process
+
+155
+00:21:39,840 --> 00:21:45,440
+but we can actually show and this is shown in the paper by ross at all
+
+156
+00:21:43,670 --> 00:21:49,840
+that introduced this algorithm that repeating this process enough times
+
+157
+00:21:47,280 --> 00:21:51,840
+eventually does extra converge
+
+158
+00:21:49,840 --> 00:21:59,910
+resulting in a final data set that does come from the same distribution as the policy asymptotically
+
+159
+00:21:56,790 --> 00:22:03,670
+so here's an example of a policy trained with dagger
+
+160
+00:22:00,240 --> 00:22:05,280
+flying a drone through a forest
+
+161
+00:22:03,670 --> 00:22:07,030
+this policy doesn't actually use a deep neural network
+
+162
+00:22:05,280 --> 00:22:10,320
+it actually uses some linear image features
+
+163
+00:22:08,790 --> 00:22:13,760
+but subsequent work has done this with deep neural networks as well
+
+164
+00:22:12,000 --> 00:22:18,080
+so this drone initially was not able to deflect far forest very well
+
+165
+00:22:15,760 --> 00:22:22,080
+but after a few iterations of soliciting additional labels from the human
+
+166
+00:22:20,080 --> 00:22:24,640
+it was able to navigate the forest quite proficiently
+
+167
+00:22:25,440 --> 00:22:29,280
+so what is the issue with dagger
+
+168
+00:22:27,670 --> 00:22:32,960
+why don't we always use this algorithm in invitation learning (imitaition?)
+
+169
+00:22:31,200 --> 00:22:37,440
+well a lot of the issues with dagger really come from step three
+
+170
+00:22:35,670 --> 00:22:40,240
+it's a little bit problem dependent
+
+171
+00:22:37,440 --> 00:22:43,030
+but in many cases asking a human to manually label dpi with optimal actions
+
+172
+00:22:40,240 --> 00:22:47,760
+can actually be quite onerous
+
+173
+00:22:45,200 --> 00:22:49,840
+imagine doing this yourself
+
+174
+00:22:47,760 --> 00:22:53,760
+imagine that you're watching a video of a drone flying through a forest
+
+175
+00:22:51,280 --> 00:22:56,480
+and you have to steer that drone provide optimal actions
+
+176
+00:22:55,200 --> 00:22:59,840
+without your actions actually affecting the drone in real time
+
+177
+00:22:58,150 --> 00:23:02,320
+that's very unnatural to humans because
+
+178
+00:22:59,840 --> 00:23:05,120
+humans don't just map observations to actions in open loop
+
+179
+00:23:03,520 --> 00:23:07,030
+we actually do feedback control
+
+180
+00:23:05,120 --> 00:23:08,240
+we watch the effect of our actions and compensate accordingly
+
+181
+00:23:07,030 --> 00:23:11,120
+when you can't see the effect of your actions
+
+182
+00:23:09,360 --> 00:23:12,720
+it can be a little hard to do this
+
+183
+00:23:11,120 --> 00:23:14,400
+so this is of course situational
+
+184
+00:23:12,720 --> 00:23:16,080
+in some domains providing optimal
+
+185
+00:23:14,400 --> 00:23:17,910
+actions for arbitrary observations
+
+186
+00:23:16,080 --> 00:23:20,400
+can be reasonably straightforward such
+
+187
+00:23:17,910 --> 00:23:21,520
+as an abstract decision making problems
+
+188
+00:23:20,400 --> 00:23:23,440
+like for example if you're doing
+
+189
+00:23:21,520 --> 00:23:24,240
+operations research inventory management
+
+190
+00:23:23,440 --> 00:23:26,240
+et cetera
+
+191
+00:23:24,240 --> 00:23:28,480
+it's easy to ask an expert you know if
+
+192
+00:23:26,240 --> 00:23:29,440
+your warehouse is in this state and your
+
+193
+00:23:28,480 --> 00:23:31,440
+prices are this
+
+194
+00:23:29,440 --> 00:23:33,440
+how should you change the prices but
+
+195
+00:23:31,440 --> 00:23:36,150
+it's comparatively much hard ask a human
+
+196
+00:23:33,440 --> 00:23:39,030
+if you see this image how should you
+
+197
+00:23:36,150 --> 00:23:39,030
+turn the steering wheel
+
+198
+00:23:39,200 --> 00:23:42,880
+all right

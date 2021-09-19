@@ -1,0 +1,593 @@
+﻿1
+00:00:00,880 --> 00:00:06,160
+let's say that you'd like to get this robot 
+to figure out how to pick up objects
+
+2
+00:00:06,160 --> 00:00:08,160
+so the goal is to build some system that
+
+3
+00:00:08,160 --> 00:00:10,400
+will use images from the robot's camera
+
+4
+00:00:10,400 --> 00:00:12,799
+position its gripper appropriately and
+
+5
+00:00:12,799 --> 00:00:14,160
+pick up objects out of a bid
+
+6
+00:00:14,160 --> 00:00:17,279
+for instance for a warehousing application
+
+7
+00:00:17,279 --> 00:00:21,439
+so images come in they go into your method which you're going to design
+
+8
+00:00:21,439 --> 00:00:24,560
+and your method is going to produce xyz coordinates
+
+9
+00:00:24,560 --> 00:00:28,240
+where the robot is going to put its gripper and attempt to pick up an object
+
+10
+00:00:28,240 --> 00:00:32,800
+now you could imagine a number of different approaches to addressing this challenge
+
+11
+00:00:32,800 --> 00:00:36,719
+you could for instance make use of your knowledge of the robotic system
+
+12
+00:00:36,719 --> 00:00:39,040
+measure the coordinates of the gripper
+
+13
+00:00:39,040 --> 00:00:41,120
+how they relate to the camera
+
+14
+00:00:41,120 --> 00:00:43,260
+set up a 3d reconstruction algorithm
+
+15
+00:00:43,260 --> 00:00:45,120
+to figure out the geometry of the objects
+
+16
+00:00:45,120 --> 00:00:48,879
+and position the gripper appropriately for each grasp
+
+17
+00:00:48,879 --> 00:00:50,719
+in some cases this will work very well
+
+18
+00:00:50,719 --> 00:00:53,690
+for instance if you have a rigid object like this
+
+19
+00:00:53,690 --> 00:00:57,960
+the robot will probably put the fingers in the appropriate positions and grasp that object
+
+20
+00:00:57,960 --> 00:01:01,680
+but some objects require a little bit more knowledge for instance
+
+21
+00:01:01,680 --> 00:01:03,199
+a large heavy object like this
+
+22
+00:01:03,199 --> 00:01:06,799
+you'd have to figure out that the center of mass is really concentrated around this bit
+
+23
+00:01:06,799 --> 00:01:08,560
+and pick it up appropriately
+
+24
+00:01:08,560 --> 00:01:11,470
+and some objects really kind of defy our prior expectations
+
+25
+00:01:11,470 --> 00:01:14,880
+if you have for example a soft and deformable object
+
+26
+00:01:14,880 --> 00:01:18,400
+a much better way to grasp it is to actually pinch it in the middle
+
+27
+00:01:18,400 --> 00:01:22,960
+rather than treating the same as the rigid objects
+
+28
+00:01:22,960 --> 00:01:27,360
+so an alternative that you could consider is to set this up as a learning problem
+
+29
+00:01:27,360 --> 00:01:31,280
+but in trying to apply standard supervised machine learning techniques
+
+30
+00:01:31,280 --> 00:01:33,300
+to this task you'll encounter a few challenges
+
+31
+00:01:33,300 --> 00:01:38,560
+standard supervised machine learning methods are going to require somebody to provide
+
+32
+00:01:38,560 --> 00:01:45,150
+labeled tuples of images and the corresponding ground truth xyz position for a successful grasp 
+
+33
+00:01:45,150 --> 00:01:50,799
+and these are very difficult for humans to provide because we ourselves aren't robots
+
+34
+00:01:50,799 --> 00:01:56,640
+we don't quite have a good intuition 
+for where a robot needs to place its fingers to pick up an object
+
+35
+00:01:56,640 --> 00:02:02,180
+so the topic of this class will be to develop reinforcement learning methods
+
+36
+00:02:02,180 --> 00:02:07,600
+that can allow us to automate the process of acquiring skills of this sort
+
+37
+00:02:07,600 --> 00:02:11,440
+at a very high level you could imagine a reinforcement learning method
+
+38
+00:02:11,440 --> 00:02:14,879
+as utilizing data that is not necessarily ground truth data
+
+39
+00:02:14,879 --> 00:02:18,240
+that is not necessarily data of good successful behaviors
+
+40
+00:02:18,240 --> 00:02:20,800
+but just data that provides experience that tells us
+
+41
+00:02:20,800 --> 00:02:23,000
+what are possible outcomes that might happen in the world
+
+42
+00:02:23,000 --> 00:02:27,440
+so if all these robots can experience a wide variety of objects
+
+43
+00:02:27,440 --> 00:02:30,180
+picking them up or failing to pick them up
+
+44
+00:02:30,180 --> 00:02:35,360
+can we use that experience to provide for this grasping system
+
+45
+00:02:35,360 --> 00:02:41,000
+so in this case we start with data collected autonomously rather than by humans
+
+46
+00:02:41,000 --> 00:02:46,480
+and the data consists of images outputs which are the same xyz tuples
+
+47
+00:02:46,480 --> 00:02:50,560
+and now these tuples are not going to necessarily all be successful
+
+48
+00:02:50,560 --> 00:02:56,319
+but instead they'll be labeled with their outcome which would be either a success or a failure
+
+49
+00:02:56,319 --> 00:02:59,200
+and this data would be provided to a reinforcement learning algorithm
+
+50
+00:02:59,200 --> 00:03:03,680
+which would produce a policy that would hopefully perform the task a bit better than
+
+51
+00:03:03,680 --> 00:03:07,120
+the robots did before when they were collecting the data
+
+52
+00:03:07,120 --> 00:03:10,560
+crucially the reinforcement learning algorithm isn't done yet
+
+53
+00:03:10,560 --> 00:03:14,080
+the resulting policy can then be deployed back into the real world
+
+54
+00:03:14,080 --> 00:03:18,959
+to collect additional data that could further improve the behavior
+
+55
+00:03:18,959 --> 00:03:21,480
+so what is reinforcement learning
+
+56
+00:03:21,480 --> 00:03:25,300
+well, fundamentally reinforcement learning is two things
+
+57
+00:03:25,300 --> 00:03:28,480
+a mathematical formalism for learning-based decision-making
+
+58
+00:03:28,480 --> 00:03:31,200
+which allows us to design algorithms
+
+59
+00:03:31,200 --> 00:03:35,519
+and an approach for learning decision making and control from experience from data
+
+60
+00:03:35,519 --> 00:03:42,159
+rather than relying on the controller or policy itself being designed by hand
+
+61
+00:03:42,480 --> 00:03:46,640
+how is reinforcement learning different from other machine learning topics
+
+62
+00:03:46,640 --> 00:03:49,680
+well if we consider standard or supervised machine learning
+
+63
+00:03:49,680 --> 00:03:53,519
+we typically make a number of assumptions for example we'll typically assume
+
+64
+00:03:53,519 --> 00:03:57,599
+that we're given data consisting of inputs x and outputs y
+
+65
+00:03:57,599 --> 00:04:04,560
+and our goal is to learn to predict y from x 
+to essentially acquire some function f of x that gives us y
+
+66
+00:04:04,560 --> 00:04:07,760
+not only do we assume that the data is actually labeled
+
+67
+00:04:07,760 --> 00:04:13,439
+but we also assume typically the data is i.i.d. which means independent and identically distributed
+
+68
+00:04:13,439 --> 00:04:18,160
+this means that the output y that we produce for a given input x
+
+69
+00:04:18,160 --> 00:04:21,519
+is not going to have any effect on other input specs
+
+70
+00:04:21,519 --> 00:04:26,320
+and of course we have to assume that we know the ground truth outputs in training
+
+71
+00:04:26,320 --> 00:04:30,720
+in contrast reinforcement learning handles situations where the data is not i.i.d.
+
+72
+00:04:30,720 --> 00:04:34,880
+in the sense that previous outputs will influence future inputs
+
+73
+00:04:34,880 --> 00:04:38,880
+so the action that you took before will affect what you see next
+
+74
+00:04:38,880 --> 00:04:41,360
+and the ground truth answer is typically not known
+
+75
+00:04:41,360 --> 00:04:49,360
+in fact instead all you really find out is whether you succeed 
+or failed or more generally what reward you received
+
+76
+00:04:49,360 --> 00:04:54,880
+so in reinforcement learning we model a decision-making system 
+as an interaction between an agent and an environment
+
+77
+00:04:54,880 --> 00:04:59,120
+the agent makes decisions which we refer to as actions
+
+78
+00:04:59,120 --> 00:05:02,560
+and the environment responds to those decisions with observations
+
+79
+00:05:02,560 --> 00:05:04,820
+which we sometimes call states and rewards
+
+80
+00:05:04,820 --> 00:05:10,240
+and crucially this process is repeated multiple times over the course of an episode
+
+81
+00:05:10,240 --> 00:05:15,440
+reinforcement learning can be finite horizon which means that this is repeated a fixed number of times
+
+82
+00:05:15,440 --> 00:05:21,360
+or infinite horizon which means that this decision-making cycle goes on forever
+
+83
+00:05:21,919 --> 00:05:27,919
+here are some examples of how we could embed real world problems into this reinforcement framework
+
+84
+00:05:27,919 --> 00:05:31,759
+if you're trying to teach a dog how to perform a particular trick
+
+85
+00:05:31,759 --> 00:05:34,720
+maybe the dog's actions are its muscle contractions
+
+86
+00:05:34,720 --> 00:05:37,500
+its observations consist of its senses its sight and smell
+
+87
+00:05:37,500 --> 00:05:44,320
+and the reward is the treat that you give it when it does what you want 
+or withhold it when it does not do what you want
+
+88
+00:05:44,320 --> 00:05:49,000
+if you are using reinforcement learning to train a robot
+
+89
+00:05:49,000 --> 00:05:52,880
+maybe its actions are motor currents or torques
+
+90
+00:05:52,880 --> 00:05:57,759
+its observations are inputs from its sensors like its camera
+
+91
+00:05:57,759 --> 00:06:01,840
+and the rewards here might consist of some measure of task success for example
+
+92
+00:06:01,840 --> 00:06:03,680
+if you'd like the robot to learn how to run
+
+93
+00:06:03,680 --> 00:06:06,880
+the measure of success would be how fast it's running
+
+94
+00:06:06,880 --> 00:06:10,319
+but reinforced learning is not limited just to dogs and robots
+
+95
+00:06:10,319 --> 00:06:13,600
+you could also imagine applying reinforcement learning for instance
+
+96
+00:06:13,600 --> 00:06:16,720
+to problems in operations research like inventory management
+
+97
+00:06:16,720 --> 00:06:20,160
+where the actions will consist of decisions about what to purchase
+
+98
+00:06:20,160 --> 00:06:23,840
+the observations might consist of the inventory levels at the current point in time
+
+99
+00:06:23,840 --> 00:06:29,080
+and the reward might consist of the net profit that you're earning
+
+100
+00:06:29,080 --> 00:06:35,600
+so you could imagine applying reinforcement settings to settings like this and also many others
+
+101
+00:06:35,600 --> 00:06:39,520
+you could imagine applying reinforcement learning to learn complex physical tasks
+
+102
+00:06:39,520 --> 00:06:45,039
+like for example getting this robotic hand to use a tool to hammer in a nail
+
+103
+00:06:45,039 --> 00:06:51,199
+you could imagine using reinforcement learning 
+to automatically acquire unexpected solutions like in this video
+
+104
+00:06:51,199 --> 00:06:54,960
+of a q learning algorithm playing the atari game breakout
+
+105
+00:06:54,960 --> 00:06:58,880
+initially this learned policy plays the game the way you might expect
+
+106
+00:06:58,880 --> 00:07:03,440
+but it actually figured out that if you can get the ball to bounce up there and bounce around for a while
+
+107
+00:07:03,440 --> 00:07:06,960
+you can get a lot more points than you would otherwise
+
+108
+00:07:06,960 --> 00:07:10,240
+you can use reinforcement in the real world
+
+109
+00:07:10,240 --> 00:07:13,599
+so coming back to the grasping example from before
+
+110
+00:07:13,599 --> 00:07:18,080
+you can use robots that practice picking up a wide range of different objects
+
+111
+00:07:18,080 --> 00:07:22,240
+and from having done that practicing figure out complex skills
+
+112
+00:07:22,240 --> 00:07:26,639
+like for example that if objects are positioned close together you need to push them apart a little bit
+
+113
+00:07:26,639 --> 00:07:30,080
+and then pick up the individual singulated objects
+
+114
+00:07:30,080 --> 00:07:34,800
+and then you can take apart all these pieces one by one
+
+115
+00:07:38,160 --> 00:07:41,440
+you could also figure out that
+
+116
+00:07:41,440 --> 00:07:46,240
+you know if you attempt to pick up an object successfully that's good you should put it away
+
+117
+00:07:46,240 --> 00:07:50,400
+but if you tried to pick it up and you missed and slipped a little bit
+
+118
+00:07:50,400 --> 00:07:59,840
+then it's better to try again reposition your gripper and go in for another try
+
+119
+00:08:09,280 --> 00:08:12,639
+you could also train the policy such that
+
+120
+00:08:12,639 --> 00:08:14,610
+it can pick up a wide range of different objects
+
+121
+00:08:14,610 --> 00:08:19,440
+so in the same way that we can see generalization in all sorts of computer vision applications
+
+122
+00:08:19,440 --> 00:08:22,720
+we can see generalization in reinforcement learning systems
+
+123
+00:08:22,720 --> 00:08:24,560
+even generalization some perturbations
+
+124
+00:08:24,560 --> 00:08:31,120
+where someone knocks the object on the gripper and the robot has to retry and reposition its gripper
+
+125
+00:08:31,120 --> 00:08:36,920
+but of course it's not just for games and robots i mentioned that you could use reinforced learning for things like inventory management
+
+126
+00:08:36,920 --> 00:08:43,360
+here's an example this is actually done by Cathy Wu 
+who's a phd student here at berkeley and is now a professor at mit
+
+127
+00:08:43,360 --> 00:08:50,880
+applying reinforcement learning to traffic control 
+so in this video the white cars are kind of simulated humans
+
+128
+00:08:50,880 --> 00:08:53,440
+and the red car is an autonomous car and
+
+129
+00:08:53,440 --> 00:09:00,720
+this car's goal is to regulate traffic so all these cars drive in a circle as smoothly as possible
+
+130
+00:09:00,720 --> 00:09:05,920
+and what you can see here is that the autonomous car is actually going to dynamically decide
+
+131
+00:09:05,920 --> 00:09:11,279
+to slow down or speed up so as to keep all the entire traffic circle going
+
+132
+00:09:11,279 --> 00:09:15,440
+so initially some traffic jams form automatically but after a while
+
+133
+00:09:15,440 --> 00:09:19,680
+this autonomous car figures out that it should regulate the flow of traffic
+
+134
+00:09:19,680 --> 00:09:23,040
+adjusts its speed gives the car ahead of it a little bit more room
+
+135
+00:09:23,040 --> 00:09:29,360
+and as a result keeps the entire circle of cars flowing much more smoothly
+
+136
+00:09:29,360 --> 00:09:33,680
+here's a more complex example so here there's this figure eight situation
+
+137
+00:09:33,680 --> 00:09:38,720
+and first you're going to see just the white car so there's no autonomous car here
+
+138
+00:09:38,720 --> 00:09:42,800
+so this is just kind of what the simulated humans do on their own they kind of bunch up at this intersection
+
+139
+00:09:42,800 --> 00:09:46,800
+ended up having to wait for each other for quite a bit
+
+140
+00:09:48,399 --> 00:09:53,519
+but once we put in an autonomous car shown here in red
+
+141
+00:09:53,519 --> 00:09:57,600
+now this autonomous car again its job is to regulate the flow of traffic so that
+
+142
+00:09:57,600 --> 00:10:01,600
+everyone goes at a steady speed what it will actually do is it will wait
+
+143
+00:10:01,600 --> 00:10:05,760
+so the last car clears the intersection and then have this kind of snake of cars
+
+144
+00:10:05,760 --> 00:10:07,600
+that snakes through just in time
+
+145
+00:10:07,600 --> 00:10:12,720
+so that no one has to wait at the intersection of the stop sign
+
+146
+00:10:13,360 --> 00:10:17,440
+all right
+

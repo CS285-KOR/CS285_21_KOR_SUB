@@ -1,0 +1,132 @@
+﻿1
+00:00:01,325 --> 00:00:03,746
+So, In the next part of this lecture
+
+2
+00:00:03,817 --> 00:00:13,443
+I want to present a short case study, for a paper that actually does imitation learning.
+In kind of clever way for a real world robotics task.
+
+3
+00:00:14,740 --> 00:00:20,471
+so this is a paper called a machine learning approach to visual Perception of Forest Trails for mobile robots
+
+4
+00:00:20,831 --> 00:00:25,314
+and in this paper, their goal is to get a quadrobot to fly through a forest.
+
+5
+00:00:25,434 --> 00:00:28,981
+so let’s start by playing back their video.
+
+6
+00:00:30,839 --> 00:00:35,113
+So here’s an illustration of their quadrobot that’s going to be flying through a forest
+
+7
+00:00:35,367 --> 00:00:39,127
+and their goal is to train quadrobot with an imitation learning with algorithm
+
+8
+00:00:39,350 --> 00:00:43,715
+so in some ways it’s kind of similar to the driving paper that i showed before
+
+9
+00:00:44,596 --> 00:00:47,604
+and now there are a few challenges to overcome.
+
+10
+00:00:48,231 --> 00:00:51,219
+We need to be able to actually collect data to train the system
+
+11
+00:00:51,410 --> 00:00:59,966
+and we need to address that stability issue right because if you remember this the in general we would get compounding errors due to distributional shift
+
+12
+00:01:00,030 --> 00:01:08,563
+and we need to somehow address them either with a principled approach like dagger or with a more heuristic approach that takes care of the issue in practice.
+
+13
+00:01:10,707 --> 00:01:18,707
+Now, the way that they actually frame this problem is a classification problem,
+so we’re going to have discrete actions going left right and straight
+
+14
+00:01:18,757 --> 00:01:24,024
+and here, they’re going to talk about how they solve the problem. three classifications, three possible labels.
+
+15
+00:01:26,457 --> 00:01:28,520
+So where does the data come from?
+
+16
+00:01:28,710 --> 00:01:31,022
+well... flying a quadrobot for a long time?
+
+17
+00:01:31,102 --> 00:01:33,574
+it’s pretty tricky because it runs out of batteries.
+
+18
+00:01:33,670 --> 00:01:38,753
+so what they’re actually going to do is they’re going to try to collect that data with a person.
+
+19
+00:01:38,991 --> 00:01:43,019
+they’re going to have a human actually walking around collecting data
+
+20
+00:01:43,083 --> 00:01:47,003
+and that’s going to be used to train this classifier. It's a deep content classifier.
+
+21
+00:01:47,099 --> 00:01:52,283
+yes it has many layers, many weights, many everything that’s great and wonderful.
+
+22
+00:01:53,992 --> 00:01:55,405
+So how is it going to trend.
+
+23
+00:01:55,875 --> 00:02:05,144
+(showing movie)
+
+24
+00:02:06,176 --> 00:02:11,368
+there we go,  there’s the illustration now many of you can probably guess at this point what’s going on
+
+25
+00:02:11,607 --> 00:02:13,474
+Why are there three cameras?
+
+26
+00:02:13,990 --> 00:02:18,967
+Well, I think you can kind of guess at this point a kind of similar idea as in that driving paper.
+
+27
+00:02:19,128 --> 00:02:25,834
+the left is initially classified as right,
+the right image will be classified as left,
+and the forward image will be classified as straight
+
+28
+00:02:25,929 --> 00:02:32,138
+so then you can go for a nice walk in swiss countryside, and use that to train up your quadrobot
+
+29
+00:02:32,991 --> 00:02:42,334
+and then we can fast forward and see what it does in practice so this here you can see at the bottom the probabilities that they’re classifiers assigning to left and right terms
+
+30
+00:02:42,582 --> 00:02:44,296
+data from a person
+
+31
+00:02:45,672 --> 00:02:47,352
+and here’s a quadrobot.
+
+32
+00:02:54,989 --> 00:03:00,539
+okay so that’s a quick case study on imitation learning
+

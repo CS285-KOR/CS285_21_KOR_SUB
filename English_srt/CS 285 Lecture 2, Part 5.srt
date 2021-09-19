@@ -1,0 +1,1074 @@
+1
+00:00:01,199 --> 00:00:04,240
+in the next part of today's lecture
+
+2
+00:00:02,960 --> 00:00:07,759
+we're going to cover a little bit of imitation learning theory
+
+3
+00:00:06,000 --> 00:00:12,799
+building off of this notion of cost functions and reward functions
+
+4
+00:00:10,400 --> 00:00:16,160
+so we'll ask this question what is a good cost function
+
+5
+00:00:14,160 --> 00:00:19,439
+or reward function for imitation learning
+
+6
+00:00:17,840 --> 00:00:23,680
+so this is the sketch limitation learning from before
+
+7
+00:00:21,199 --> 00:00:25,760
+we're going to be mapping observations to actions
+
+8
+00:00:23,680 --> 00:00:29,359
+and we could hypothesize that maybe a reasonable reward function
+
+9
+00:00:27,359 --> 00:00:33,200
+might be the log probability that we assign to the experts action
+
+10
+00:00:31,359 --> 00:00:37,760
+so the log probability of the action that we take is equal to *pi of s
+
+11
+00:00:35,440 --> 00:00:40,800
+where *pi is the unknown policy of the expert
+
+12
+00:00:39,040 --> 00:00:44,480
+we could also use something called the 0 1 loss so we might say
+
+13
+00:00:42,320 --> 00:00:48,239
+we get a loss of zero if we perfectly
+match the expert
+
+14
+00:00:45,520 --> 00:00:51,520
+and a one if we didn't the zero one loss
+is a bit more
+
+15
+00:00:49,120 --> 00:00:52,879
+uh convenient for theoretical analysis
+
+16
+00:00:51,520 --> 00:00:56,000
+and it directly counts the number of
+mistakes that you make
+
+17
+00:00:54,000 --> 00:01:00,960
+whereas the log likelihood is a bit more
+of a practical choice
+
+18
+00:00:58,320 --> 00:01:04,320
+but remember that in reinforcement
+learning
+
+19
+00:01:01,520 --> 00:01:08,240
+the reward or loss must be evaluated in
+expectation
+
+20
+00:01:05,360 --> 00:01:12,960
+under the learned policy not under the
+policy of the expert
+
+21
+00:01:10,640 --> 00:01:14,880
+so we want to match the experts actions
+
+22
+00:01:12,960 --> 00:01:20,000
+in the states that we actually visit not necessarily just in the states that the expert visited
+
+23
+00:01:17,680 --> 00:01:23,119
+and this is why behavior cloning is not
+actually optimizing quite the right
+
+24
+00:01:21,600 --> 00:01:28,880
+objective behavior cloning would typically
+maximize the log likelihood in expectation
+
+25
+00:01:27,439 --> 00:01:32,560
+under the state or observation
+distribution of the expert
+
+26
+00:01:30,640 --> 00:01:38,640
+whereas we want to maximize it in expectation
+under the state or observation distribution
+
+27
+00:01:35,840 --> 00:01:42,880
+of our policy this is another way of saying
+that we have a distributional mismatch problem
+
+28
+00:01:41,040 --> 00:01:47,119
+and this is exactly the problem that
+dagger tries to correct
+
+29
+00:01:45,200 --> 00:01:52,479
+so what i'm going to do next is i'm
+going to theoretically analyze
+
+30
+00:01:49,200 --> 00:01:58,640
+some bounds on the expected cost
+for naive behavior cloning
+
+31
+00:01:56,560 --> 00:02:01,360
+and discuss how we can formalize
+this distributional shift problem
+
+32
+00:02:01,520 --> 00:02:06,640
+so in this analysis i'm going to use T
+
+33
+00:02:04,960 --> 00:02:08,319
+to denote the length of the trajectory
+
+34
+00:02:06,640 --> 00:02:10,160
+so if we see me use T
+
+35
+00:02:08,319 --> 00:02:14,319
+that just means there are T
+steps in our trajectory
+
+36
+00:02:12,800 --> 00:02:18,400
+and we're going to be concerned with
+this zero one loss
+
+37
+00:02:16,319 --> 00:02:22,959
+and the quantity that we want to analyze is
+the expected total value of the zero one loss
+
+38
+00:02:21,360 --> 00:02:27,599
+which is also the expected number of
+mistakes we would make along one trajectory
+
+39
+00:02:27,840 --> 00:02:33,760
+so in order to do any kind of analysis like
+this we have to first make some assumptions
+
+40
+00:02:32,480 --> 00:02:39,519
+and the assumption that i'm going to
+make is that
+
+41
+00:02:36,080 --> 00:02:41,040
+supervised learning works what that means is initially
+
+42
+00:02:39,519 --> 00:02:42,400
+i'll make a fairly naive assumption which is
+
+43
+00:02:41,040 --> 00:02:48,000
+that for all of the states
+in the training set the probability of
+
+44
+00:02:45,840 --> 00:02:52,239
+making a mistake at those states
+is less than or equal to epsilon
+
+45
+00:02:50,239 --> 00:02:56,239
+this is a reasonable assumption because
+it says for the state and action tuples
+
+46
+00:02:53,840 --> 00:02:58,000
+that you saw you learned them effectively meaning
+
+47
+00:02:56,239 --> 00:03:02,000
+that if someone told you in state s
+take action a you're going to assign a
+
+48
+00:03:00,640 --> 00:03:09,200
+probability less than or equal to epsilon to every
+other action where epsilon is some small number
+
+49
+00:03:06,720 --> 00:03:12,480
+and now in order to think about bounding
+the total number of mistakes
+
+50
+00:03:10,879 --> 00:03:16,560
+we're going to consider the most
+pessimistic scenario possible
+
+51
+00:03:14,319 --> 00:03:20,239
+when we construct theoretical bounds we
+want to be pessimistic we want to
+
+52
+00:03:18,080 --> 00:03:24,879
+write down some inequality that holds in
+the worst possible case
+
+53
+00:03:22,720 --> 00:03:28,000
+and the most pessimistic scenario for
+these zero one losses is
+
+54
+00:03:26,560 --> 00:03:32,799
+what i'm going to call a tightrope
+walker scenario
+
+55
+00:03:30,080 --> 00:03:37,360
+so for a tank rope walker the tightrope
+walker needs to take exactly the right action
+
+56
+00:03:35,120 --> 00:03:39,360
+at every single point in time
+
+57
+00:03:37,360 --> 00:03:43,200
+and if they make even a single mistake
+they fall off the tightrope
+
+58
+00:03:41,440 --> 00:03:46,080
+and then they don't know what to do
+
+59
+00:03:43,200 --> 00:03:49,599
+so we can illustrate the type of walker
+schematically as this grid world
+
+60
+00:03:48,159 --> 00:03:54,159
+where they have to stay on the gray
+squares and keep going to the right
+
+61
+00:03:51,680 --> 00:03:57,680
+and if they deviate even once they fall
+off they go into the red region
+
+62
+00:03:55,920 --> 00:03:59,519
+where there is no demonstration data
+
+63
+00:03:57,680 --> 00:04:00,640
+because the expert never fell off
+
+64
+00:03:59,519 --> 00:04:05,760
+and therefore they have no way of
+knowing what to do
+
+65
+00:04:03,120 --> 00:04:09,360
+now this type of walker just to be clear
+is not concerned with falling off
+
+66
+00:04:07,680 --> 00:04:13,599
+because they'll get hurt they're
+concerned about falling off
+
+67
+00:04:11,360 --> 00:04:14,640
+because they will incur zero one loss
+
+68
+00:04:13,599 --> 00:04:17,919
+when they fall off
+they'll be in a state where they have no data
+
+69
+00:04:16,400 --> 00:04:21,440
+which means that they have no way
+of knowing what to do in that state
+
+70
+00:04:19,919 --> 00:04:22,720
+so it's a kind of a funny type of walker
+
+71
+00:04:21,440 --> 00:04:25,199
+their concern is not about hurting
+themselves
+
+72
+00:04:23,360 --> 00:04:28,880
+their concern is about not knowing what
+to do
+
+73
+00:04:27,120 --> 00:04:32,639
+okay so let's analyze this type of
+walker
+
+74
+00:04:30,320 --> 00:04:41,040
+so the quantity that we want to bound
+is the sum over time of the zero one loss
+
+75
+00:04:37,919 --> 00:04:43,280
+which is the expected number of mistakes
+
+76
+00:04:41,040 --> 00:04:47,120
+let's think about the first time step at
+the very first time step
+
+77
+00:04:45,280 --> 00:04:50,880
+the title walker starts in a state that
+was in the training set
+
+78
+00:04:48,479 --> 00:04:55,520
+which means that with probability uh
+greater than epsilon
+
+79
+00:04:52,960 --> 00:04:57,840
+they will take the correct action with
+probability
+
+80
+00:04:56,080 --> 00:05:00,960
+less than or equal to epsilon they'll
+take the wrong action
+
+81
+00:04:59,520 --> 00:05:03,520
+if they take the wrong action they will fall off
+
+82
+00:05:00,960 --> 00:05:07,280
+but they still have T
+time steps left and once they fall off
+
+83
+00:05:06,080 --> 00:05:08,320
+they have no way of knowing what to do
+
+84
+00:05:07,280 --> 00:05:10,000
+so if they fall off
+
+85
+00:05:08,320 --> 00:05:15,840
+they will make an additional T
+mistakes
+
+86
+00:05:12,479 --> 00:05:17,680
+so we can say that for that first time step
+
+87
+00:05:15,840 --> 00:05:21,520
+there's an epsilon term which
+represents the probability of falling off
+
+88
+00:05:19,600 --> 00:05:25,840
+and if they fall off they will get
+capital t additional mistakes
+
+89
+00:05:23,199 --> 00:05:28,080
+so there's an epsilon times capital t term
+
+90
+00:05:25,840 --> 00:05:34,720
+and then there's a one minus epsilon times
+everything else so epsilon times T
+
+91
+00:05:32,240 --> 00:05:41,600
+plus one minus epsilon times the number of mistakes
+that they will make at the next time step until the end
+
+92
+00:05:39,840 --> 00:05:46,240
+and what happens at the next time step well
+the same exact thing at the next time step
+
+93
+00:05:44,800 --> 00:05:51,759
+if they did the right thing on the first time step
+they again have an epsilon probability of falling off
+
+94
+00:05:49,600 --> 00:05:53,759
+now there's only t minus one steps left
+
+95
+00:05:51,759 --> 00:05:56,479
+so they fall off on the second step
+
+96
+00:05:53,759 --> 00:06:04,479
+they will get epsilon times t minus 1 plus 1
+minus epsilon times whatever is left over so
+
+97
+00:06:00,960 --> 00:06:17,840
+you get this series of terms epsilon t + 1 - epsilon x epsilon t -
+1 + 1 - epsilon x 1 - epsilon times epsilon t - 2 etc etc etc
+
+98
+00:06:14,720 --> 00:06:20,080
+so you basically get T terms
+
+99
+00:06:17,840 --> 00:06:24,560
+and each one of them is on the order of
+epsilon t
+
+100
+00:06:21,840 --> 00:06:27,120
+right when we're concerned with big o
+
+101
+00:06:24,560 --> 00:06:29,520
+we can get rid of uh constants in front
+
+102
+00:06:27,120 --> 00:06:32,240
+and since 1 - epsilon is usually a
+pretty large number
+
+103
+00:06:30,880 --> 00:06:36,880
+all we're really getting is a bunch of
+these epsilon t terms
+
+104
+00:06:34,800 --> 00:06:40,720
+so that means that the total bound is
+T times epsilon t
+
+105
+00:06:38,160 --> 00:06:46,000
+so the error is on the order of
+epsilon t^2 right technically it's
+
+106
+00:06:45,039 --> 00:06:50,319
+going to be like
+epsilon times t t squared over two
+
+107
+00:06:49,440 --> 00:06:52,400
+or something like that
+
+108
+00:06:50,319 --> 00:06:54,160
+but if we're just concerned with big o uh
+
+109
+00:06:52,400 --> 00:06:57,599
+then we don't care about those constants
+
+110
+00:06:54,160 --> 00:07:00,160
+and we got epsilon t squared now this is
+a pretty bad bound
+
+111
+00:06:58,160 --> 00:07:05,440
+because it means that the as our
+the length of our trajectory increases
+
+112
+00:07:02,400 --> 00:07:08,240
+our error increases quadratically
+
+113
+00:07:05,440 --> 00:07:12,000
+and that's why naive behavioral
+cloning can be a bad idea theoretically
+
+114
+00:07:14,000 --> 00:07:19,599
+now that analysis was a little bit naive
+
+115
+00:07:18,000 --> 00:07:21,280
+because we didn't assume anything about
+
+116
+00:07:19,599 --> 00:07:23,840
+generalization we just said that
+
+117
+00:07:21,280 --> 00:07:28,240
+for all states in the training set our
+errors bounded by epsilon
+
+118
+00:07:25,759 --> 00:07:33,199
+a more general analysis would account for
+generalization would account for the fact
+
+119
+00:07:30,479 --> 00:07:35,919
+that your policy does well not just on
+the training points
+
+120
+00:07:34,479 --> 00:07:40,319
+but on other points from the same
+distribution
+
+121
+00:07:38,080 --> 00:07:42,000
+so one way that we could say this is
+
+122
+00:07:40,319 --> 00:07:46,560
+we could say our error is bounded by
+epsilon
+
+123
+00:07:42,720 --> 00:07:49,280
+for any state sampled from p train
+
+124
+00:07:46,560 --> 00:07:55,120
+in fact it's actually enough just to say that our error
+is bounded for by epsilon in expectation or p train
+
+125
+00:07:53,759 --> 00:07:58,560
+and that's much more realistic because
+that's our actual training objective
+
+126
+00:07:56,879 --> 00:08:03,120
+for the analysis i'm going to present
+i'll go with the the
+
+127
+00:08:00,720 --> 00:08:07,120
+uh the s sample from p train definition
+but this is actually fairly easy to extend
+
+128
+00:08:05,360 --> 00:08:12,879
+uh to the setting where your expected error is
+bounded by epsilon and that's what's actually done
+
+129
+00:08:09,520 --> 00:08:14,319
+uh in the stephon ross dagger paper
+
+130
+00:08:12,879 --> 00:08:18,080
+so here's how we can go about this more
+sophisticated analysis so first
+
+131
+00:08:16,319 --> 00:08:22,800
+uh with that just to get this out of the
+way with dagger
+
+132
+00:08:19,680 --> 00:08:27,039
+p train approaches p theta right that's
+the whole point of dagger
+
+133
+00:08:24,240 --> 00:08:31,759
+so if p train approaches p theta then
+all points will be in distribution
+
+134
+00:08:29,199 --> 00:08:34,880
+which means that s is always sampled
+from p train
+
+135
+00:08:32,800 --> 00:08:38,080
+which means that error is always bounded
+by epsilon
+
+136
+00:08:36,240 --> 00:08:40,880
+which means that no matter what you do
+
+137
+00:08:38,080 --> 00:08:45,600
+the bound on the expected cost will be
+epsilon times t it'll be linear in t
+
+138
+00:08:44,159 --> 00:08:47,279
+that's in some ways not actually all
+
+139
+00:08:45,600 --> 00:08:49,519
+that interesting of a result
+
+140
+00:08:47,279 --> 00:08:50,800
+because we're removing all distributional shift
+
+141
+00:08:49,519 --> 00:08:57,040
+what's more interesting is how we
+can show that the bound is still quadratic
+
+142
+00:08:54,560 --> 00:09:00,080
+if we don't do dagger if we if we don't
+have p train going to be theta
+
+143
+00:08:58,880 --> 00:09:06,399
+and that's what we're going to do next on
+this side so if p train is not equal to p theta
+
+144
+00:09:03,519 --> 00:09:10,560
+then what we can do and then this
+analysis is basically
+
+145
+00:09:08,000 --> 00:09:14,560
+directly based on stefan ross's paper a reduction
+of imitation learning and structural prediction
+
+146
+00:09:13,040 --> 00:09:18,320
+to no regret online learning which is
+the docker paper
+
+147
+00:09:16,240 --> 00:09:25,680
+what we can do is we can write the distribution over
+states at some time step t as the sum of two terms
+
+148
+00:09:24,000 --> 00:09:30,240
+and these two terms are kind of
+analogous to the type of walker scenario
+
+149
+00:09:28,160 --> 00:09:31,920
+the first term represents what happened
+
+150
+00:09:30,240 --> 00:09:36,399
+if we haven't made a mistake
+at any previous time step and the second term represents
+
+151
+00:09:34,320 --> 00:09:38,399
+what happens if we did
+
+152
+00:09:36,399 --> 00:09:43,200
+so for the first term what's the probability
+that we haven't made a mistake so far
+
+153
+00:09:41,120 --> 00:09:45,440
+well our probability of doing the right thing
+
+154
+00:09:43,200 --> 00:09:48,480
+if we're in distribution is one
+minus epsilon
+
+155
+00:09:47,120 --> 00:09:55,440
+and if we do the right thing then we
+remain in distribution
+
+156
+00:09:50,240 --> 00:09:57,519
+which means that by time step little t
+
+157
+00:09:55,440 --> 00:10:01,519
+we have a probability of one minus
+epsilon to the power t
+
+158
+00:09:59,360 --> 00:10:03,040
+then we've done the right stuff up
+
+159
+00:10:01,519 --> 00:10:04,959
+until now and we've done the right stuff
+
+160
+00:10:03,040 --> 00:10:08,640
+up until now then our state distribution
+is simply p train
+
+161
+00:10:06,959 --> 00:10:10,959
+because we've matched the expert every single step up until
+
+162
+00:10:08,640 --> 00:10:17,920
+now so the first term is 1 minus epsilon to the power
+of t times p train the second term is everything else
+
+163
+00:10:15,519 --> 00:10:21,279
+1 minus 1 minus epsilon to the t so this
+basically accounts
+
+164
+00:10:18,720 --> 00:10:23,120
+for all the other probability mass and
+
+165
+00:10:21,279 --> 00:10:25,120
+if we have made a mistake in the past
+
+166
+00:10:23,120 --> 00:10:28,000
+in general we can't really say anything
+about where we're at
+
+167
+00:10:26,399 --> 00:10:33,120
+so we might have fallen off the
+tightrope we might be in some crazy place
+
+168
+00:10:29,360 --> 00:10:34,640
+so we're going to call that p mistake
+
+169
+00:10:33,120 --> 00:10:36,160
+so what this is saying is that for at
+
+170
+00:10:34,640 --> 00:10:39,839
+any time step we can write the
+distribution over states
+
+171
+00:10:37,680 --> 00:10:42,959
+as the sum of two terms the first one
+for not having made any mistakes
+
+172
+00:10:41,600 --> 00:10:48,640
+and the second one for having made at
+least one mistake
+
+173
+00:10:47,440 --> 00:10:52,000
+now in general we can't say anything
+about p mistake
+
+174
+00:10:50,480 --> 00:10:59,680
+so for p mistake we might have arbitrarily
+large probability of additional error
+
+175
+00:10:56,640 --> 00:11:10,560
+so what we can do is we can bound the total variation divergence
+between p theta s t and p train st
+
+176
+00:11:07,680 --> 00:11:15,360
+total variation divergence is just the sum of the
+absolute values of the differences
+
+177
+00:11:11,920 --> 00:11:18,079
+between the probabilities over all the states
+
+178
+00:11:15,360 --> 00:11:21,279
+so if we take the left-hand side of this
+equation
+
+179
+00:11:18,880 --> 00:11:24,240
+and substitute in the above equation for
+p theta
+
+180
+00:11:22,560 --> 00:11:33,920
+basically substitute in 1 minus epsilon to the t times b
+train plus 1 minus 1 minus epsilon to the t times p mistake
+
+181
+00:11:30,399 --> 00:11:44,480
+the first p train term cancels with the minus sign and we just end up with 1
+minus 1 minus epsilon to the t of the absolute value of p mistake minus p train
+
+182
+00:11:42,959 --> 00:11:48,720
+now remember that we can't say anything
+about p mistake
+
+183
+00:11:46,240 --> 00:11:52,399
+so the only bound that we can put on the
+total variation divergence
+
+184
+00:11:50,160 --> 00:11:58,160
+between p mistake and p train is the maximum
+error between two distributions which is two right
+
+185
+00:11:56,320 --> 00:12:01,279
+because the distribution sum to one
+in the worst case one of them will be
+
+186
+00:11:59,839 --> 00:12:03,200
+one in one place and the other will be
+zero
+
+187
+00:12:01,760 --> 00:12:07,519
+the other only one in another place
+where the other one is zero
+
+188
+00:12:05,120 --> 00:12:09,040
+so the only bound that we can put on
+
+189
+00:12:07,519 --> 00:12:15,440
+this if we don't know anything about p mistake
+is 2 times 1 minus 1 minus epsilon of t
+
+190
+00:12:15,600 --> 00:12:19,760
+a useful identity that we can use to
+
+191
+00:12:17,200 --> 00:12:22,880
+simplify this is that 1 minus epsilon to
+the t
+
+192
+00:12:20,480 --> 00:12:26,480
+is greater than or equal to 1 minus
+epsilon times t
+
+193
+00:12:24,240 --> 00:12:28,000
+if epsilon is between zero and one and
+
+194
+00:12:26,480 --> 00:12:29,440
+we know that epsilon is between zero and
+
+195
+00:12:28,000 --> 00:12:31,440
+one because epsilon is a bound on a
+probability
+
+196
+00:12:30,079 --> 00:12:36,000
+and probabilities are always less than
+one and always positive
+
+197
+00:12:33,680 --> 00:12:39,839
+so we can write a simpler bound for this
+by turning this into two times epsilon t
+
+198
+00:12:38,399 --> 00:12:44,639
+we don't have to do this this is a
+looser bound but it's just convenient
+
+199
+00:12:42,320 --> 00:12:52,720
+to remove the exponential and to give us kind of an
+understanding of the big o magnitude of this okay
+
+200
+00:12:51,279 --> 00:13:00,959
+so now let's go to the quantity that we really want what we
+care about is the expected value of the cost overall time
+
+201
+00:12:59,360 --> 00:13:06,720
+so we can write the expected value of
+the cost uh as a sum over time
+
+202
+00:13:04,320 --> 00:13:15,360
+of a sum over states of the probability of that state times
+the cost that's just from the definition of expected value
+
+203
+00:13:12,160 --> 00:13:24,560
+and we can express this uh we can express a bound on
+this cost in terms of two terms p train times the cost
+
+204
+00:13:22,000 --> 00:13:27,920
+plus the difference between p theta and
+p train
+
+205
+00:13:26,079 --> 00:13:32,160
+the way that you get this inequality is
+just by writing
+
+206
+00:13:29,519 --> 00:13:34,399
+p theta is equal to p theta plus p train
+minus p
+
+207
+00:13:32,720 --> 00:13:36,079
+train right if you add and subtract
+
+208
+00:13:34,399 --> 00:13:37,680
+something that's all good
+
+209
+00:13:36,079 --> 00:13:43,120
+then we group the terms and we put absolute value
+around p theta minus p train
+
+210
+00:13:42,160 --> 00:13:46,720
+because the absolute value of a number
+is always greater than or equal to
+
+211
+00:13:44,880 --> 00:13:52,320
+that number itself so that's how we can get
+this bound
+
+212
+00:13:49,279 --> 00:13:56,720
+now the first part p
+train times c we know what that is
+
+213
+00:13:54,880 --> 00:13:59,519
+because the expected value under p train
+of the cost
+
+214
+00:13:57,760 --> 00:14:04,880
+is bounded by epsilon that's our
+assumption
+
+215
+00:14:01,760 --> 00:14:06,880
+the second term well the
+
+216
+00:14:04,880 --> 00:14:16,160
+bound that we have above on the absolute value of p theta minus p train
+is two times epsilon t and c max the worst case cost is one
+
+217
+00:14:14,399 --> 00:14:24,079
+so then the bound that we can write out for this is epsilon that comes from the
+expected value of the constant or p train plus two times epsilon t
+
+218
+00:14:23,519 --> 00:14:32,079
+which comes from the total variation divergence
+or absolute value between p theta and p train
+
+219
+00:14:30,399 --> 00:14:36,720
+so we have one term that's linear in
+T and one term that's quadratic
+
+220
+00:14:34,639 --> 00:14:41,279
+because the sum over t of two epsilon t
+is on the order of capital t squared
+
+221
+00:14:41,360 --> 00:14:52,320
+so we've derived an o of epsilon t squared
+bound with this kind of more general assumption
+
+222
+00:14:49,360 --> 00:14:55,440
+and notice here that uh the only
+assumption on the policy
+
+223
+00:14:53,680 --> 00:14:58,480
+that we needed is that the expected value of the cost
+
+224
+00:14:55,440 --> 00:15:03,839
+under p train is epsilon so this is kind of the
+more general assumption that i stated before
+
+225
+00:15:01,680 --> 00:15:06,959
+all right so this derivation maybe went
+by a little fast
+
+226
+00:15:04,880 --> 00:15:08,800
+so if you have any questions about this
+
+227
+00:15:06,959 --> 00:15:10,240
+do feel free to ask a comment on youtube
+
+228
+00:15:08,800 --> 00:15:13,600
+we can discuss this in class
+
+229
+00:15:10,240 --> 00:15:15,680
+and also consider checking out the paper
+
+230
+00:15:13,600 --> 00:15:20,639
+cited below by stefan ross that
+describes the full proof in detail
+

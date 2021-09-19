@@ -27,6 +27,12 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
     - Hyunseok Cho [@hoyajigi](https://github.com/hoyajigi) 
     - HanYoung Kim [@pinga999](https://github.com/pinga999) 
     - Real Name [@github nick](https://github.com/github_address) 
+    - Real Name [@github nick](https://github.com/github_address) 
+    - Real Name [@github nick](https://github.com/github_address) 
+    - Real Name [@github nick](https://github.com/github_address) 
+    - Real Name [@github nick](https://github.com/github_address) 
+    - Real Name [@github nick](https://github.com/github_address) 
+    - Real Name [@github nick](https://github.com/github_address) 
 
 |No.|Lecture|Duration|Subtitile|Contributor|
 |--|------------------------------------------|----:|---|---|
@@ -41,7 +47,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 | 9|[L2, Part 5](https://youtu.be/e2PpdPC34kI)|15:19|[English]()<p>[Korean]()|@junteken|
 |10|[L2, Part 6](https://youtu.be/nM9f-5oQ86Y)|4:58|[English]()<p>[Korean]()|@pinga999|
 |11|[L3, Part 1](https://youtu.be/AOypIa_8RXg)|3:45|[English]()<p>[Korean]()|@pinga999|
-
+|12|[L3, Part 2](https://youtu.be/kPa6hU9prg4)|18:04|[English]()<p>[Korean]()|@gbeak @|
 
 ## Contact
 오역과 오타에 관해서는 Pull request로 함께 번역의 질을 높여주시는 데 도움을 주셔도 좋고, curieuexjy@gmail.com으로 알려주시면 감사하겠습니다.

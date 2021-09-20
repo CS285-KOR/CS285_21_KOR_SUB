@@ -12,12 +12,12 @@ Korean Sub for CS285 2021 fall lecture
 ## Announcements
 Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 있다면 공부하시는 분들에게 도움이 될 것 같아 만든 프로젝트 입니다. 저희의 번역 자막을 이용하실 분들께서는 프로젝트의 [번역 기준](./term.md)을 참고해주시면 감사하겠습니다.
 
-> 관련해서 [CS231n](https://github.com/visionNoob/CS231N_17_KOR_SUB) 프로젝트에서 많은 참고를 하여 시작하게 되었으므로 CS231n 한글번역 프로젝트 관계자분들께 감사드립니다.
+> [CS231n](https://github.com/visionNoob/CS231N_17_KOR_SUB) 프로젝트를 참고하여 많은 도움이 되었습니다. CS231n 한글번역 프로젝트 관계자분들께 감사드립니다.
 
 ## How to use it
-1. 4K downloader로 강의를 다운 받습니다.
-2. Kor.srt 파일을 다운 받습니다.
-3. 강의 영상으르 Kor.srt 파일과 함께 재생합니다.
+1. [4K Video Downloader](https://www.4kdownload.com/downloads)로 Youtube에서 강의 링크를 copy&paste하여 영상을 다운 받습니다.
+2. repository에 있는 Eng.srt/Kor.srt 파일을 다운 받습니다.
+3. 강의 영상을 Eng.srt/Kor.srt 파일과 함께 재생합니다.
 
 ## Table of Contents(with Contributors)
 

@@ -3,7 +3,7 @@
 
 Korean Sub for CS285 2021 fall lecture
 
-## CS285 한글 번역
+## CS285 한글 번역 
 ### CS285: Deep Reinforcement Learning @UC Berkely
 - [Original CS285 Lecture Video Playlist](https://youtube.com/playlist?list=PL_iWQOsE6TfXxKgI1GgyV1B_Xa0DxE5eH)
 - [CS285 Website](http://rail.eecs.berkeley.edu/deeprlcourse/) : Slides and Homeworks

@@ -35,6 +35,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
     - Real Name [@github nick](https://github.com/github_address) 
 
 > ✒️:1st Draft | 🔍:2nd Check | 🗂:Archived
+
 |No.|Lecture|Duration|English Sub|Korean Sub|Status|Contributor|
 |--|--------|-------:|-----------|----------|------|-----------|
 | 1|[L1, Part 1](https://youtu.be/JHrlF10v2Og)|10:16|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt)|[Korean]()|✒️|@karl6885|

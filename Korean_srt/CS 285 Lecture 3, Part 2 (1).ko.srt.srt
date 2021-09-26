@@ -1,0 +1,544 @@
+﻿1
+00:00:00,701 --> 00:00:02,633
+Alright let's get started with colab notebook
+
+2
+00:00:03,031 --> 00:00:04,611
+this first video's gonna be
+
+3
+00:00:04,636 --> 00:00:09,640
+review of numpy which is a framework of working with matrices and multi dimensional arrays
+
+4
+00:00:09,665 --> 00:00:12,585
+If you feel like you already know numpy pretty well
+
+5
+00:00:09,665 --> 00:00:13,015
+이 리뷰가 정말 필요합니다. 파이 토치
+
+6
+00:00:12,610 --> 00:00:16,482
+you don't really need this review feel free to skip with next video we started talking about pytorch
+
+7
+00:00:18,810 --> 00:00:21,182
+Okay, so overview of numpy
+
+8
+00:00:26,541 --> 00:00:28,800
+행렬을 저장하고 조작하는 객체
+
+9
+00:00:21,207 --> 00:00:27,226
+numpy arrays are basically objects that you store and manipulate matrices
+
+10
+00:00:27,251 --> 00:00:30,027
+so here we're gonna define three different numpy arrays
+
+11
+00:00:27,251 --> 00:00:30,455
+다른 모양에는
+
+12
+00:00:30,052 --> 00:00:31,392
+each with different shapes
+
+13
+00:00:31,417 --> 00:00:33,157
+We have one dimensional one
+
+14
+00:00:31,417 --> 00:00:35,015
+3차원 배열
+
+15
+00:00:33,379 --> 00:00:36,284
+We have two dimensional array and then we have three dimensional array
+
+16
+00:00:33,379 --> 00:00:38,847
+하여 값이 어떻게
+
+17
+00:00:37,457 --> 00:00:39,001
+so let's print all this out
+
+18
+00:00:37,457 --> 00:00:45,493
+기본적으로 각 방향에서 각각의 목록 길이를 정의하는 모양이라고 합니다.
+
+19
+00:00:39,107 --> 00:00:41,956
+and we can see how their values are represented
+
+20
+00:00:41,980 --> 00:00:45,059
+and we can also see that there is a probably called shape
+
+21
+00:00:45,083 --> 00:00:51,368
+that defines basically the length of list in each direction
+
+22
+00:00:52,122 --> 00:00:55,320
+so here we have a shape six one dimensional vector
+
+23
+00:00:55,606 --> 00:01:01,424
+and we have 2 by 3 matrix and then we have a 3 by 2 by three multi dimensional array
+
+24
+00:00:55,606 --> 00:01:02,463
+some of you know how to use python list you can use integers or slices
+
+25
+00:01:02,762 --> 00:01:04,844
+so you can index into numpy arrays
+
+26
+00:01:04,915 --> 00:01:08,514
+similar to how you would with python list you can use integers or slices
+
+27
+00:01:08,788 --> 00:01:13,316
+but additionally you can specify indices for multiple dimensions of the array
+
+28
+00:01:13,920 --> 00:01:19,481
+so this example we're gonna create an array that has shape four by five
+
+29
+00:01:19,537 --> 00:01:23,040
+1에서 20까지의 모든 값을 갖
+
+30
+00:01:19,537 --> 00:01:24,880
+습니다.
+
+31
+00:01:19,506 --> 00:01:22,211
+and it's gonna have all the values from one to twenty
+
+32
+00:01:23,022 --> 00:01:26,164
+so let's print this out first and you can see the values here
+
+33
+00:01:28,839 --> 00:01:32,282
+and let's start by maybe indexing to a single value of the array
+
+34
+00:01:32,307 --> 00:01:36,503
+that would be row 2 of the array so I should get the numbers 11 through 15.
+
+35
+00:01:36,528 --> 00:01:37,622
+that's what I see here
+
+36
+00:01:39,407 --> 00:01:41,518
+we can also provide indices for multiple dimensions
+
+37
+00:01:41,543 --> 00:01:45,597
+so let's say I want row 2 column 3 of the array I want the number 14
+
+38
+00:01:45,621 --> 00:01:48,867
+so I should do 2 comma 3 and that's what I would get here
+
+39
+00:01:44,320 --> 00:01:47,175
+그것이 내가 여기에서 얻을 수 있는 것입니다.
+
+40
+00:01:50,399 --> 00:01:54,830
+and finally you can also do a combination of integer indices and slices
+
+41
+00:01:54,855 --> 00:01:56,215
+just like you do it with python list
+
+42
+00:01:56,240 --> 00:02:00,454
+so here what I'm doing is I'm getting all the rows from two onwards
+
+43
+00:02:00,479 --> 00:02:05,520
+and for each of those rows I'm gonna get the value in the third column
+
+44
+00:02:06,370 --> 00:02:11,920
+so that would give me these two rows third values of 14 and 19.
+
+45
+00:02:14,503 --> 00:02:20,618
+In numpy you can do all sorts like arithmetic on numpy arrays as long as their dimensions match
+
+46
+00:02:20,912 --> 00:02:26,389
+so in this example let's try adding these two arrays that are 2 by 3
+
+47
+00:02:27,614 --> 00:02:31,703
+and it's basically going to add the numbers element wise
+
+48
+00:02:33,671 --> 00:02:38,753
+and sometimes you can also do these arithmetic operations on arrays
+
+49
+00:02:38,800 --> 00:02:40,751
+whose dimentions don't exactly match
+
+50
+00:02:38,800 --> 00:02:43,175
+할 수도 있습니다.  배열 중 하나에 값이 충분하지 않습니다
+
+51
+00:02:41,213 --> 00:02:45,499
+because basically when you don't have enough values in one of the arrays
+
+52
+00:02:45,524 --> 00:02:49,576
+the values will kind of be stretched or copied so that their dimensions do match
+
+53
+00:02:50,487 --> 00:02:53,310
+so it's probably the easiest we look at an example here
+
+54
+00:02:50,487 --> 00:02:53,415
+음, 하나의 숫자 3이 있다고 가정해 보겠습니다.
+
+55
+00:02:54,267 --> 00:02:58,733
+so let's say we have a single number three and then we have 2 by 3 matrix
+
+56
+00:02:54,267 --> 00:03:02,375
+기본적으로 이것이
+
+57
+00:02:58,937 --> 00:03:03,371
+we can multiply that single number by the matrix and what's going to do is
+
+58
+00:02:58,937 --> 00:03:07,255
+숫자 3에 이러한 각 요소를
+
+59
+00:03:03,396 --> 00:03:10,373
+basically pretend that this was a matrix that was 2 by 3 and multiply the number 3 by each of these elements
+
+60
+00:03:03,396 --> 00:03:14,455
+배열 1 2 3이
+
+61
+00:03:11,843 --> 00:03:16,794
+and similarly let's say we have an array 1, 2, 3
+
+62
+00:03:17,108 --> 00:03:20,829
+and then we have this z matrix
+
+63
+00:03:17,606 --> 00:03:27,530
+기본적으로 숫자
+
+64
+00:03:20,854 --> 00:03:26,300
+which we defined earlier to be shape 3 by 2 by 3
+
+65
+00:03:20,854 --> 00:03:34,530
+여기에서 최종 결과를 얻기 위해 이러한 행을 사용
+
+66
+00:03:26,367 --> 00:03:30,968
+and you can still add these together because it'lll basically copy the number 1, 2, 3
+
+67
+00:03:30,993 --> 00:03:37,291
+and add it to each of these rows to get this final result here
+
+68
+00:03:38,237 --> 00:03:42,072
+so this is called broadcasting when you have two arrays that aren't quite the same shape
+
+69
+00:03:42,096 --> 00:03:46,476
+but you can still add them together or do other operations to combine them
+
+70
+00:03:47,521 --> 00:03:51,430
+and there are a lot of benefits of doing it this way as opposed to explicitly defining
+
+71
+00:03:52,238 --> 00:03:55,151
+to numpy arrays that have the exact same shape
+
+72
+00:03:49,040 --> 00:03:50,615
+은 정확히 동일한 모양을 가진 두 개의 numpy 배열을 명시적으로 정의하는 것과는 대조적
+
+73
+00:03:56,000 --> 00:03:57,578
+first code is more concise
+
+74
+00:03:57,812 --> 00:04:03,884
+like in this example we didn't have to create an array that just had the number three duplicated six times
+
+75
+00:04:04,368 --> 00:04:10,367
+and also you don't have to actually store those duplicated values you don't explicitly create them or store them in a memory
+
+76
+00:03:57,812 --> 00:04:06,134
+하지 않는 복제된 값을 실제로 저장할
+
+77
+00:04:10,612 --> 00:04:18,050
+and there are some optimizations happening under the hood and numpy that makes these operations run faster if you do them through broadcasting
+
+78
+00:04:19,010 --> 00:04:22,888
+so it's nice both for consciseness and for performance benefits
+
+79
+00:04:12,159 --> 00:04:16,560
+되도록 하는 후드와 numpy 아래에서 발생하는 몇 가지 최적화
+
+80
+00:04:24,467 --> 00:04:28,449
+for the most part the way that broadcasting works is pretty intuitive like
+
+81
+00:04:30,314 --> 00:04:33,707
+like it kind of duplicates the value exactly like you'd expect
+
+82
+00:04:21,440 --> 00:04:25,840
+과 성능상의 이점
+
+83
+00:04:28,965 --> 00:04:30,473
+방송이 작동하는 방식은 예상
+
+84
+00:04:34,191 --> 00:04:38,208
+ but sometimes you might end up working on something a little more complicated
+
+85
+00:04:38,233 --> 00:04:41,882
+and if there is ever any doubt about how boradcasting works
+
+86
+00:04:41,907 --> 00:04:47,612
+I highly encourage you to check out this link over here and that gives a pretty nice short summary of
+
+87
+00:04:47,637 --> 00:04:53,255
+how exactly the shapes are working out
+
+88
+00:04:53,279 --> 00:04:57,747
+so next there is an important concept in numpy called axes
+
+89
+00:04:55,520 --> 00:04:59,919
+numpy라는 축
+
+90
+00:04:57,772 --> 00:05:03,977
+axes and numpy arrays are basically like the directions along which you can do certain things
+
+91
+00:05:04,002 --> 00:05:11,534
+so for example if we have this 2d array here we have two axes axis zero which goes down along the rows
+
+92
+00:05:11,559 --> 00:05:16,112
+and then we have axis 1 which goes left and right along the columns here
+
+93
+00:05:17,064 --> 00:05:23,384
+so we can do an example here where we're going to be combining values along different axes
+
+94
+00:05:23,409 --> 00:05:28,092
+so let's define the exact same array that we have in this diagram over here
+
+95
+00:05:28,117 --> 00:05:30,984
+and first we'll start by doing np.sum
+
+96
+00:05:33,658 --> 00:05:41,053
+so by defualt if you use any of these operations like np.sum it's going to basically combine all the elements of your array into a single number
+
+97
+00:05:41,673 --> 00:05:45,215
+maybe you only want to add all the numbers along a certain direction
+
+98
+00:05:45,078 --> 00:05:46,880
+특정 방향을 따라 숫자가
+
+99
+00:05:45,240 --> 00:05:48,964
+so let's say I want to add these three things together to get 14
+
+100
+00:05:48,989 --> 00:05:53,365
+these three to get 15 and so on and these two together get nine
+
+101
+00:05:54,647 --> 00:05:59,678
+I can specify that I only want to do the summation along axis zero
+
+102
+00:05:59,703 --> 00:06:06,855
+so here what that's going to do is it'll only do the summation along each column
+
+103
+00:06:06,879 --> 00:06:10,469
+but it's going to keep those values and not combine them together
+
+104
+00:06:10,494 --> 00:06:15,673
+and similarly I can specify axis 1 and that's going to do it along the
+
+105
+00:06:08,000 --> 00:06:13,199
+하고 함께 결합하지
+
+106
+00:06:16,262 --> 00:06:20,161
+it's going to add up all the items in each row so this way this way
+
+107
+00:06:21,955 --> 00:06:26,042
+this pretty much works like any kind of reduction operation you could do in numpy
+
+108
+00:06:26,392 --> 00:06:30,614
+for example, like max and min you can specify axes
+
+109
+00:06:30,639 --> 00:06:37,648
+and so if I do the max along x is zero then that's going to give me the largest number along each of these columns
+
+110
+00:06:37,673 --> 00:06:43,461
+If I do maximum axis one then I'm going to get the largest item along each of these rows
+
+111
+00:06:38,554 --> 00:06:39,403
+경우 이러한 각 열을 따라 가장 큰 숫자를 제공하면
+
+112
+00:06:43,494 --> 00:06:48,907
+so it's really useful to kind of understand what exactly these axes are reffering to
+
+113
+00:06:48,932 --> 00:06:50,383
+because a lot of times
+
+114
+00:06:50,408 --> 00:06:54,640
+you're going to be working with operations where you don't want to reduce the entire array
+
+115
+00:06:54,665 --> 00:06:59,416
+but you want to keep maybe one of the dimensions
+
+116
+00:06:59,441 --> 00:07:04,842
+so more generally once we start talking about things with more than two dimensions in numpy
+
+117
+00:07:05,649 --> 00:07:12,632
+It's the best to think of an axis as basically the index of one of the values in the arrays dot shape property
+
+118
+00:07:12,765 --> 00:07:20,089
+so let's look at an example here where we're going to create an array with random numbers between one to ten
+
+119
+00:07:17,120 --> 00:07:20,160
+1에서 10 사이의 난수로 배열을 생성할 예
+
+120
+00:07:20,114 --> 00:07:27,431
+and this is going to be the shape it's going to have four different dimensions 3 by 2 by 4 by 5
+
+121
+00:07:22,800 --> 00:07:26,186
+3 x 2
+
+122
+00:07:27,456 --> 00:07:32,515
+and if you do some kind of reduction operation and specify a certain axis
+
+123
+00:07:33,198 --> 00:07:37,568
+what that basically does is combine the values along that axis
+
+124
+00:07:37,593 --> 00:07:42,683
+or you can think of it as that axis basically disappearing from the erase shape
+
+125
+00:07:46,640 --> 00:07:47,416
+then
+
+126
+00:07:42,708 --> 00:07:46,615
+so if I do np.sum along axis 2
+
+127
+00:07:47,441 --> 00:07:49,041
+this number
+
+128
+00:07:49,066 --> 00:07:51,031
+the second index of the shape is going to disappear
+
+129
+00:07:51,055 --> 00:07:56,501
+and the result is going to be 3 by 2 by 5
+
+130
+00:07:56,526 --> 00:07:59,512
+and similarly you can also specify multiple axes like
+
+131
+00:07:56,321 --> 00:07:57,737
+모양의 두 번째 인덱스
+
+132
+00:07:59,537 --> 00:08:02,098
+in this case maybe I want to add everything along x to zero
+
+133
+00:08:02,123 --> 00:08:05,064
+but also along axis 2 and
+
+134
+00:08:05,484 --> 00:08:06,677
+it'll do this reduction
+
+135
+00:08:06,702 --> 00:08:08,075
+across both axes
+
+136
+00:08:08,099 --> 00:08:16,837
+both are going to disappear and you're going to be left with a 2 by 5 array
+

@@ -39,13 +39,13 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 | 3|[L1, Part 3](https://youtu.be/BYoKE9yRy8g)|10:11|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%203.srt)|[Korean](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/Korean_srt/CS%20285%20Lecture%201%2C%20Part%203.ko.srt)|✒️|@curieuxjy|
 | 4|[L1, Part 4](https://youtu.be/xRmBEnI55es)|11:15|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%204.srt)|[Korean](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/Korean_srt/CS%20285%20Lecture%201%2C%20Part%204.ko.srt)|✒️|@hoyajigi|
 | 5|[L2, Part 1](https://youtu.be/HUzyjOsd2PA)|23:26|[English]()|[Korean]()|✒️|@hawk90 @BEMELON|
-| 6|[L2, Part 2](https://youtu.be/988gLurg01U)|15:28|[English]()|[Korean]()|✒️|@topchaebol|
+| 6|[L2, Part 2](https://youtu.be/988gLurg01U)|15:28|[English]()|[Korean]()|✒️|@gbeak @curieuxjy|
 | 7|[L2, Part 3](https://youtu.be/H_z7vxGhsQk)| 3:03|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%202%2C%20Part%203.srt)|[Korean](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/Korean_srt/CS%20285%20Lecture%202%2C%20Part%203.ko.srt.srt)|✒️|@tw0226|
 | 8|[L2, Part 4](https://youtu.be/ajAaM5FMRz4)| 4:13|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%202%2C%20Part%204.srt)|[Korean]()|✒️|@tw0226|
-| 9|[L2, Part 5](https://youtu.be/e2PpdPC34kI)|15:19|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%202%2C%20Part%205.srt)|[Korean]()|✒️|@junteken|
+| 9|[L2, Part 5](https://youtu.be/e2PpdPC34kI)|15:19|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%202%2C%20Part%205.srt)|[Korean]()|✒️|@curieuxjy|
 |10|[L2, Part 6](https://youtu.be/nM9f-5oQ86Y)| 4:58|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%202%2C%20Part%206.srt)|[Korean]()|✒️|@pinga999|
 |11|[L3, Part 1](https://youtu.be/AOypIa_8RXg)| 3:45|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%203%2C%20Part%201.srt)|[Korean]()|✒️|@pinga999|
-|12|[L3, Part 2](https://youtu.be/kPa6hU9prg4)|18:04|[English]()|[Korean]()|✒️|@gbeak @|
+|12|[L3, Part 2](https://youtu.be/kPa6hU9prg4)|18:04|[English]()|[Korean]()||@|
 |13|[L3, Part 3](https://youtu.be/ubSsUJbLkwM)|15:42|[English]()|[Korean]()||@|
 |14|[L3, Part 4](https://youtu.be/dsNtkT7LF8M)|23:27|[English]()|[Korean]()||@|
 |15|[L3, Part 5](https://youtu.be/Px3dQiv6R7E)|19:33|[English]()|[Korean]()||@|

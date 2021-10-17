@@ -28,7 +28,6 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 - HanYoung Kim [@pinga999](https://github.com/pinga999) 
 - KyuDo Hwang [@BEMELON](https://github.com/BEMELON)
 - Cheoljeong Park [@CheolJ](https://github.com/CheolJ)
-- Real Name [@github nick](https://github.com/github_address)
 
 > ✒️:1st Draft | 🔍:2nd Check | 🗂:Archived
 
@@ -76,6 +75,41 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 |40|[L8, Part 4](https://youtu.be/oMUSn1eRm7A)|23:41|[English]()|[Korean]()||@|
 |41|[L8, Part 5](https://youtu.be/Q-Qwjz8Zmh0)|10:04|[English]()|[Korean]()||@|
 |42|[L8, Part 6](https://youtu.be/cmGSnu-PIwU)|11:00|[English]()|[Korean]()||@|
+|43|[L9, Part 1](https://youtu.be/ySenCHPsKJU)|21:23|[English]()|[Korean]()||@|
+|44|[L9, Part 2](https://youtu.be/LtAt5M_a0dI)|18:48|[English]()|[Korean]()||@|
+|45|[L9, Part 3](https://youtu.be/WuPauZgX7BM)|5:50|[English]()|[Korean]()||@|
+|46|[L9, Part 4](https://youtu.be/QWnpF0FaKL4)|21:08|[English]()|[Korean]()||@|
+|47|[L10, Part 1](https://youtu.be/4SL0DnxC1GM)|19:20|[English]()|[Korean]()||@|
+|48|[L10, Part 2](https://youtu.be/pd9mKcH4kkk)|23:12|[English]()|[Korean]()||@|
+|49|[L10, Part 3](https://youtu.be/gqTE8-tH3Iw)|23:49|[English]()|[Korean]()||@|
+|50|[L10, Part 4](https://youtu.be/PHC2dm4E_VQ)|13:23|[English]()|[Korean]()||@|
+|51|[L10, Part 5](https://youtu.be/4Km05TctgNw)|6:21|[English]()|[Korean]()||@|
+|52|[L11, Part 1](https://youtu.be/LkTmiylbHYk)|17:47|[English]()|[Korean]()||@|
+|53|[L11, Part 2](https://youtu.be/LkTmiylbHYk)|9:35|[English]()|[Korean]()||@|
+|54|[L11, Part 3](https://youtu.be/zKiyNUSLGbQ)|17:09|[English]()|[Korean]()||@|
+|55|[L11, Part 4](https://youtu.be/zKiyNUSLGbQ)|6:54|[English]()|[Korean]()||@|
+|56|[L11, Part 5](https://youtu.be/2EWicx9uP1Q)|17:22|[English]()|[Korean]()||@|
+|57|[L12, Part 1](https://youtu.be/5GJkqMFgADw)|13:09|[English]()|[Korean]()||@|
+|58|[L12, Part 2](https://youtu.be/cVnTRwrY4lE)|13:31|[English]()|[Korean]()||@|
+|59|[L12, Part 3](https://youtu.be/wXcu6xMs9BM)|13:03|[English]()|[Korean]()||@|
+|60|[L12, Part 4](https://youtu.be/DszxsbAl8Eo)|10:48|[English]()|[Korean]()||@|
+|61|[L13, Part 1](https://youtu.be/RTLeJrp5Yp4)|19:51|[English]()|[Korean]()||@|
+|62|[L13, Part 2](https://youtu.be/bb3Aus4R654)|15:49|[English]()|[Korean]()||@|
+|63|[L13, Part 3](https://youtu.be/VR6no95qNts)|14:31|[English]()|[Korean]()||@|
+|64|[L13, Part 4](https://youtu.be/85_0i1Ug1kg)|13:02|[English]()|[Korean]()||@|
+|65|[L13, Part 5](https://youtu.be/9Y9lHFgiJZ0)|6:50|[English]()|[Korean]()||@|
+|66|[L13, Part 6](https://youtu.be/40-_EclzZ5Q)|12:40|[English]()|[Korean]()||@|
+|67|[L14, Part 1](https://youtu.be/HnV3ed8wqPA)|14:17|[English]()|[Korean]()||@|
+|68|[L14, Part 2](https://youtu.be/FxzreFYUkxo)|15:28|[English]()|[Korean]()||@|
+|69|[L14, Part 3](https://youtu.be/N9I0jstOWCc)|13:52|[English]()|[Korean]()||@|
+|70|[L14, Part 4](https://youtu.be/9O3GMntSL80)|8:02|[English]()|[Korean]()||@|
+|71|[L15, Part 1](https://youtu.be/NV4oSWe1H9o)|38:01|[English]()|[Korean]()||@|
+|72|[L15, Part 2](https://youtu.be/9HrN6nHoxD8)|25:33|[English]()|[Korean]()||@|
+|73|[L15, Part 3](https://youtu.be/YNritd36FB0)|21:20|[English]()|[Korean]()||@|
+|74|[L16, Part 1](https://youtu.be/TCn26YClkCw)|31:59|[English]()|[Korean]()||@|
+|75|[L16, Part 2](https://youtu.be/tKXMLG4FKpI)|7:33|[English]()|[Korean]()||@|
+|76|[L16, Part 3](https://youtu.be/KG1MsrGlPwQ)|18:17|[English]()|[Korean]()||@|
+|77|[L16, Part 4](https://youtu.be/0MBLPA4gZPA)|12:20|[English]()|[Korean]()||@|
 
 ## Contact
 오역과 오타에 관해서는 [Issue](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/issues)나 [Pull request](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/pulls)로 함께 번역의 질을 높여주시는 데 도움을 주셔도 좋고, curieuexjy@gmail.com으로 이메일을 보내주시면 감사하겠습니다.

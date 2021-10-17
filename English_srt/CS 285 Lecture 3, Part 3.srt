@@ -1,0 +1,720 @@
+﻿1
+00:00:00,390 --> 00:00:03,600
+all right now let's start talking about the basics of pytorch
+
+2
+00:00:03,600 --> 00:00:06,310
+so pytorch is built around tensors
+
+3
+00:00:06,310 --> 00:00:08,400
+which are really similar to numpy arrays
+
+4
+00:00:08,400 --> 00:00:16,400
+and basically a lot of the things that we talked about in the previous video with numpy you can do the exact same thing on pytorch tensors too
+
+5
+00:00:16,400 --> 00:00:24,000
+so for example i can define two pytorch tensors that have the same shape and then i can add them together just like i did with numpy arrays
+
+6
+00:00:24,000 --> 00:00:30,640
+I can also do reductions just like I do in numpy and i can specify axes along which i want to do that reduction
+
+7
+00:00:30,640 --> 00:00:39,520
+there's a minor difference which is that in pytorch the argument is called dim for dimension instead of axes but otherwise they're the same
+
+8
+00:00:39,520 --> 00:00:43,680
+and just like numpy pytorch will also try to broadcast operations if possible
+
+9
+00:00:43,680 --> 00:00:51,920
+so if i have these two tensors of different shapes i can still add them together because they'll be broadcasted
+
+10
+00:00:51,920 --> 00:00:56,800
+something you'll probably do pretty often is move between numpy arrays and pytorch tensors
+
+11
+00:00:56,800 --> 00:01:01,600
+we'll talk a bit more about why that's necessary a little later
+
+12
+00:01:01,600 --> 00:01:04,550
+but for now let's just show you how that works
+
+13
+00:01:04,550 --> 00:01:08,150
+so let's say you have this numpy array
+
+14
+00:01:08,150 --> 00:01:12,640
+it's two by three and i want to convert this to a pytorch tensor
+
+15
+00:01:12,640 --> 00:01:15,750
+so to do that i'll be using the torch.from numpy function
+
+16
+00:01:15,750 --> 00:01:19,840
+and what that does is it gives me a new pytorch tensor
+
+17
+00:01:19,840 --> 00:01:24,400
+but that tensor actually shares the same memory as the original numpy array
+
+18
+00:01:24,400 --> 00:01:29,430
+so even though on this new tensor x you can do all sorts of pytorch operations on it now
+
+19
+00:01:29,430 --> 00:01:33,600
+it's actually referring to the same part of memory
+
+20
+00:01:33,600 --> 00:01:36,070
+so if you mutate the original numpy array
+
+21
+00:01:36,070 --> 00:01:43,040
+that's also going to affect the pytorch tensor and vice versa
+
+22
+00:01:43,040 --> 00:01:46,640
+by default numpy arrays are going to be the float 64 type
+
+23
+00:01:46,640 --> 00:01:50,720
+so if you look at this dtype property whenever you print out a pytorch tensor
+
+24
+00:01:50,720 --> 00:01:54,560
+you can see what data type it is
+
+25
+00:01:54,560 --> 00:01:58,470
+most of the time tensors and py torch are actually float32
+
+26
+00:01:58,470 --> 00:02:00,390
+so when you convert from numpy over to pytorch
+
+27
+00:02:00,390 --> 00:02:04,960
+you'll probably want to actually cast it as a float32 type
+
+28
+00:02:04,960 --> 00:02:07,680
+just because you don't really need that extra level of precision
+
+29
+00:02:07,680 --> 00:02:13,590
+so the way you do that is you can call dot to and you can specify floats integers or whatever you want
+
+30
+00:02:13,590 --> 00:02:20,080
+and that's how you'd change it to a different data type
+
+31
+00:02:20,080 --> 00:02:24,000
+so here since we converted it basically to the default floating point type
+
+32
+00:02:24,000 --> 00:02:28,480
+you'll see that it doesn't have a d type specified
+
+33
+00:02:28,480 --> 00:02:31,200
+and finally if you want to go the other way around if you have a pytorch tensor
+
+34
+00:02:31,200 --> 00:02:33,040
+and you want to go back to a numpy array
+
+35
+00:02:33,040 --> 00:02:36,800
+you can just call that tensor dot numpy
+
+36
+00:02:36,800 --> 00:02:45,200
+and again this will occupy the same part of memory so mutating one will mutate the other
+
+37
+00:02:45,200 --> 00:02:49,040
+pytorch also has a bunch of built-in functions for neural networks
+
+38
+00:02:49,040 --> 00:02:52,230
+and this can be really useful when you're training them
+
+39
+00:02:52,230 --> 00:02:55,510
+you should definitely check out the documentation for a full list of what you can do
+
+40
+00:02:55,510 --> 00:03:00,150
+chances are whatever you're trying to do there's something in pytorch that already accomplishes it
+
+41
+00:03:00,150 --> 00:03:04,080
+but just to give you a sense of how much is available to you
+
+42
+00:03:04,080 --> 00:03:09,510
+all sorts of activation functions like relu sigmoid 10h there are functions for each of these
+
+43
+00:03:09,510 --> 00:03:13,920
+along with whatever numerical optimizations need to be done
+
+44
+00:03:13,920 --> 00:03:15,120
+so you don't have to worry about those
+
+45
+00:03:15,120 --> 00:03:20,080
+you can just use the built-in by torch functions
+
+46
+00:03:20,080 --> 00:03:24,310
+there's also the softmax function if you're trying to predict probabilities
+
+47
+00:03:24,310 --> 00:03:31,360
+and you can call softmax on some pytorch tensor specify some dimension along which you're taking those
+
+48
+00:03:31,360 --> 00:03:40,150
+I'm taking this off now so dimension equals negative one means i'm using the last dimension so basically each row is going to be a set of probabilities
+
+49
+00:03:40,150 --> 00:03:48,790
+and then when i call torsion soft max i convert these logics to probabilities
+
+50
+00:03:48,790 --> 00:03:54,640
+so probably the most critical part of pytorch is the way that it does automatic differentiation
+
+51
+00:03:54,640 --> 00:03:57,920
+because if you've ever tried to do back prop by hand
+
+52
+00:03:57,920 --> 00:04:02,560
+it's really tedious and it's not something that you want to try to implement yourself in code
+
+53
+00:04:02,560 --> 00:04:10,150
+so this is one of the most important parts of what pytorch does for you in terms of training neural networks
+
+54
+00:04:10,150 --> 00:04:18,070
+so let's say we have some loss function and we want to evaluate the gradient of that loss function with respect to the inputs x and y
+
+55
+00:04:18,070 --> 00:04:24,800
+so the way you do that is when you define the tensor you can additionally specify requires valuables true
+
+56
+00:04:24,800 --> 00:04:30,630
+and that will basically tell pytorch that it should keep track of the gradients for this variable
+
+57
+00:04:30,630 --> 00:04:39,600
+by default if you don't specify that it's just going to be a fixed tensor and there's going to be no gradient tracked for back prop
+
+58
+00:04:39,600 --> 00:04:47,520
+so what happens when you specify requires grad equals true is the tensor will keep track of two pieces of information
+
+59
+00:04:47,520 --> 00:04:50,630
+the first is the data which is just the original values in the tensor
+
+60
+00:04:50,630 --> 00:04:55,120
+but also have a dot grad property which stores the gradient
+
+61
+00:04:55,120 --> 00:05:00,800
+right now you'll notice that dog grad is none just because you haven't really done any computation with x yet
+
+62
+00:05:00,800 --> 00:05:05,030
+you haven't told pytorch what to take the gradients of
+
+63
+00:05:05,030 --> 00:05:09,680
+so there's nothing inside the x.grad property
+
+64
+00:05:09,680 --> 00:05:13,750
+but let's see what happens when we define a loss
+
+65
+00:05:13,750 --> 00:05:16,160
+so here we're doing some calculations that involve x and y
+
+66
+00:05:16,160 --> 00:05:18,880
+we're summing them together to get a scalar loss
+
+67
+00:05:18,880 --> 00:05:25,030
+and that resulting tensor loss you'll notice has this grad function property
+
+68
+00:05:25,030 --> 00:05:33,680
+and the reason for that is basically anytime you do any kind of operations on pytorch tensors that have requires grad equals true
+
+69
+00:05:33,680 --> 00:05:41,360
+pytorch will implicitly build out its own graph of all the computations you're doing
+
+70
+00:05:41,360 --> 00:05:45,910
+and for each tensor it keeps track of which function was applied before it to get to that tensor
+
+71
+00:05:45,910 --> 00:05:49,680
+so this example grad function is going to be sum backward zero
+
+72
+00:05:49,680 --> 00:05:56,080
+because the way that you got to the loss was that you called dot sum on something before it
+
+73
+00:05:56,080 --> 00:06:01,190
+so the cool thing is we can actually trace our way back through these grad functions
+
+74
+00:06:01,190 --> 00:06:09,190
+all the way to the beginning to see the computation graph that pytorch has in its internal representation
+
+75
+00:06:09,190 --> 00:06:14,630
+so this is the computation graph of that loss function we calculated earlier
+
+76
+00:06:14,630 --> 00:06:20,470
+and we're printing this from loss going backwards so the first thing is sum backward
+
+77
+00:06:20,470 --> 00:06:30,000
+and if we take that grad function and figure out what came before it it's saying that the sum came from this thing before it which came from pow backward zero
+
+78
+00:06:30,000 --> 00:06:33,190
+because we squared something to get to it
+
+79
+00:06:33,190 --> 00:06:35,840
+tracing one step backwards we have add
+
+80
+00:06:35,840 --> 00:06:37,600
+and then tracing one step backwards
+
+81
+00:06:37,600 --> 00:06:40,630
+you'll notice that we have two different things
+
+82
+00:06:40,630 --> 00:06:45,360
+because the addition operation the result of the addition came from two variables
+
+83
+00:06:45,360 --> 00:06:50,560
+the first was some tensor y for which we said requires grad equals true
+
+84
+00:06:50,560 --> 00:06:53,190
+so that's why we have this accumulate grad operation
+
+85
+00:06:53,190 --> 00:06:58,310
+another thing was some sort of multiplication operation so we have a mole backward
+
+86
+00:06:58,310 --> 00:07:00,400
+and then if we go back one more step
+
+87
+00:07:00,400 --> 00:07:03,280
+we see these other two inputs
+
+88
+00:07:03,280 --> 00:07:05,190
+we have x where we specified requires grad equals true
+
+89
+00:07:05,190 --> 00:07:14,240
+and then we have this other value two which is basically not something that's storing gradient
+
+90
+00:07:14,240 --> 00:07:18,630
+so that doesn't have its own grad function
+
+91
+00:07:18,630 --> 00:07:22,560
+so each of the yellow nodes above in this computation graph has a dot grad property
+
+92
+00:07:22,560 --> 00:07:24,720
+and when you do back prop
+
+93
+00:07:24,720 --> 00:07:30,800
+and pytorch that direct property is going to be storing the gradients with respect to the loss
+
+94
+00:07:30,800 --> 00:07:36,880
+so to perform backprop we are going to choose some scalar at some point in the computation graph
+
+95
+00:07:36,880 --> 00:07:38,560
+so here we'll choose loss
+
+96
+00:07:38,560 --> 00:07:41,520
+and we'll call lost.backward
+
+97
+00:07:41,520 --> 00:07:46,000
+and once that's done all of these yellow nodes will have their gradients populated
+
+98
+00:07:46,000 --> 00:07:53,680
+and if you print out the dot grad properties you can see that these now have values
+
+99
+00:07:53,680 --> 00:07:56,560
+so something that's a bit strange in pytorch is that the gradients actually accumulate
+
+100
+00:07:56,560 --> 00:08:02,800
+so if you do the same operation again and then you call last backward again
+
+101
+00:08:02,800 --> 00:08:06,560
+it won't like overwrite the previous dot grad it'll actually add to it
+
+102
+00:08:06,560 --> 00:08:10,560
+so you'll end up getting twice the gradient
+
+103
+00:08:10,560 --> 00:08:14,080
+and the reason this might sometimes be useful is for example
+
+104
+00:08:14,080 --> 00:08:16,560
+if you have multiple loss functions
+
+105
+00:08:16,560 --> 00:08:20,630
+and you want to take the gradient with respect to both of those
+
+106
+00:08:20,630 --> 00:08:25,030
+even if they don't use the same parameters or anything like that
+
+107
+00:08:25,030 --> 00:08:28,000
+you can still do these operations and call dot backward
+
+108
+00:08:28,000 --> 00:08:31,280
+so in this case i have some loss function that only depends on x
+
+109
+00:08:31,280 --> 00:08:36,710
+and when i call that backwards it's going to keep the previous ones which came from the other loss function
+
+110
+00:08:36,710 --> 00:08:43,030
+but also you'll notice that x dot grad changed here because of this second loss function
+
+111
+00:08:43,030 --> 00:08:52,480
+so that can be useful sometimes if you're working with more complicated architectures that involve multiple loss functions or things like that
+
+112
+00:08:52,480 --> 00:08:58,880
+for the most part though pretty much what you need to know is you define these operations
+
+113
+00:08:58,880 --> 00:09:11,600
+so you define this loss function here and then you just say lost backward and your gradients will get populated for you
+
+114
+00:09:11,600 --> 00:09:17,270
+something that you will probably do pretty often is stopping and starting gradients
+
+115
+00:09:17,270 --> 00:09:27,200
+so if you don't specify requires right equals true then by default that tensor will not have any gradient tracked
+
+116
+00:09:27,200 --> 00:09:29,760
+so here x will have its gradient tracked but y won't
+
+117
+00:09:29,760 --> 00:09:37,510
+so if I compute the loss and do last step backwards you'll notice that x dot gradle is populated but y dot grad wasn't
+
+118
+00:09:37,510 --> 00:09:40,320
+you can always change your mind afterwards after initializing the tensor
+
+119
+00:09:40,320 --> 00:09:43,270
+you can change requires grad to be true
+
+120
+00:09:43,270 --> 00:09:47,040
+and then as long as it's true at the point where you call
+
+121
+00:09:47,040 --> 00:09:50,390
+where you compute the loss and do law stuff backward
+
+122
+00:09:50,390 --> 00:09:52,320
+then you're going to get a gradient
+
+123
+00:09:52,320 --> 00:09:56,240
+but you have to make sure to do this before you actually do any computations
+
+124
+00:09:56,240 --> 00:10:04,800
+because remember pytorch needs to be able to store the grad functions for each of these to remember where they came from
+
+125
+00:10:04,800 --> 00:10:15,200
+you can also cut a gradient by calling y dot detach so let's say you have these two variables where you do want to track the gradient normally
+
+126
+00:10:15,200 --> 00:10:21,360
+but for some reason later on you want to do a calculation that doesn't uh have its gradient tracked
+
+127
+00:10:21,360 --> 00:10:24,880
+so an example this might be if x and y are like the weights of a neural network
+
+128
+00:10:24,880 --> 00:10:28,390
+when you do training you definitely want requires grad equals true
+
+129
+00:10:28,390 --> 00:10:35,040
+but when it's time to actually evaluate you might not want to have any gradient on it
+
+130
+00:10:35,040 --> 00:10:46,480
+so you can call why not detach and that's not in place operation it's going to return an entirely new tensor that doesn't have requires grad equals true
+
+131
+00:10:46,480 --> 00:10:50,000
+so the original y is actually still staying the same
+
+132
+00:10:50,000 --> 00:10:52,390
+but now if you call that step backward
+
+133
+00:10:52,390 --> 00:10:58,950
+you notice that y detached doesn't have its grad populated
+
+134
+00:10:58,950 --> 00:11:02,240
+so a few things to watch out for
+
+135
+00:11:02,240 --> 00:11:06,480
+and then we'll talk about like when exactly you'll use these things
+
+136
+00:11:06,480 --> 00:11:14,070
+so the first is you can't do any in place operations if the tensor has requires grad equals true so here for y
+
+137
+00:11:14,070 --> 00:11:21,920
+I can't mutate y by like calling y dot add underscore or like modifying a single element of y
+
+138
+00:11:21,920 --> 00:11:28,950
+if I try to do that i'll get an error message
+
+139
+00:11:28,950 --> 00:11:34,480
+I'm mutating y and then here it'll give me an error
+
+140
+00:11:34,480 --> 00:11:41,680
+and the reason is because pytorch is only able to keep track of your operations for backdrop purposes
+
+141
+00:11:41,680 --> 00:11:48,160
+if you write them in terms of these pure functions like adding things multiplying things 
+
+142
+00:11:48,160 --> 00:11:51,040
+you can't go in and directly modify a tensor or else
+
+143
+00:11:51,040 --> 00:11:56,720
+pytorch won't realize that something changed and your back prop is gonna get messed up
+
+144
+00:11:56,720 --> 00:12:05,680
+and for pretty much the same reason you also can't uh convert a tensor that still has requires quite equals true to numpy 
+
+145
+00:12:05,680 --> 00:12:12,630
+because remember they share the same memory so we don't want to accidentally modify the numpy array and mess with the back prop process for this tensor
+
+146
+00:12:12,630 --> 00:12:16,560
+so instead if you actually want to convert that tensor to numpy
+
+147
+00:12:16,560 --> 00:12:23,120
+you want to detach it first so we have the tensor y you can call y dot detach dot numpy
+
+148
+00:12:23,120 --> 00:12:31,120
+there's a weird gotcha here which is that even though y dot detach returns a new tensor that doesn't require grad
+
+149
+00:12:31,120 --> 00:12:34,880
+that tensor still occupies the same memory as y
+
+150
+00:12:34,880 --> 00:12:42,950
+and unfortunately you can still accidentally like you can make changes to this y dot detach or y not detach that numpy 
+
+151
+00:12:42,950 --> 00:12:49,040
+and that will end up affecting y as well which will mess up your gradients 
+
+152
+00:12:49,040 --> 00:12:59,920
+so if you wanted to convert a pytorch tensor that has requires grad equals true to either a numpy array or a tensor without gradient 
+
+153
+00:12:59,920 --> 00:13:01,830
+and you want to be able to safely mutate it 
+
+154
+00:13:01,830 --> 00:13:11,760
+what you have to do is not only detach it but also called dot clone which will give you an actual copy of the tensor in new memory
+
+155
+00:13:11,760 --> 00:13:20,800
+so this is all kind of abstract right now you might be wondering like why you need all these things
+
+156
+00:13:20,800 --> 00:13:26,950
+converting to and from numpy detaching requirement and things like that
+
+157
+00:13:26,950 --> 00:13:32,390
+and at least as it relates to rl 
+
+158
+00:13:32,390 --> 00:13:34,880
+usually what ends up happening is that
+
+159
+00:13:34,880 --> 00:13:39,600
+sometimes you're working with numpy arrays and sometimes you're working with tensors
+
+160
+00:13:39,600 --> 00:13:46,390
+so as an example let's say you have some kind of environment where you want to train your agent in
+
+161
+00:13:46,390 --> 00:13:53,360
+and then you have a model which is represented by like a series of pytorch tensors
+
+162
+00:13:53,360 --> 00:14:00,390
+usually your simulator for the environment is going to be working with numpy arrays not pie torch tensors
+
+163
+00:14:00,390 --> 00:14:05,270
+just because uh it's probably a good idea to keep the simulator code kind of separate
+
+164
+00:14:05,270 --> 00:14:12,070
+it shouldn't depend on what deep learning framework you're using to train your agent 
+
+165
+00:14:12,070 --> 00:14:15,270
+so that's the meter is going to be working with numpy arrays
+
+166
+00:14:15,270 --> 00:14:24,630
+and if you have like a data set full of like states represented as numpy arrays from this simulated environment
+
+167
+00:14:24,630 --> 00:14:27,600
+and you want to start doing training for rl
+
+168
+00:14:27,600 --> 00:14:34,000
+what you'll do is you'll convert from those numpy arrays to pytorch tensors
+
+169
+00:14:34,000 --> 00:14:39,600
+and using those pi towards tensors you can do training on your model
+
+170
+00:14:39,600 --> 00:14:43,120
+and then when it's time to actually make predictions
+
+171
+00:14:43,120 --> 00:14:47,040
+you'll get some kind of state from the environment which is a numpy array
+
+172
+00:14:47,040 --> 00:14:50,800
+so you'll want to convert that to a pytorch tensor
+
+173
+00:14:50,800 --> 00:14:55,760
+use that tensor run it through your model and get some predicted action maybe
+
+174
+00:14:55,760 --> 00:15:02,160
+but you'll probably want to detach that action and convert it back to an numpy array
+
+175
+00:15:02,160 --> 00:15:05,760
+that's just usually a nice convention 
+
+176
+00:15:05,760 --> 00:15:15,440
+just because the output of your policy is not really something that you need to track the gradient for or that you need to do any further pytorch operations on 
+
+177
+00:15:15,440 --> 00:15:26,390
+so it's a good idea to only use pytorch for that middle layer where you're doing like anything related to training or inference
+
+178
+00:15:26,390 --> 00:15:31,190
+but then use numpy arrays to actually represent the states of your environment
+
+179
+00:15:31,190 --> 00:15:33,750
+and the actions that you choose to take
+
+180
+00:15:33,750 --> 00:15:41,830
+so that's an example of when you would need to work with these conversion functions or use things like detach
+

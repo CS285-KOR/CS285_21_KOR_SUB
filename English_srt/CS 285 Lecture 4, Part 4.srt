@@ -1,0 +1,620 @@
+1
+00:00:01,040 --> 00:00:03,659
+in the next part of today's lecture
+
+2
+00:00:03,660 --> 00:00:05,279
+I'm going to give you a kind of a
+
+3
+00:00:05,359 --> 00:00:06,859
+whirlwind tour
+
+4
+00:00:06,879 --> 00:00:09,897
+through different types of reinforcement learning algorithms
+
+5
+00:00:10,080 --> 00:00:12,359
+we'll talk about each of these types in
+
+6
+00:00:12,400 --> 00:00:13,660
+much more detail
+
+7
+00:00:13,759 --> 00:00:16,160
+in the next few lectures but for now
+
+8
+00:00:16,160 --> 00:00:18,120
+we'll just discuss what these types are
+
+9
+00:00:18,160 --> 00:00:22,320
+so they don't come as a surprise later
+
+10
+00:00:23,439 --> 00:00:25,119
+so the RL algorithms we'll cover will
+
+11
+00:00:25,199 --> 00:00:27,040
+generally be optimizing
+
+12
+00:00:27,119 --> 00:00:30,560
+the RL objective that I defined before
+
+13
+00:00:30,640 --> 00:00:34,192
+policy graded algorithms attempt to directly
+
+14
+00:00:34,239 --> 00:00:36,320
+calculate a derivative of this objective
+
+15
+00:00:36,320 --> 00:00:37,880
+with respect to theta
+
+16
+00:00:37,920 --> 00:00:39,619
+and then perform a grading descent
+
+17
+00:00:39,680 --> 00:00:42,640
+procedure using that derivative
+
+18
+00:00:42,719 --> 00:00:45,760
+value-based methods estimate value
+
+19
+00:00:45,840 --> 00:00:47,700
+functions or Q functions
+
+20
+00:00:47,760 --> 00:00:49,980
+for the optimal policy and then use
+
+21
+00:00:50,000 --> 00:00:52,070
+those value functions or Q functions
+
+22
+00:00:52,095 --> 00:00:52,740
+ which are typically themselves
+
+23
+00:00:52,800 --> 00:00:54,600
+represented by a function approximately
+
+24
+00:00:54,640 --> 00:00:55,939
+like a neural network
+
+25
+00:00:56,000 --> 00:00:59,020
+to improve the policy oftentimes pure
+
+26
+00:00:59,039 --> 00:01:00,320
+value-based functions
+
+27
+00:01:00,320 --> 00:01:02,259
+don't even represent the policy directly
+
+28
+00:01:02,320 --> 00:01:04,159
+but rather represented implicitly
+
+29
+00:01:04,159 --> 00:01:06,760
+as something like an argmax of a Q function
+
+30
+00:01:08,799 --> 00:01:10,360
+Actor-critic methods are a kind of
+
+31
+00:01:10,400 --> 00:01:12,480
+hybrid between the two actor critic methods
+
+32
+00:01:12,481 --> 00:01:13,255
+Actor-critics methods
+
+33
+00:01:13,280 --> 00:01:15,820
+learn a Q function or value function and
+
+34
+00:01:15,840 --> 00:01:16,720
+then use it
+
+35
+00:01:16,720 --> 00:01:19,519
+to improve the policy typically by using
+
+36
+00:01:19,520 --> 00:01:21,789
+them to calculate a better policy gradient
+
+37
+00:01:23,368 --> 00:01:26,104
+and then model based reinforcement learning algorithms
+
+38
+00:01:26,129 --> 00:01:27,926
+will estimate a transition model
+
+39
+00:01:27,951 --> 00:01:29,895
+they'll estimate some model of the
+
+40
+00:01:29,920 --> 00:01:32,700
+transition probabilities t and then they
+
+41
+00:01:32,720 --> 00:01:33,600
+will either
+
+42
+00:01:33,600 --> 00:01:35,940
+use the transition model for planning
+
+43
+00:01:36,000 --> 00:01:38,640
+directly without any explicit policy
+
+44
+00:01:38,640 --> 00:01:40,794
+or use the transition model to improve
+
+45
+00:01:40,819 --> 00:01:43,280
+the policy
+
+46
+00:01:43,305 --> 00:01:45,000
+and there are actually many variants in
+
+47
+00:01:45,040 --> 00:01:47,200
+model based RL for how the transition
+
+48
+00:01:47,200 --> 00:01:50,000
+model can be used
+
+49
+00:01:50,399 --> 00:01:52,800
+all right let's start our conversation
+
+50
+00:01:52,880 --> 00:01:54,000
+with model-based RL algorithms
+
+51
+00:01:54,000 --> 00:01:57,895
+so for model-based RL algorithms
+
+52
+00:01:57,920 --> 00:02:01,139
+the green box will typically consist of
+
+53
+00:02:01,200 --> 00:02:03,873
+learning some model for p of S t+1
+
+54
+00:02:03,898 --> 00:02:05,680
+given St, at
+
+55
+00:02:05,759 --> 00:02:07,279
+so this could be a neural net that takes
+
+56
+00:02:07,280 --> 00:02:08,799
+in St, at
+
+57
+00:02:08,879 --> 00:02:10,380
+and either outputs a probability
+
+58
+00:02:10,399 --> 00:02:12,020
+distribution over t+1
+
+59
+00:02:12,080 --> 00:02:13,840
+or if it's a deterministic model just
+
+60
+00:02:13,920 --> 00:02:17,840
+attempts to predict S t+1 directly
+
+61
+00:02:18,000 --> 00:02:21,288
+and then the blue box has a number of different options
+
+62
+00:02:21,360 --> 00:02:23,999
+so let's focus in on that blue box since
+
+63
+00:02:24,080 --> 00:02:26,214
+model based RL algorithms will differ greatly
+
+64
+00:02:26,239 --> 00:02:29,099
+in terms of how they implement this part
+
+65
+00:02:29,124 --> 00:02:31,920
+So, one option for model based RL algorithms
+
+66
+00:02:31,920 --> 00:02:33,880
+is to simply use the learned model
+
+67
+00:02:33,920 --> 00:02:36,480
+directly to plan so you could
+
+68
+00:02:36,480 --> 00:02:37,199
+for example
+
+69
+00:02:37,280 --> 00:02:41,520
+learn how the rules of a chess game work
+
+70
+00:02:41,599 --> 00:02:44,660
+and then use your favorite discrete
+
+71
+00:02:44,712 --> 00:02:48,055
+planning algorithm like Monte Carlo tree search to play chess
+
+72
+00:02:48,080 --> 00:02:50,280
+or you can learn the physics of a
+
+73
+00:02:50,319 --> 00:02:52,479
+continuous environment for a robot
+
+74
+00:02:52,480 --> 00:02:54,800
+and then use some optimal control or
+
+75
+00:02:54,879 --> 00:02:56,720
+trajectory optimization procedure
+
+76
+00:02:56,800 --> 00:02:58,699
+through that learned physics model to
+
+77
+00:02:58,720 --> 00:03:01,599
+control the robot
+
+78
+00:03:02,000 --> 00:03:05,440
+another option is to use the learned model
+
+79
+00:03:05,440 --> 00:03:07,419
+to compute derivatives of the reward
+
+80
+00:03:07,440 --> 00:03:09,440
+function with respect to the policy
+
+81
+00:03:09,519 --> 00:03:12,639
+essentially through back propagation
+
+82
+00:03:12,640 --> 00:03:14,180
+this is a very simple idea but it
+
+83
+00:03:14,239 --> 00:03:15,619
+actually requires quite a few tricks to
+
+84
+00:03:15,680 --> 00:03:17,500
+make it work well
+
+85
+00:03:17,519 --> 00:03:18,740
+typically in order to account for
+
+86
+00:03:18,800 --> 00:03:20,980
+numerical stability so for example
+
+87
+00:03:21,040 --> 00:03:22,776
+second order methods tend to work a lot
+
+88
+00:03:22,801 --> 00:03:24,159
+better than first order methods for back
+
+89
+00:03:24,239 --> 00:03:26,880
+propagating the policy
+
+90
+00:03:26,959 --> 00:03:29,199
+another common use of a model is to use
+
+91
+00:03:29,280 --> 00:03:30,799
+the model to actually learn a separate
+
+92
+00:03:30,799 --> 00:03:32,720
+value function or Q function
+
+93
+00:03:32,799 --> 00:03:35,060
+and then use that value function or
+
+94
+00:03:35,120 --> 00:03:36,539
+Q function to improve the policy
+
+95
+00:03:36,560 --> 00:03:38,140
+so the value function or Q function
+
+96
+00:03:38,239 --> 00:03:39,399
+would be learned using some type of
+
+97
+00:03:39,440 --> 00:03:42,799
+dynamic programming method
+
+98
+00:03:43,120 --> 00:03:45,680
+and it's also fairly common to kind of
+
+99
+00:03:45,760 --> 00:03:48,396
+extend number three to essentially use a model
+
+100
+00:03:48,421 --> 00:03:50,940
+to generate additional data for a model
+
+101
+00:03:50,959 --> 00:03:52,640
+free reinforcement learning algorithm
+
+102
+00:03:52,640 --> 00:03:55,840
+and that can often work very well
+
+103
+00:03:56,959 --> 00:03:59,785
+alright, value function based algorithms
+
+104
+00:03:59,810 --> 00:04:01,920
+so for value function based algorithms
+
+105
+00:04:01,920 --> 00:04:05,280
+the green box involves fitting some estimate
+
+106
+00:04:05,280 --> 00:04:08,460
+of V(s) or Q(s,a)
+
+107
+00:04:08,480 --> 00:04:09,831
+usually using a neural network to
+
+108
+00:04:09,856 --> 00:04:13,226
+represent V(s) or Q(s,a)
+
+109
+00:04:13,251 --> 00:04:15,100
+where the network takes in s or
+
+110
+00:04:15,120 --> 00:04:17,600
+(s,a) as input and outputs a real
+
+111
+00:04:17,600 --> 00:04:19,559
+valued number
+
+112
+00:04:19,600 --> 00:04:21,680
+and then the blue box if it's a pure
+
+113
+00:04:21,759 --> 00:04:22,819
+value based method
+
+114
+00:04:22,880 --> 00:04:25,880
+would simply choose the policy to be the
+
+115
+00:04:25,919 --> 00:04:27,200
+argmax of
+
+116
+00:04:27,272 --> 00:04:30,367
+Q(s,a) so in a pure value based method
+
+117
+00:04:30,400 --> 00:04:32,151
+we wouldn't actually represent the policy
+
+118
+00:04:32,176 --> 00:04:33,772
+explicitly as a neural net
+
+119
+00:04:33,797 --> 00:04:35,040
+we would just represent it implicitly
+
+120
+00:04:35,065 --> 00:04:37,536
+as an argmax over a neural network
+
+121
+00:04:37,561 --> 00:04:40,160
+representing Q(s,a)
+
+122
+00:04:41,199 --> 00:04:44,380
+direct policy gradient method would
+
+123
+00:04:44,479 --> 00:04:46,000
+implement the blue box
+
+124
+00:04:46,080 --> 00:04:47,960
+simply by taking a gradient step or
+
+125
+00:04:48,000 --> 00:04:49,320
+gradient ascent step
+
+126
+00:04:49,360 --> 00:04:51,460
+on theta using the gradient of the
+
+127
+00:04:51,485 --> 00:04:54,120
+expected value of the reward
+
+128
+00:04:54,160 --> 00:04:55,674
+we'll talk about how this grading can be
+
+129
+00:04:55,699 --> 00:04:57,480
+estimated in the next lecture
+
+130
+00:04:57,520 --> 00:05:00,098
+but the green box for policy gradient algorithms
+
+131
+00:05:00,123 --> 00:05:01,282
+is very very simple
+
+132
+00:05:01,307 --> 00:05:03,599
+it just involves computing the total
+
+133
+00:05:03,600 --> 00:05:05,139
+reward along each trajectory
+
+134
+00:05:05,199 --> 00:05:06,960
+simply by adding up the rewards that
+
+135
+00:05:07,039 --> 00:05:09,360
+were obtained during the rollout
+
+136
+00:05:09,360 --> 00:05:10,900
+by the way when I use the term rollout
+
+137
+00:05:10,960 --> 00:05:12,720
+that simply means sample
+
+138
+00:05:12,800 --> 00:05:15,039
+of your policy it means run your policy
+
+139
+00:05:15,120 --> 00:05:16,620
+one step at a time and the reason we
+
+140
+00:05:16,639 --> 00:05:17,499
+call it a rollout
+
+141
+00:05:17,520 --> 00:05:19,160
+is because you're unrolling your policy
+
+142
+00:05:19,199 --> 00:05:22,100
+one step at a time
+
+143
+00:05:22,160 --> 00:05:23,919
+Actor-critic algorithms are a kind of
+
+144
+00:05:24,000 --> 00:05:25,859
+hybrid between value-based methods and
+
+145
+00:05:25,919 --> 00:05:27,679
+policy gradient methods
+
+146
+00:05:27,759 --> 00:05:30,460
+Actor-critic algorithms also fit a value
+
+147
+00:05:30,479 --> 00:05:32,695
+function or a Q function in the green box
+
+148
+00:05:32,720 --> 00:05:34,800
+just like value-based methods but then
+
+149
+00:05:34,800 --> 00:05:36,000
+in the blue box
+
+150
+00:05:36,000 --> 00:05:37,940
+they actually take a gradient ascend
+
+151
+00:05:38,000 --> 00:05:39,380
+step on the policy
+
+152
+00:05:39,440 --> 00:05:41,239
+just like policy gradient methods
+
+153
+00:05:41,280 --> 00:05:43,655
+utilizing the value function or Q function
+
+154
+00:05:43,680 --> 00:05:45,219
+to obtain a better estimate of the
+
+155
+00:05:45,280 --> 00:05:51,919
+gradient a more accurate gradient
+

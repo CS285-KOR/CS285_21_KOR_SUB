@@ -1,0 +1,964 @@
+1
+00:00:00,880 --> 00:00:04,524
+hello and welcome to the fourth lecture of cs285
+
+2
+00:00:05,120 --> 00:00:13,530
+in today's lecture, we're going to go over a comprehensive introduction
+to reinforce some learning algorithms definitions and basic concepts
+
+3
+00:00:14,246 --> 00:00:16,591
+so let's start with some definitions
+
+4
+00:00:16,952 --> 00:00:22,976
+first let's go over some of the terminology that we covered in
+the previous lecture when we talked about imitation learning
+
+5
+00:00:23,039 --> 00:00:30,559
+we learned that we can represent a policy as a distribution over actions a_t condition on observations o_t
+
+6
+00:00:30,560 --> 00:00:40,159
+we call this policy pi and we often use a subscript theta to know the
+policy depends on a vector of parameters that we're going to denote theta
+
+7
+00:00:40,160 --> 00:00:45,691
+when we're doing deep reinforcement learning oftentimes
+we'll represent the policy with a deep neural network
+
+8
+00:00:45,747 --> 00:00:52,398
+although as we will learn in the next few lectures in the course
+depending on the type of reinforcement learning algorithm
+
+9
+00:00:52,399 --> 00:00:59,119
+we might choose to represent the policy directly or
+implicitly through some other object such as a value function
+
+10
+00:00:59,120 --> 00:01:08,364
+important definitions to know are the state which we denote st the observation
+ot and the action a t as we learned in the imitation learning lecture.
+
+11
+00:01:08,404 --> 00:01:17,438
+the observation and state can be related to one another by the following graphical
+model where the edge between observations and actions is the policy.
+
+12
+00:01:17,493 --> 00:01:26,493
+the edge between current states and actions and future states is the transition
+probability or the dynamics and the state satisfies the markov property.
+
+13
+00:01:26,573 --> 00:01:35,956
+which means that the state at time t+1 is independent of the state at time t-1 when condition on the
+current state st
+
+14
+00:01:36,059 --> 00:01:40,713
+the markov property is the main thing that distinguishes the state from the observation
+
+15
+00:01:40,799 --> 00:01:45,039
+the state has to satisfy the markov
+property whereas the observation does not
+
+16
+00:01:45,040 --> 00:01:55,571
+and we learn in the imitation learning lecture that the observation is some stochastic function of the state which may or may not contain all the information necessary to infer the full state.
+
+17
+00:01:55,848 --> 00:01:58,216
+so that's kind of the primary difference
+
+18
+00:01:58,240 --> 00:02:10,960
+we will discuss algorithms for both fully observed reinforcement learning
+where we have access to the state and partially observed reinforcement learning where you only have access to an observation
+
+19
+00:02:11,120 --> 00:02:14,168
+all right so that's the markov property
+
+20
+00:02:14,480 --> 00:02:26,187
+and typically you'll see me write the policy as π_θ(a_t /o_t) or π_θ(a_t / s_t)
+depending on whether i'm talking about the partially observed or the fully observed case
+
+21
+00:02:26,215 --> 00:02:31,636
+i will sometimes get a little sloppy and use
+st when in fact you could also use ot.
+
+22
+00:02:31,661 --> 00:02:37,840
+but in cases, where this distinction is
+important i'll make a remark in the lectures
+
+23
+00:02:38,019 --> 00:02:47,279
+so in imitation learning we saw that we could collect a data set let's
+say of humans driving a vehicle consisting of observation action tuples
+
+24
+00:02:47,280 --> 00:02:54,399
+and then use supervised learning algorithms to figure out how to
+train a policy to take actions that resemble those of the expert
+
+25
+00:02:54,400 --> 00:03:05,279
+in today's lecture we'll introduce the formalism of reinforcement learning
+which allows us to train these policies without having access to expert data
+
+26
+00:03:05,280 --> 00:03:15,119
+so to do that of course we need to define what it is that we want the policy to
+do and we define the objective by means of something called a reward function
+
+27
+00:03:15,120 --> 00:03:23,119
+so we could say well which action is better or worse if you're driving this car if
+you don't have any data how can you say what is a good action what is a bad action
+
+28
+00:03:23,120 --> 00:03:29,635
+so the reward function essentially tells you that the reward function
+is a scalar valued function of the state and the action
+
+29
+00:03:29,675 --> 00:03:35,279
+although sometimes it can depend on only the state most
+generally it can depend on both the state and the action
+
+30
+00:03:35,327 --> 00:03:39,148
+and it tells us which states and actions
+are better
+
+31
+00:03:39,219 --> 00:03:47,999
+so for example if you're trying to drive a car you could say a state
+where the car is driving quickly on the road is a high reward state
+
+32
+00:03:48,000 --> 00:03:53,039
+whereas a state where the car is collided
+with another car is a low reward state
+
+33
+00:03:53,040 --> 00:04:01,279
+but crucially the objective in reinforcement learning is
+not just to take actions that have high rewards right now
+
+34
+00:04:01,280 --> 00:04:05,074
+but rather to take actions that will
+lead to higher awards later
+
+35
+00:04:05,120 --> 00:04:14,079
+so if you're driving on the road a little too fast you might be getting a high reward
+but that might lead to an inevitable collision later that will lead to low reward
+
+36
+00:04:14,080 --> 00:04:21,767
+so you have to consider the future rewards when choosing the current actions and that's really at the heart of the decision decision making problem
+
+37
+00:04:21,767 --> 00:04:30,457
+that's at the heart of the reinforcement learning problems how do you
+choose the right actions now to receive high rewards later.
+
+38
+00:04:30,516 --> 00:04:44,478
+together the state the action the reward and the transition probabilities define
+what we call a markov decision process it is a decision process on a markovian state
+
+39
+00:04:44,479 --> 00:04:50,719
+so let's build up towards a full formal
+definition of markov decision processes
+
+40
+00:04:50,720 --> 00:04:53,695
+we'll start with something called a markov chain.
+
+41
+00:04:53,720 --> 00:05:02,959
+the markov chain is named after andrei markov who was a mathematician
+who pioneered the study of stochastic processes including markov chains
+
+42
+00:05:02,960 --> 00:05:12,420
+and the markov chain has a very simple definition it consists
+of just two things a set of states s and a transition function t.
+
+43
+00:05:12,515 --> 00:05:17,758
+the state space is simply a set which
+could be either discrete or continuous
+
+44
+00:05:17,759 --> 00:05:23,359
+so you could have a discrete state in which case
+each state is a discrete element a finite size set
+
+45
+00:05:23,360 --> 00:05:31,918
+or you could have a continuous state in which case perhaps
+your states correspond to real valued vectors in Rn.
+
+46
+00:05:31,919 --> 00:05:38,799
+t is a transition operator it can also be referred
+to as a transition probability or a dynamics function
+
+47
+00:05:38,800 --> 00:05:42,055
+it specifies a conditional probability
+distribution
+
+48
+00:05:42,080 --> 00:05:51,976
+so in a markov chain t denotes the probability of the
+state at time t plus 1 condition on the state of time t
+
+49
+00:05:52,001 --> 00:06:00,478
+and the reason that it's called an operator is because if we
+represent the probabilities of each state at time step t as a vector
+
+50
+00:06:00,479 --> 00:06:09,487
+so let's say we have n states this becomes a vector with n elements
+and we can call it mu t comma i for the probability of the ith state
+
+51
+00:06:09,600 --> 00:06:19,439
+the whole vector would be called mu t then we can
+write the the transition probabilities as a matrix
+
+52
+00:06:19,440 --> 00:06:25,463
+where the ijth entry is the probability of going
+into state i if you're currently in the state j
+
+53
+00:06:25,536 --> 00:06:31,918
+and if we do this then we can express the vector of
+state probabilities at the next time step mu t plus one
+
+54
+00:06:31,966 --> 00:06:42,863
+as simply a matrix vector product between the matrix of
+probabilities t and the vector of state probabilities mu t
+
+55
+00:06:42,888 --> 00:06:50,784
+this is simply a way of writing the chain rule of
+probability with a little bit of linear algebra.
+
+56
+00:06:50,809 --> 00:06:58,190
+but, here you can see that t acts on mu mu t as a linear
+operator which is why we call the transition operator
+
+57
+00:06:58,246 --> 00:07:07,039
+it's an operator when applied to the current vector of state
+probabilities produces the next vector of state probabilities
+
+58
+00:07:07,432 --> 00:07:12,047
+so here's the graphical model
+corresponding to the markov chain
+
+59
+00:07:12,080 --> 00:07:17,840
+and here is the edge denoting transition
+probabilities
+
+60
+00:07:18,319 --> 00:07:33,360
+and of course the states in the markov chain denote the states in the markov chain satisfy the markov property which means that the state at time t plus one is conditionally independent of the state at time t minus 1 given the state at time t
+
+61
+00:07:34,080 --> 00:07:38,799
+all right, now the markov chain by itself doesn't
+allow us to specify a decision making problem
+
+62
+00:07:38,800 --> 00:07:42,375
+because there's no notion of actions
+
+63
+00:07:42,400 --> 00:07:49,439
+so in order to go towards the notion of actions,
+we need to turn the markov chain into a markov decision process
+
+64
+00:07:49,440 --> 00:07:54,511
+and this was really a much more recent
+invention pioneer than the 1950s.
+
+65
+00:07:54,741 --> 00:08:03,375
+so the markov decision process adds a few additional objects to
+the markov chain it adds an action space and a reward function
+
+66
+00:08:03,400 --> 00:08:07,484
+so now we have a state space which is a discrete or continuous set of states.
+
+67
+00:08:07,508 --> 00:08:11,758
+we have an action space which is also a discrete or continuous set
+
+68
+00:08:11,759 --> 00:08:24,959
+so the graphical model now contains both states and actions and our transition probabilities
+are now conditioned on both states and actions so we have p of st plus one given st comma a t
+
+69
+00:08:24,960 --> 00:08:31,800
+t is still called the transition operator but it can no
+longer be expressed as a matrix now it's actually a tensor
+
+70
+00:08:31,825 --> 00:08:37,440
+because it has three dimensions the next
+state the current state and the current action
+
+71
+00:08:37,888 --> 00:08:47,278
+but we can do the same kind of linear algebra trick so if we let
+mu t comma j denote the probability of being in state j at time t
+
+72
+00:08:47,279 --> 00:08:53,518
+and we can have another vector that will
+denote the probability of taking some action
+
+73
+00:08:53,543 --> 00:09:02,811
+and now we can write t as a tensor so t i j k is the probability
+of entering state i if you're in state j and take action k.
+
+74
+00:09:02,836 --> 00:09:20,375
+then you can write a linear form that describes the state probability mu t plus one comma i at the next time step as a linear function of the current state probabilities the current action probabilities and the transition probabilities.
+
+75
+00:09:20,415 --> 00:09:32,880
+so that means that this transition operator although it is now a tensor is still a linear operator
+that transforms current action and state probabilities into next time step state probabilities
+
+76
+00:09:33,519 --> 00:09:43,571
+now we also have this reward function and the reward function is a mapping
+from the cartesian product of the state in action space into real value numbers
+
+77
+00:09:43,795 --> 00:09:48,317
+and this is what allows us to define
+an objective for reinforcement learning
+
+78
+00:09:48,731 --> 00:09:58,494
+so we call r of st comma a_t the reward and our objective which i
+will define a few slides from now will be to maximize total rewards
+
+79
+00:09:58,810 --> 00:10:01,895
+but before i do that, i just want to extend this markov decision
+
+80
+00:10:01,920 --> 00:10:12,959
+process definition to also define the partially observed markov decision
+process and this is what will allow us to bring in the notion of observations
+
+81
+00:10:11,040 --> 00:10:18,958
+so a partially observed markov decision process further augments
+the definition with two additional objects an observation space o
+
+82
+00:10:18,959 --> 00:10:24,310
+and an emission probability
+or an observation probability e.
+
+83
+00:10:24,570 --> 00:10:31,494
+so again, s is the state space, a is an
+action space and o is now an observation space
+
+84
+00:10:31,519 --> 00:10:39,999
+the graphical model now looks the same as it did for the mdp with the
+addition that we have these observations o that depend on the state
+
+85
+00:10:40,000 --> 00:10:47,048
+so we have a transition operator just like before and now
+we have an emission probability p(o_t / s_t).
+
+86
+00:10:47,073 --> 00:10:50,615
+of course we also have the reward
+function
+
+87
+00:10:50,640 --> 00:10:58,497
+the reward function is still mapping from states and actions to real numbers
+so this the reward function convention is the final states not on observations
+
+88
+00:10:58,640 --> 00:11:09,200
+but typically in a partially observed markov decision process or palmdp, we
+would be making decisions based on observations without access to the true states
+
+89
+00:11:09,440 --> 00:11:18,239
+all right. now, that we've defined the mathematical objects of the markov chain
+the markov decision process and the partially observed markov decision process
+
+90
+00:11:18,240 --> 00:11:22,615
+let's define an objective for
+reinforcement learning
+
+91
+00:11:22,640 --> 00:11:30,879
+in reinforcement learning, we're going to be learning some object that defines
+a policy so for now let's just assume that we learn the policy directly
+
+92
+00:11:30,880 --> 00:11:35,119
+and we'll see later on how there are some other
+methods that might represent the policy implicitly
+
+93
+00:11:35,120 --> 00:11:39,585
+but for now we'll be explicitly learning pi theta (a/s).
+
+94
+00:11:39,931 --> 00:11:44,934
+we'll come back to the partial observed case later for
+now let's just say that our policy is conditioned on s
+
+95
+00:11:44,959 --> 00:11:48,769
+and theta corresponds to the parameters of the policy
+
+96
+00:11:48,794 --> 00:11:55,199
+so if the policy is a deep neural net then theta
+denotes the parameters of that deep neural net
+
+97
+00:11:55,200 --> 00:12:06,624
+the state goes into the policy, the action comes out and then the state and action go into the
+transition probability basically the physics that govern the world which produces the next state
+
+98
+00:12:07,040 --> 00:12:11,015
+that's the process that we are controlling.
+
+99
+00:12:11,040 --> 00:12:16,476
+now in this process we can write down a
+probability distribution over trajectories.
+
+100
+00:12:16,501 --> 00:12:24,239
+so trajectories are sequences of states and actions
+s1a1 s2a2 etc etc until you get to state st at.
+
+101
+00:12:24,240 --> 00:12:34,524
+for now we will assume that our control problem is finite horizon which means that the
+decision making task lasts for a fixed number of time steps capital t and then ends.
+
+102
+00:12:34,793 --> 00:12:38,300
+we will extend this to the infinite horizon setting shortly,
+
+103
+00:12:38,412 --> 00:12:44,879
+but for now we'll write down the finite horizon version
+because it's quite a bit easier to uh to start with
+
+104
+00:12:44,880 --> 00:12:57,199
+so if we write down the joint distribution of our states and actions and here i'm putting the
+subscript theta on this joint distribution to indicate that it depends on the policy pi theta
+
+105
+00:12:57,200 --> 00:13:02,799
+we can factorize it by using the chain rule in terms
+of probability distributions that we've already defined
+
+106
+00:13:02,800 --> 00:13:13,975
+so we have an initial state distribution p of s1.
+i sort of brush this under the rug when i define the markov chain the mdp and the palmdp. but all these also have an initial state distribution p of s1
+
+107
+00:13:14,000 --> 00:13:26,398
+and then we have a product over all time steps of the probability of an action (a_t/ s_t) and the probability of the transition to the next time step (s_t+1/s_t,a_t)
+
+108
+00:13:26,399 --> 00:13:29,415
+now i said this is derived from the
+chain rule of probability
+
+109
+00:13:29,440 --> 00:13:34,198
+but of course in the chain rule of probability
+you need to condition on all past variables
+
+110
+00:13:34,297 --> 00:13:41,278
+but here we are exploiting the markov property to
+drop the dependence on st minus 1 st minus 2 etc etc
+
+111
+00:13:41,279 --> 00:13:47,269
+because we know that st plus 1 is conditionally
+independent of st minus 1 given st
+
+112
+00:13:47,294 --> 00:13:52,320
+so this is how we can
+define the tree distribution
+
+113
+00:13:52,800 --> 00:14:01,020
+and for notational brevity i will sometimes
+write p of tau to denote p of s1 through s_t, a_t
+
+114
+00:14:01,045 --> 00:14:09,760
+so tau is just a shorthand for trajectory and
+all it means is a sequence of states and actions
+
+115
+00:14:10,320 --> 00:14:21,433
+so having defined the trajectory distribution, we can actually define an objective for reinforcement learning
+and we can define that objective as an and we can define that objective as an under the trajectory distribution
+
+116
+00:14:21,458 --> 00:14:27,278
+so the goal in reinforcement learning is to
+find the parameters theta that define our policy
+
+117
+00:14:27,279 --> 00:14:34,398
+so as to maximize the expected value
+of the sum of rewards over the trajectory
+
+118
+00:14:34,399 --> 00:14:41,999
+so we would like a policy that produces trajectories
+that have the highest possible rewards in expectation
+
+119
+00:14:42,000 --> 00:14:52,716
+and the expectation of course accounts for the uh stochasticity of the
+policy the transition probabilities and the initial state distribution
+
+120
+00:14:52,741 --> 00:14:58,159
+so this is the definition of the reinforced
+learning objective that we're going to work with
+
+121
+00:14:58,160 --> 00:15:04,648
+there are of course a few variants on this and we'll derive them over
+the course of the next few lectures this is the most basic version.
+
+122
+00:15:04,673 --> 00:15:12,135
+so at this point, i would like all of you to pause and look
+carefully at the subjective and really make sure that you understand what this means
+
+123
+00:15:12,160 --> 00:15:19,156
+that you understand what it means to have a sum of rewards,
+what it means to take their expectation under a trajectory distribution
+
+124
+00:15:19,279 --> 00:15:27,141
+what a trajectory distribution is and how it is influenced by our choice
+of policy parameters theta which in turn influence the policy pi theta
+
+125
+00:15:27,166 --> 00:15:33,278
+because if this part is unclear then what follows in the
+remainder of this lecture will be quite hard to follow
+
+126
+00:15:33,279 --> 00:15:43,120
+so please take a moment to think about this and if you have any questions about
+the trajectory distribution please be sure to write a comment on the video
+
+127
+00:15:44,054 --> 00:15:46,978
+all right. let's proceed.
+
+128
+00:15:47,003 --> 00:16:03,734
+so, one of the things that we might notice about this factorization of the structure distribution is that
+it actually although it's a it's defined in terms of the objects that we had in the markov decision process
+
+129
+00:16:03,759 --> 00:16:07,254
+it can also be interpreted as a markov
+chain
+
+130
+00:16:07,279 --> 00:16:12,879
+and to interpret this as a markov chain,
+we need to define a kind of augmented state space.
+
+131
+00:16:12,880 --> 00:16:20,800
+so our original state space is s but we also have these
+actions and the actions make this a markov decision process
+
+132
+00:16:21,199 --> 00:16:30,159
+but we know that the action depends on the state based on the policy so pi theta
+a t given s t allows us to get a distribution of our actions conditioned on states
+
+133
+00:16:30,160 --> 00:16:36,039
+so we can do is we can group the state in
+action together into a kind of augmented state.
+
+134
+00:16:36,064 --> 00:16:42,295
+and now,  the augmented
+states actually form a markov chain
+
+135
+00:16:42,320 --> 00:16:58,639
+so p of s t plus one comma a t plus one given s t comma a t the transition operator in this
+augmented markov chain is simply the product of the transition operator in the mdp and the policy
+
+136
+00:17:01,120 --> 00:17:08,879
+so this can allow us to define the objective in a slightly different
+way that will be convenient to use in some of our later derivations
+
+137
+00:17:08,880 --> 00:17:17,119
+so far, i've defined the objective as an expected value
+under the trajectory distribution of the sum of rewards
+
+138
+00:17:17,120 --> 00:17:22,958
+but remember that our distribution actually
+follows a markov chain with this augmented space
+
+139
+00:17:22,959 --> 00:17:30,159
+and this transition operator is the product
+of the mdp transitions and the policy
+
+140
+00:17:30,160 --> 00:17:43,321
+so we could also write the objective by linearity of expectation as the sum over time of the
+expected values under the state actual marginal in this markov chain of the reward of that time step.
+
+141
+00:17:43,346 --> 00:17:53,279
+so this is just using linearity of expectation to take the sum out of the
+expectation so that you have a sum over t of the expectation over tau of r s_t a_t
+
+142
+00:17:53,280 --> 00:18:01,279
+and then since the thing inside the expectation not only depends
+on s_t a_t, we can marginalize all the other variables out
+
+143
+00:18:01,280 --> 00:18:10,639
+and we are left with a sum over the expectation
+under p theta s t comma a t of r s t a t
+
+144
+00:18:10,640 --> 00:18:19,599
+now this might seem like kind of a useless little mathematical
+you know kind of rewriting of the original objective.
+
+145
+00:18:19,600 --> 00:18:25,119
+but it turns out to be quite useful if we want
+to extend this to the infinite horizon case
+
+146
+00:18:25,120 --> 00:18:36,559
+so this marginal p theta s t given a t in a finite time markov chain
+can be obtained just by marginalizing out all the other time steps
+
+147
+00:18:36,640 --> 00:18:41,495
+but we can also use this objective to
+get the infinite horizon case
+
+148
+00:18:41,520 --> 00:18:44,695
+so what if t equals infinity?
+
+149
+00:18:44,720 --> 00:18:49,376
+the first thing that happens if t equals infinity
+is your objective might become ill-defined.
+
+150
+00:18:49,401 --> 00:18:58,399
+for example, if your reward your reward is always positive then you have a
+sum of an infinite number of positive numbers which is going to be infinity.
+
+151
+00:18:58,400 --> 00:19:14,345
+so we need some way to make the objective finite and there are a few ways of doing this one way of doing is well which i'll
+use now for convenience but is actually not the most common way is to use what's called the average reward formulation.
+
+152
+00:19:14,370 --> 00:19:19,199
+so you basically take this sum of expected
+rewards and you divide it by capital t
+
+153
+00:19:19,200 --> 00:19:27,759
+so basically the average reward overall time steps dividing by capital
+capital, t is a constant in general, this doesn't change the maximum
+
+154
+00:19:27,760 --> 00:19:38,079
+but then you can take t to infinity and get a well-defined quantity later on we'll learn about
+something called discounts which is another way to get a finite number for the infinite horizon case.
+
+155
+00:19:38,080 --> 00:19:40,695
+but, making this finite is pretty easy.
+
+156
+00:19:40,720 --> 00:19:45,952
+let's talk about how we can actually
+define an infinite horizon objective.
+
+157
+00:19:46,000 --> 00:20:02,484
+so we have our markov chain from before and our augmented markov chain has this transition operator so that means
+that we can write the vector st plus one comma a t plus one as some linear operator t applied to st comma a t.
+
+158
+00:20:02,509 --> 00:20:06,615
+and this is the state action
+transition operator
+
+159
+00:20:06,640 --> 00:20:18,080
+and more generally, we can skip k time steps ahead and we can say
+that s_t+k, a_t+k is equal to t to the power k times s_t, a_t.
+
+160
+00:20:18,400 --> 00:20:33,950
+so one question we could ask is does the state action marginal p of s t comma a t converge to a
+stationary distribution basically converge to a single distribution as little k goes to infinity
+
+161
+00:20:33,975 --> 00:20:42,639
+if this is true that means that we should be able to write
+the stationary distribution mu as being equal to t times mu
+
+162
+00:20:42,640 --> 00:20:51,839
+and under a few technical assumptions namely ergodicity and the chain
+being aperiodic we can actually show the stationary distribution exists.
+
+163
+00:20:51,840 --> 00:21:04,597
+intuitively being a periodic simply means exactly what it sounds like that the markov chain is not periodic and being ergotic means that roughly speaking every state can be reached from every other state with non-zero probability.
+
+164
+00:21:04,622 --> 00:21:11,678
+the ergotic assumption is important because it prevents a situation where
+if you start in one part of the mdp you might never reach another one
+
+165
+00:21:11,679 --> 00:21:19,038
+so if this is true if starting in one part may result in you
+never reaching another part then where you start always matters
+
+166
+00:21:19,039 --> 00:21:21,104
+and the stationary distribution doesn't exist
+
+167
+00:21:21,144 --> 00:21:31,677
+but if this is not the case if there's even a slight chance of getting
+to any state from any other state eventually then you will have a stationary distribution provided as a periodic
+
+168
+00:21:31,840 --> 00:21:40,239
+so the station distribution must obey this equation mu equals
+t times mu because otherwise it's not a stationary distribution
+
+169
+00:21:40,240 --> 00:21:50,158
+so stationary means it's the same before and after the transition and if it's the same before
+and after the transition then applying t enough times will eventually allow you to reach it
+
+170
+00:21:50,159 --> 00:22:01,999
+you can solve for the station distribution uh simply by rearranging this equation to see that
+it is equal to tau minus i times so they can be written as tau minus i times mu equals 0.
+
+171
+00:22:02,000 --> 00:22:09,199
+and remember that mu is a distribution so it's a
+vector of numbers that are all positive and sum to 1.
+
+172
+00:22:09,200 --> 00:22:19,199
+so one way you can find mu is by finding the eigenvector
+with eigenvalue one for the matrix defined by t
+
+173
+00:22:19,200 --> 00:22:23,335
+so mu is eigenvector of t with
+eigenvalue one
+
+174
+00:22:23,360 --> 00:22:28,880
+and it always exists under the
+ergodicity and aperiodicity assumptions
+
+175
+00:22:29,039 --> 00:22:38,969
+so if we know that if we run this markov chain forward enough
+times, eventually it'll settle into mu, that means that as t goes to infinity,
+
+176
+00:22:38,993 --> 00:22:45,424
+this sum over the expectations of the marginals
+becomes dominated by the stationary distribution terms
+
+177
+00:22:45,449 --> 00:22:56,465
+so you have some finite number of terms initially that are not in the stationary distribution mu1 mu2 mu3 etc. then you have
+infinitely many terms that are very very close to the stationary distribution
+
+178
+00:22:56,490 --> 00:23:02,162
+which means that once you put in the average reward case so you're going to find put a 1 over t.
+
+179
+00:23:03,600 --> 00:23:10,639
+and then take the limit as t goes to infinity, the limit is basically going
+to be the expected value of the reward under the stationary distribution
+
+180
+00:23:10,640 --> 00:23:18,400
+and that allows us to define an objective for reinforcement
+learning in the infinite horizon case as t goes to infinity
+
+181
+00:23:18,559 --> 00:23:31,440
+this is perhaps a lot to take in so this would be a good place to pause think about the derivation on this
+slide and if something is unclear or you have any questions please be sure to write them in the comments
+
+182
+00:23:33,520 --> 00:23:50,079
+now, one last bit that i want to describe in this section which is very important for understanding the basic principle behind a lot of reinforcement learning methods is that reinforcement learning is really about optimizing expectations
+
+183
+00:23:50,080 --> 00:24:00,479
+so although we talk about reinforcement learning in terms of choosing actions that
+lead to high rewards we're always really concerned about expected values of rewards
+
+184
+00:24:00,480 --> 00:24:14,534
+and the interesting thing about expected values is that expected values can be continuous in the parameters of the
+corresponding distributions even when the function that we're taking the expectation of is itself highly discontinuous
+
+185
+00:24:14,561 --> 00:24:32,107
+and this is a really important fact for understanding why reinforced learning algorithms can use smooth optimization methods like
+gradient descent to optimize objectives that are seemingly non-differentiable like binary rewards for winning or losing a game
+
+186
+00:24:32,332 --> 00:24:35,338
+let me explain this with a little toy
+example.
+
+187
+00:24:35,760 --> 00:24:47,278
+let's imagine that you're driving down a mountain road and your reward is plus one
+if you stay on the road and zero if you fall or negative one if you fall off the road
+
+188
+00:24:47,279 --> 00:24:50,301
+so the reward function here appears to be discontinuous.
+
+189
+00:24:50,326 --> 00:24:53,839
+there is a discontinuity between staying
+on the road and falling off the road,
+
+190
+00:24:53,840 --> 00:24:59,941
+and if you try to optimize the reward function with respect to for
+example the position of the car,
+
+191
+00:24:59,965 --> 00:25:10,959
+that optimization problem can't really be solved with gradient based methods, because the reward is not a continuous or much less a differentiable function of the car's position
+
+192
+00:25:10,960 --> 00:25:21,599
+however if you have a probability distribution over some action, let's
+say that abstractly that you just get to choose like fall or don't fall
+
+193
+00:25:21,600 --> 00:25:34,240
+so you have a binary action the other fall you don't fall and it's a bernoulli random variable with
+parameter theta so with probability theta you fall off with probability one minus theta you don't fall off
+
+194
+00:25:34,559 --> 00:25:42,079
+now the interesting thing is that the expected value of the
+reward with respect to pi theta is actually smooth in theta
+
+195
+00:25:42,080 --> 00:25:49,678
+because you have a probability of theta falling off which has a reward
+of minus one and a probability of one minus theta staying on the road
+
+196
+00:25:49,679 --> 00:26:00,719
+so the reward is one minus theta plus one minus theta minus theta
+and that's perfectly smooth and perfectly differentiable in theta
+
+197
+00:26:00,720 --> 00:26:12,215
+so this is this is a very important property that will come up again and again and that really explains
+why reinforcement algorithms can optimize seemingly non-smooth and even sparse reward functions,
+
+198
+00:26:12,240 --> 00:26:25,359
+which is that expected values of non-smooth and non-differentiable functions under differentiable and smooth probability distributions are themselves smooth and differentiable
+
+199
+00:26:25,360 --> 00:26:29,840
+okay let's pause there
+

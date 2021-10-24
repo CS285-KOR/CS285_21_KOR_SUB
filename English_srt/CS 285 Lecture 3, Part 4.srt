@@ -1,4 +1,4 @@
-﻿1
+1
 00:00:00,719 --> 00:00:01,920
 all right now let's go over a full
 
@@ -168,7 +168,7 @@ important thing is that we want it to be
 
 43
 00:01:40,560 --> 00:01:44,560
-a subclass of an end module
+a subclass of an nn.Module
 
 44
 00:01:44,799 --> 00:01:48,159
@@ -220,7 +220,7 @@ and each of those is going to be using a
 
 56
 00:02:17,040 --> 00:02:20,640
-built-in nn.linear class which is a
+built-in nn.Linear class which is a
 
 57
 00:02:20,640 --> 00:02:22,640
@@ -252,7 +252,7 @@ going to send it through a linear layer
 
 64
 00:02:39,120 --> 00:02:41,519
-then a related non-linearity
+then a ReLU non-linearity
 
 65
 00:02:41,519 --> 00:02:43,280
@@ -476,7 +476,7 @@ automatically have their gradients
 
 120
 00:05:12,160 --> 00:05:16,080
-tracked so requires grad equals true
+tracked so requires_grad = true
 
 121
 00:05:17,840 --> 00:05:20,320
@@ -1056,7 +1056,7 @@ which zeroes out all the gradients
 
 265
 00:11:27,519 --> 00:11:29,680
-then you do lost backward to populate
+then you do loss.backward() to populate
 
 266
 00:11:29,680 --> 00:11:32,079
@@ -1404,7 +1404,7 @@ it was originally initialized on cpu is
 
 352
 00:15:07,440 --> 00:15:09,199
-using the two function so we just use
+using the to() function so we just use
 
 353
 00:15:09,199 --> 00:15:13,839
@@ -1420,7 +1420,7 @@ so kind of like you can't convert tensors that have
 
 356
 00:15:25,120 --> 00:15:27,199
-gradients being tracked into numpy areas
+gradients being tracked into numpy arrays
 
 357
 00:15:27,199 --> 00:15:29,360
@@ -2145,4 +2145,3 @@ we can load it and use it to make
 537
 00:23:24,720 --> 00:23:28,200
 predictions again
-

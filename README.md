@@ -20,6 +20,8 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 3. 강의 영상을 Eng.srt/Kor.srt 파일과 함께 재생합니다.
 
 ## Process
+
+![](./img/github.png)
 [![](./img/first_draft.png)](./docs/first_draft.md)
 [![](./img/second_check.png)](./docs/second_check.md)
 

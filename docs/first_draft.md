@@ -8,7 +8,7 @@ Github Repository에 있는 [Projects](https://docs.github.com/en/issues/organiz
 
 `Projects`에는 영어 자막 작업을 위한 `English srt`와 한글 자막 작업을 위한 `Korean srt`프로젝트 2개가 있습니다. 메인 Markdown 파일인 [README.md](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB#table-of-contentswith-contributors)강의 리스트에서 작업이 완료되지 않은 강의를 선정하여 프로젝트 보드에 Card를 만듭니다.
 
-<img src="../img/process_1.png" width="500"/>
+<img src="../img/process_1.png"/>
 
 작업할 자막 언어에 따라 `English srt` 혹은 `Korean srt` 프로젝트를 클릭합니다. `To do`/`In Progress`/`Done` 총 3가지 작업 분류 열이 있습니다.
 - `To do` : 작업 대기. 아직 작업자 배정 안됨.
@@ -33,7 +33,7 @@ Github Repository에 있는 [Projects](https://docs.github.com/en/issues/organiz
 목표기간: 2021.11.07 - 2021.11.15
 ```
 
-<img src="../img/process_2.png" width="500"/>
+<img src="../img/process_2.png"/>
 
 
 ## 2. 번역 작업 툴을 활용하여 번역하기
@@ -43,10 +43,26 @@ Github Repository에 있는 [Projects](https://docs.github.com/en/issues/organiz
 [<img src="../img/aegisub.png" width="250"/>](./aegisub.md)
 [<img src="../img/subtitle_edit.png" width="250"/>](./subtitle_edit.md)
 
+> Aegisub Tutorial Thanks to @karl6885
+
+> Subtitle Edit Tutorial Thanks to @curieuxjy
+
+각자 작업환경에 맞는 프로그램을 이용하여 진행해주세요.
+
 ## 3. 번역 작업 후 자막 파일 업로드
 
-작업을 완료한 후에는 Github에 업로드 합니다. 메인 리드미에 작업자 태그를 작성합니다.
+작업을 완료한 후에는 Github에 srt 파일을 업로드 합니다. 
+
+<img src="../img/process_5.png"/>
+
+업로드 한 후에는 [README](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB#table-of-contentswith-contributors)에 `Status` 및 `Contributor` 태그를 작성합니다.
+- `Status` : 1st Draft, 2nd Check인지에 따라 표시
+- `Contributor` : Github ID로 태그
+
+<img src="../img/process_3.png" width="500"/>
 
 ## 4. 번역 작업 완료 마무리
 
-`1.`에서 선정했던 작업카드를 `Done` 칼럼으로 옮겨서 마무리 합니다.
+`1.`에서 선정했던 작업카드를 `Done` 칼럼으로 옮겨서 마무리 합니다. 목표 기간과 실행 기간의 차이는 있을 수 있습니다.
+
+<img src="../img/process_4.png"/>

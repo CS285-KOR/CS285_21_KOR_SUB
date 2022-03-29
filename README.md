@@ -28,45 +28,48 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 ## Table of Contents(with Contributors)
 > ✒️:1st Draft | 🔍:2nd Check | 🗂:Archived
 
+
   <details>
   <summary><b><u>Lecture 01~06</u></b></summary>
 
   *   <details>
-      <summary><b>Mid Toggle</b></summary>
+      <summary><b>Lecture 01</b></summary>
+      <p>
+          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a> 
+          <a href="./English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt">Lsert 1</a>
+          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
+          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
+          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Lecture 02</b></summary>
       <p>
           <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
       </p>
       </details>
   *   <details>
-      <summary><b>Miewre</b></summary>
+      <summary><b>Lecture 03</b></summary>
       <p>
-          |No.|Lecture|English Sub|Korean Sub|Status|
-          |--|--------|-----------|----------|------|
-          |d|d|d|d|d|
+          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
       </p>
       </details>
   *   <details>
-      <summary><b>Mid Toggle</b></summary>
+      <summary><b>Lecture 04</b></summary>
       <p>
-          Great, Middle Layer summary text working fine.
+          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
       </p>
       </details>
   *   <details>
-      <summary><b>Mid Toggle</b></summary>
+      <summary><b>Lecture 05</b></summary>
       <p>
-          Great, Middle Layer summary text working fine.
+          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
       </p>
       </details>
   *   <details>
-      <summary><b>Mid Toggle</b></summary>
+      <summary><b>Lecture 06</b></summary>
       <p>
-          Great, Middle Layer summary text working fine.
-      </p>
-      </details>
-  *   <details>
-      <summary><b>Mid Toggle</b></summary>
-      <p>
-          Great, Middle Layer summary text working fine.
+          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
       </p>
       </details>    
   </details>

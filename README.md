@@ -26,20 +26,202 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 [![](./img/second_check.png)](./docs/second_check.md)
 
 ## Table of Contents(with Contributors)
-
-### Contributors
-- Jungyeon Lee [@curieuxjy](https://github.com/curieuxjy)
-- Yeongkyu Kim [@karl6885](https://github.com/karl6885) 
-- Hyunseok Cho [@hoyajigi](https://github.com/hoyajigi) 
-- HanYoung Kim [@pinga999](https://github.com/pinga999) 
-- KyuDo Hwang [@BEMELON](https://github.com/BEMELON)
-- Cheoljeong Park [@CheolJ](https://github.com/CheolJ)
-
 > ✒️:1st Draft | 🔍:2nd Check | 🗂:Archived
 
-|No.|Lecture|Duration|English Sub|Korean Sub|Status|Contributor|
-|--|--------|-------:|-----------|----------|------|-----------|
-| 1|[L1, Part 1](https://youtu.be/JHrlF10v2Og)|10:16|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt)|[Korean]()|✒️|@karl6885|
+  <details>
+  <summary><b><u>Lecture 01~06</u></b></summary>
+
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Miewre</b></summary>
+      <p>
+          |No.|Lecture|English Sub|Korean Sub|Status|
+          |--|--------|-----------|----------|------|
+          |d|d|d|d|d|
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>    
+  </details>
+  
+  
+  <details>
+  <summary><b><u>Lecture 07~12</u></b></summary>
+
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>    
+  </details>
+  
+  <details>
+  <summary><b><u>Lecture 13~18</u></b></summary>
+
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>    
+  </details>
+  
+  <details>
+  <summary><b><u>Lecture 19~23</u></b></summary>
+
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  </details>
+  
+  <details>
+  <summary><b><u>Guest Talk</u></b></summary>
+
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  *   <details>
+      <summary><b>Mid Toggle</b></summary>
+      <p>
+          Great, Middle Layer summary text working fine.
+      </p>
+      </details>
+  </details>
+
+
+|No.|Lecture|English Sub|Korean Sub|Status|
+|--|--------|-----------|----------|------|
+| 1||10:16|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt)|[Korean]()|✒️|@karl6885|
 | 2|[L1, Part 2](https://youtu.be/IoF7D0qec0I)|12:36|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%202.srt)|[Korean]()|✒️|@CheolJ|
 | 3|[L1, Part 3](https://youtu.be/BYoKE9yRy8g)|10:11|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%203.srt)|[Korean](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/Korean_srt/CS%20285%20Lecture%201%2C%20Part%203.ko.srt)|✒️|@curieuxjy|
 | 4|[L1, Part 4](https://youtu.be/xRmBEnI55es)|11:15|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%204.srt)|[Korean](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/Korean_srt/CS%20285%20Lecture%201%2C%20Part%204.ko.srt)|✒️|@hoyajigi|
@@ -116,6 +298,10 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 |75|[L16, Part 2](https://youtu.be/tKXMLG4FKpI)|7:33|[English]()|[Korean]()||@|
 |76|[L16, Part 3](https://youtu.be/KG1MsrGlPwQ)|18:17|[English]()|[Korean]()||@|
 |77|[L16, Part 4](https://youtu.be/0MBLPA4gZPA)|12:20|[English]()|[Korean]()||@|
+
+### Contributors
+You can check contributors [here](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/graphs/contributors).
+
 
 ## Contact
 오역과 오타에 관해서는 [Issue](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/issues)나 [Pull request](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/pulls)로 함께 번역의 질을 높여주시는 데 도움을 주셔도 좋고, curieuexjy@gmail.com으로 이메일을 보내주시면 감사하겠습니다.

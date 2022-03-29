@@ -26,7 +26,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 [![](./img/second_check.png)](./docs/second_check.md)
 
 ## Table of Contents(with Contributors)
-> ✒️:1st Draft | 🔍:2nd Check | 🗂:Archived
+> ✒️:1st Draft | 🔍:2nd Check
 
 
   <details>
@@ -34,12 +34,21 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 
   *   <details>
       <summary><b>Lecture 01</b></summary>
-      <p>
-          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a> 
-          <a href="./English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt">Lsert 1</a>
-          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
-          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
-          <a href="https://youtu.be/JHrlF10v2Og">L1, Part 1</a>
+      <p><a href="https://youtu.be/JHrlF10v2Og">L1, Part 1 ✒️</a> 
+      <a href="/English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt">🇺🇸</a>
+      <a href="/Korean_srt/CS%20285%20Lecture%201%2C%20Part%203.ko.srt">🇰🇷</a>
+      </p>
+      <p><a href="https://youtu.be/IoF7D0qec0I">L1, Part 2 ✒️</a> 
+      <a href="/English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt">🇺🇸</a>
+      <a href="/Korean_srt/CS%20285%20Lecture%201%2C%20Part%203.ko.srt">🇰🇷</a>
+      </p>
+      <p><a href="https://youtu.be/BYoKE9yRy8g">L1, Part 3 ✒️</a> 
+      <a href="/English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt">🇺🇸</a>
+      <a href="/Korean_srt/CS%20285%20Lecture%201%2C%20Part%203.ko.srt">🇰🇷</a>
+      </p>
+      <p><a href="https://youtu.be/xRmBEnI55es">L1, Part 4 ✒️</a> 
+      <a href="/English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt">🇺🇸</a>
+      <a href="/Korean_srt/CS%20285%20Lecture%201%2C%20Part%203.ko.srt">🇰🇷</a>
       </p>
       </details>
   *   <details>
@@ -224,7 +233,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 
 |No.|Lecture|English Sub|Korean Sub|Status|
 |--|--------|-----------|----------|------|
-| 1||10:16|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt)|[Korean]()|✒️|@karl6885|
+| 1||10:16|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt)|[Korean]()||@karl6885|
 | 2|[L1, Part 2](https://youtu.be/IoF7D0qec0I)|12:36|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%202.srt)|[Korean]()|✒️|@CheolJ|
 | 3|[L1, Part 3](https://youtu.be/BYoKE9yRy8g)|10:11|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%203.srt)|[Korean](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/Korean_srt/CS%20285%20Lecture%201%2C%20Part%203.ko.srt)|✒️|@curieuxjy|
 | 4|[L1, Part 4](https://youtu.be/xRmBEnI55es)|11:15|[English](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/English_srt/CS%20285%20Lecture%201%2C%20Part%204.srt)|[Korean](https://github.com/CS285-KOR-SUB/CS285_21_KOR_SUB/blob/main/Korean_srt/CS%20285%20Lecture%201%2C%20Part%204.ko.srt)|✒️|@hoyajigi|

@@ -1,0 +1,2072 @@
+1
+00:00:00,719 --> 00:00:05,175
+hello and welcome to the second lecture
+of cs285
+
+2
+00:00:05,200 --> 00:00:09,175
+today we're going to talk about
+supervised learning of behaviors
+
+3
+00:00:09,200 --> 00:00:13,095
+so let's start with a little bit of
+terminology and notation
+
+4
+00:00:13,120 --> 00:00:16,631
+if we have a regular supervised learning
+problem
+
+5
+00:00:16,656 --> 00:00:20,215
+let's say a computer vision problem an
+object recognition problem
+
+6
+00:00:20,240 --> 00:00:22,986
+we might want to recognize objects in an image
+
+7
+00:00:23,011 --> 00:00:24,694
+so we might have some input image
+
+8
+00:00:24,719 --> 00:00:27,014
+that goes through a deep neural network
+
+9
+00:00:27,039 --> 00:00:29,174
+and the output is a label
+
+10
+00:00:29,199 --> 00:00:35,148
+so the terminology we're going to use
+here is going to be kind of reinforcement learning terminology
+
+11
+00:00:35,173 --> 00:00:37,123
+and i'll gradually
+work from
+
+12
+00:00:37,148 --> 00:00:41,906
+using reinforcement terminology from us
+for a standard supervised learning example
+
+13
+00:00:41,931 --> 00:00:45,964
+to then turn that into a reinforcement
+learning problem
+
+14
+00:00:45,989 --> 00:00:49,895
+so we're going to call the input o for
+observation
+
+15
+00:00:49,920 --> 00:00:52,328
+and we're going to call the output a for action
+
+16
+00:00:52,353 --> 00:00:55,975
+but for now the input is an image
+and the output is a label
+
+17
+00:00:56,000 --> 00:01:00,191
+the neural network in the middle or in general
+whatever kind of model you might want to have
+
+18
+00:01:00,216 --> 00:01:04,557
+that maps the observations to actions
+we're going to call policy
+
+19
+00:01:04,582 --> 00:01:07,575
+and we'll denote it with the the
+letter pi
+
+20
+00:01:07,600 --> 00:01:11,833
+where the subscript theta represents the
+parameters of that policy
+
+21
+00:01:11,858 --> 00:01:15,783
+so in a neural net
+theta represents the weights of that neural net
+
+22
+00:01:15,808 --> 00:01:26,375
+so we have an input o an output a and a mapping between them
+pi subscript theta which gives a distribution over a given o
+
+23
+00:01:26,400 --> 00:01:30,454
+now in reinforcement learning of course
+we're concerned with
+
+24
+00:01:30,479 --> 00:01:32,656
+sequential decision making problems
+
+25
+00:01:32,681 --> 00:01:36,969
+so all of these inputs and outputs
+occur at some point in time
+
+26
+00:01:37,038 --> 00:01:41,991
+so we'll typically use a subscript
+t to denote the time step at which they happen
+
+27
+00:01:42,016 --> 00:01:45,549
+usually in reinforcement learning
+we deal with discrete time problems
+
+28
+00:01:45,574 --> 00:01:49,749
+so we assume that
+time is broken up into little discrete steps
+
+29
+00:01:49,774 --> 00:01:53,860
+and t is an integer that
+represents at which step do you observe o
+
+30
+00:01:53,885 --> 00:01:56,593
+and at which step do you emit a
+
+31
+00:01:56,618 --> 00:02:02,879
+so now pi theta gives a
+distribution over a t conditional ot
+
+32
+00:02:02,880 --> 00:02:05,454
+and of course unlike regular supervised learning
+
+33
+00:02:05,479 --> 00:02:10,965
+in reinforcement learning the output
+at one time step influences the input at the next
+
+34
+00:02:10,990 --> 00:02:15,434
+so a t has an effect on ot plus one
+
+35
+00:02:15,459 --> 00:02:20,559
+so if you for example fail to recognize
+the tiger then at the next time step
+
+36
+00:02:20,560 --> 00:02:26,399
+you might see something undesirable like
+maybe the tiger will be a lot closer to you
+
+37
+00:02:26,400 --> 00:02:32,615
+so you could extend this basic idea
+to learn policies
+
+38
+00:02:32,640 --> 00:02:37,119
+for control so obviously instead of outputting
+labels you would probably output something
+
+39
+00:02:37,120 --> 00:02:42,895
+that looks a lot more like an action but it
+could still be a discrete action it could still use a soft max distribution
+
+40
+00:02:42,920 --> 00:02:47,748
+so for instance
+you could choose from a discrete set of options upon seeing the tiger
+
+41
+00:02:47,773 --> 00:02:50,214
+but you could also
+have a continuous action
+
+42
+00:02:50,239 --> 00:02:55,520
+in which case pi theta outputs the
+parameters of some continuous distribution
+
+43
+00:02:55,545 --> 00:03:01,598
+such as the mean and variance of a
+multivariate normal or gaussian distribution
+
+44
+00:03:01,599 --> 00:03:06,535
+so to summarize the terminology ot
+represents the observation
+
+45
+00:03:06,560 --> 00:03:09,333
+a t represents the action
+
+46
+00:03:09,358 --> 00:03:16,294
+and then pi subscript theta a t given ot
+is the policy
+
+47
+00:03:16,319 --> 00:03:21,095
+now another term that we'll see a lot in
+reinforcement learning
+
+48
+00:03:21,120 --> 00:03:25,574
+is the state which we'll denote as st
+
+49
+00:03:25,599 --> 00:03:31,107
+and sometimes we'll see the policy
+written as a t given st
+
+50
+00:03:31,132 --> 00:03:33,920
+the difference between st and ot
+
+51
+00:03:33,945 --> 00:03:39,679
+is that the state is typically assumed to be
+a markovian state which i'll explain shortly
+
+52
+00:03:39,680 --> 00:03:44,055
+whereas ot is an observation that
+results from that state
+
+53
+00:03:44,080 --> 00:03:48,158
+so most generally we would write a
+policy as being conditional and observation
+
+54
+00:03:48,159 --> 00:03:53,425
+but sometimes we'll write it as being conditional and
+state and that is a more restrictive special case
+
+55
+00:03:53,450 --> 00:03:59,280
+so let me explain the distinction
+between states and observations
+
+56
+00:03:59,360 --> 00:04:04,428
+let's say that you observe this scene
+there is a cheetah chasing a gazelle
+
+57
+00:04:04,453 --> 00:04:09,919
+now this observation consists of an
+image and the image is made of pixels
+
+58
+00:04:09,920 --> 00:04:15,015
+those pixels might be sufficient to figure
+out where the cheetah and the gazelle are
+
+59
+00:04:15,040 --> 00:04:16,573
+or they might not be
+
+60
+00:04:16,598 --> 00:04:22,279
+but the image is produced
+by some underlying physics of some system
+
+61
+00:04:22,304 --> 00:04:26,159
+and that system has a state it has
+a kind of a minimal representation
+
+62
+00:04:26,160 --> 00:04:28,706
+so the image is the observation ot
+
+63
+00:04:28,731 --> 00:04:34,212
+the state is the representation of
+the current configuration of the system
+
+64
+00:04:34,237 --> 00:04:38,948
+which in this case might be for instance the position
+of the cheetah and the position of the gazelle
+
+65
+00:04:38,973 --> 00:04:42,493
+and maybe their velocities
+
+66
+00:04:42,518 --> 00:04:46,239
+now the observation might be altered in
+some way
+
+67
+00:04:46,264 --> 00:04:51,520
+so the full state cannot be inferred
+exactly for instance if a car
+
+68
+00:04:49,600 --> 00:04:53,199
+drives in front of the cheetah and you
+
+69
+00:04:51,520 --> 00:04:54,880
+can't see it
+
+70
+00:04:53,199 --> 00:04:56,880
+the observation might be insufficient to
+
+71
+00:04:54,880 --> 00:04:58,320
+deduce the state
+
+72
+00:04:56,880 --> 00:05:00,160
+but the state hasn't actually changed
+
+73
+00:04:58,320 --> 00:05:01,759
+the cheat is still where it was before
+
+74
+00:05:00,160 --> 00:05:03,680
+is just that now the image pixels and
+
+75
+00:05:01,759 --> 00:05:05,840
+the observation are not enough
+
+76
+00:05:03,680 --> 00:05:07,199
+to figure out where it is and that
+
+77
+00:05:05,840 --> 00:05:08,720
+really
+
+78
+00:05:07,199 --> 00:05:10,560
+gets at the difference between states
+
+79
+00:05:08,720 --> 00:05:12,639
+and observations states
+
+80
+00:05:10,560 --> 00:05:14,000
+are the true configuration of the system
+
+81
+00:05:12,639 --> 00:05:15,360
+an observation
+
+82
+00:05:14,000 --> 00:05:17,840
+is something that results from that
+
+83
+00:05:15,360 --> 00:05:21,680
+state which may or may not be enough
+
+84
+00:05:17,840 --> 00:05:23,360
+to deduce the state more formally
+
+85
+00:05:21,680 --> 00:05:24,960
+we can explain the distinction between
+
+86
+00:05:23,360 --> 00:05:27,199
+states and observations
+
+87
+00:05:24,960 --> 00:05:28,720
+by using the terminology of graphical
+
+88
+00:05:27,199 --> 00:05:31,360
+models
+
+89
+00:05:28,720 --> 00:05:33,039
+so we can draw a graphical model that
+
+90
+00:05:31,360 --> 00:05:36,080
+represents the relationship
+
+91
+00:05:33,039 --> 00:05:38,800
+between states and actions and
+
+92
+00:05:36,080 --> 00:05:40,240
+observations as i mentioned observations
+
+93
+00:05:38,800 --> 00:05:42,479
+result from states
+
+94
+00:05:40,240 --> 00:05:44,000
+so there's an arrow from s to o at every
+
+95
+00:05:42,479 --> 00:05:46,479
+time step
+
+96
+00:05:44,000 --> 00:05:48,160
+your policy uses the observations to
+
+97
+00:05:46,479 --> 00:05:49,680
+choose the action so that's the arrow
+
+98
+00:05:48,160 --> 00:05:51,280
+from o to a
+
+99
+00:05:49,680 --> 00:05:53,199
+and the state in action at the current
+
+100
+00:05:51,280 --> 00:05:55,520
+time step determines the state of the
+
+101
+00:05:53,199 --> 00:05:58,319
+next time step so s1 and a1
+
+102
+00:05:55,520 --> 00:05:58,319
+go to s2
+
+103
+00:05:58,639 --> 00:06:04,560
+now from inspecting this graphical model
+
+104
+00:06:02,319 --> 00:06:05,759
+we might conclude that there are certain
+
+105
+00:06:04,560 --> 00:06:09,280
+independencies
+
+106
+00:06:05,759 --> 00:06:11,759
+that are present in the system so
+
+107
+00:06:09,280 --> 00:06:13,840
+this is the policy pi this is the
+
+108
+00:06:11,759 --> 00:06:14,639
+transition probabilities p of s d plus
+
+109
+00:06:13,840 --> 00:06:18,479
+one given s t
+
+110
+00:06:14,639 --> 00:06:21,840
+a t and something we might note here
+
+111
+00:06:18,479 --> 00:06:21,840
+is that
+
+112
+00:06:22,000 --> 00:06:28,960
+p of s t plus 1 given s t 18
+
+113
+00:06:25,600 --> 00:06:30,080
+is independent of s t minus 1. so for a
+
+114
+00:06:28,960 --> 00:06:32,639
+state
+
+115
+00:06:30,080 --> 00:06:34,160
+if you know the current state then you
+
+116
+00:06:32,639 --> 00:06:35,440
+can figure out the distribution over the
+
+117
+00:06:34,160 --> 00:06:37,440
+next state
+
+118
+00:06:35,440 --> 00:06:39,039
+without any regard for the previous
+
+119
+00:06:37,440 --> 00:06:41,600
+state
+
+120
+00:06:39,039 --> 00:06:43,520
+that is to say the future is
+
+121
+00:06:41,600 --> 00:06:46,080
+conditionally independent of the past
+
+122
+00:06:43,520 --> 00:06:47,840
+given the present this is a very
+
+123
+00:06:46,080 --> 00:06:49,919
+important independence property
+
+124
+00:06:47,840 --> 00:06:51,520
+because it says that if you want to make
+
+125
+00:06:49,919 --> 00:06:54,560
+a decision
+
+126
+00:06:51,520 --> 00:06:56,479
+that will impact future states
+
+127
+00:06:54,560 --> 00:06:57,919
+you do not have to consider how you
+
+128
+00:06:56,479 --> 00:06:59,280
+reach the state you're currently in it's
+
+129
+00:06:57,919 --> 00:07:01,120
+enough to just consider your current
+
+130
+00:06:59,280 --> 00:07:01,599
+state and you can forget about previous
+
+131
+00:07:01,120 --> 00:07:04,960
+states
+
+132
+00:07:01,599 --> 00:07:07,199
+that led you to it this is called the
+
+133
+00:07:04,960 --> 00:07:08,880
+markov property and the markov property
+
+134
+00:07:07,199 --> 00:07:10,479
+is a very very important property in
+
+135
+00:07:08,880 --> 00:07:11,759
+reinforcement learning and sequential
+
+136
+00:07:10,479 --> 00:07:13,759
+decision making
+
+137
+00:07:11,759 --> 00:07:15,199
+because without the markov property we
+
+138
+00:07:13,759 --> 00:07:16,880
+would not be able to formulate
+
+139
+00:07:15,199 --> 00:07:19,520
+optimal policies without considering
+
+140
+00:07:16,880 --> 00:07:22,240
+entire histories
+
+141
+00:07:19,520 --> 00:07:24,160
+however if our policy is conditioned on
+
+142
+00:07:22,240 --> 00:07:27,039
+observations rather than states
+
+143
+00:07:24,160 --> 00:07:27,680
+as it is in this picture we could ask
+
+144
+00:07:27,039 --> 00:07:30,160
+well
+
+145
+00:07:27,680 --> 00:07:31,919
+are the observations also conditionally
+
+146
+00:07:30,160 --> 00:07:34,160
+independent in this way
+
+147
+00:07:31,919 --> 00:07:35,360
+is the current observation entirely
+
+148
+00:07:34,160 --> 00:07:37,039
+sufficient
+
+149
+00:07:35,360 --> 00:07:39,599
+to figure out how to act so as to reach
+
+150
+00:07:37,039 --> 00:07:40,800
+some state in the future
+
+151
+00:07:39,599 --> 00:07:42,319
+take a moment to think about this
+
+152
+00:07:40,800 --> 00:07:45,840
+question and consider writing your
+
+153
+00:07:42,319 --> 00:07:45,840
+answer in the comments
+
+154
+00:07:47,039 --> 00:07:50,160
+the trouble is that the observation is
+
+155
+00:07:48,639 --> 00:07:52,160
+in general not
+
+156
+00:07:50,160 --> 00:07:54,000
+going to satisfy the markov property
+
+157
+00:07:52,160 --> 00:07:55,520
+meaning that the current observation
+
+158
+00:07:54,000 --> 00:07:57,440
+might not be enough to fully determine
+
+159
+00:07:55,520 --> 00:07:58,319
+the future without also observing the
+
+160
+00:07:57,440 --> 00:08:00,479
+past
+
+161
+00:07:58,319 --> 00:08:02,319
+and this is perhaps most obvious from
+
+162
+00:08:00,479 --> 00:08:04,479
+the example with the cheetah
+
+163
+00:08:02,319 --> 00:08:05,759
+when the car is in front of the cheetah
+
+164
+00:08:04,479 --> 00:08:07,120
+and you cannot see where it is in the
+
+165
+00:08:05,759 --> 00:08:08,240
+image
+
+166
+00:08:07,120 --> 00:08:09,759
+you might not be able to figure out
+
+167
+00:08:08,240 --> 00:08:11,680
+where it's going to go in the future
+
+168
+00:08:09,759 --> 00:08:14,319
+because you can't see it right now
+
+169
+00:08:11,680 --> 00:08:16,000
+but if in the previous point in time you
+
+170
+00:08:14,319 --> 00:08:17,280
+could see if maybe the car was somewhere
+
+171
+00:08:16,000 --> 00:08:19,039
+else before
+
+172
+00:08:17,280 --> 00:08:20,400
+you could memorize where the cheetah was
+
+173
+00:08:19,039 --> 00:08:22,319
+so that even when it's occluded by the
+
+174
+00:08:20,400 --> 00:08:23,520
+car you still remember its state
+
+175
+00:08:22,319 --> 00:08:26,000
+so in general if you're using
+
+176
+00:08:23,520 --> 00:08:27,919
+observations past observations can
+
+177
+00:08:26,000 --> 00:08:28,960
+actually give you additional information
+
+178
+00:08:27,919 --> 00:08:30,160
+beyond what you would get from the
+
+179
+00:08:28,960 --> 00:08:32,399
+current observation
+
+180
+00:08:30,160 --> 00:08:34,320
+that would be useful for decision making
+
+181
+00:08:32,399 --> 00:08:36,080
+whereas if you directly observe states
+
+182
+00:08:34,320 --> 00:08:37,519
+then the current state is always going
+
+183
+00:08:36,080 --> 00:08:41,120
+to give you everything you need
+
+184
+00:08:37,519 --> 00:08:42,479
+because it satisfies the markov property
+
+185
+00:08:41,120 --> 00:08:43,839
+now many reinforcement learning
+
+186
+00:08:42,479 --> 00:08:44,560
+algorithms that we'll discuss in this
+
+187
+00:08:43,839 --> 00:08:47,680
+course
+
+188
+00:08:44,560 --> 00:08:50,399
+will actually require markovian
+
+189
+00:08:47,680 --> 00:08:51,760
+states in which case i will write pi of
+
+190
+00:08:50,399 --> 00:08:53,920
+a given s
+
+191
+00:08:51,760 --> 00:08:55,440
+but in some cases i will also mention
+
+192
+00:08:53,920 --> 00:08:57,360
+that a particular algorithm
+
+193
+00:08:55,440 --> 00:08:59,200
+could be modified in some way to handle
+
+194
+00:08:57,360 --> 00:09:00,640
+non-markovian observations
+
+195
+00:08:59,200 --> 00:09:02,800
+and then i'll describe how that can be
+
+196
+00:09:00,640 --> 00:09:02,800
+done
+
+197
+00:09:03,920 --> 00:09:08,720
+now a little aside on notation in
+
+198
+00:09:06,800 --> 00:09:11,680
+reinforcement learning we typically use
+
+199
+00:09:08,720 --> 00:09:13,120
+s to denote state and a to denote action
+
+200
+00:09:11,680 --> 00:09:14,560
+that's very reasonable because those are
+
+201
+00:09:13,120 --> 00:09:15,360
+the first letters of those words in
+
+202
+00:09:14,560 --> 00:09:18,640
+english
+
+203
+00:09:15,360 --> 00:09:20,240
+this kind of terminology was
+
+204
+00:09:18,640 --> 00:09:22,320
+widely popularized by the study of
+
+205
+00:09:20,240 --> 00:09:23,360
+dynamic programming which in many ways
+
+206
+00:09:22,320 --> 00:09:25,279
+was
+
+207
+00:09:23,360 --> 00:09:27,040
+kind of pioneered by richard bellman in
+
+208
+00:09:25,279 --> 00:09:29,200
+the 1950s
+
+209
+00:09:27,040 --> 00:09:31,440
+if you have a background in robotics and
+
+210
+00:09:29,200 --> 00:09:32,800
+optimal control and linear systems
+
+211
+00:09:31,440 --> 00:09:34,480
+then you might be more familiar with a
+
+212
+00:09:32,800 --> 00:09:36,959
+different notation where
+
+213
+00:09:34,480 --> 00:09:38,560
+x is used to denote state and u is used
+
+214
+00:09:36,959 --> 00:09:41,680
+to denote action
+
+215
+00:09:38,560 --> 00:09:43,200
+this is exactly equivalent terminology x
+
+216
+00:09:41,680 --> 00:09:45,760
+makes sense for state because
+
+217
+00:09:43,200 --> 00:09:47,760
+that's usually the variable used for an
+
+218
+00:09:45,760 --> 00:09:50,000
+unknown quantity in algebra
+
+219
+00:09:47,760 --> 00:09:52,240
+and u is the first word for action in
+
+220
+00:09:50,000 --> 00:09:54,480
+russian which is
+
+221
+00:09:52,240 --> 00:09:55,680
+and uh this makes sense because this
+
+222
+00:09:54,480 --> 00:09:58,480
+kind of terminology
+
+223
+00:09:55,680 --> 00:09:59,519
+was actually popularized by folks like
+
+224
+00:09:58,480 --> 00:10:01,760
+left panteragan
+
+225
+00:09:59,519 --> 00:10:05,279
+who studied optimal control in the
+
+226
+00:10:01,760 --> 00:10:07,680
+soviet union
+
+227
+00:10:05,279 --> 00:10:08,800
+all right so that's a little bit of
+
+228
+00:10:07,680 --> 00:10:11,360
+terminology
+
+229
+00:10:08,800 --> 00:10:12,240
+but let's talk now about how we can
+
+230
+00:10:11,360 --> 00:10:14,560
+actually learn
+
+231
+00:10:12,240 --> 00:10:16,079
+policies and in today's lecture we'll
+
+232
+00:10:14,560 --> 00:10:17,440
+actually start with a very simple way of
+
+233
+00:10:16,079 --> 00:10:19,120
+learning policies
+
+234
+00:10:17,440 --> 00:10:20,640
+that doesn't even require using very
+
+235
+00:10:19,120 --> 00:10:21,600
+sophisticated reinforcement learning
+
+236
+00:10:20,640 --> 00:10:23,760
+algorithms
+
+237
+00:10:21,600 --> 00:10:25,360
+but instead learns policies in much the
+
+238
+00:10:23,760 --> 00:10:27,040
+same way that we learn
+
+239
+00:10:25,360 --> 00:10:29,120
+image classifiers and other kinds of
+
+240
+00:10:27,040 --> 00:10:32,240
+models in supervised learning
+
+241
+00:10:29,120 --> 00:10:35,279
+by utilizing data
+
+242
+00:10:32,240 --> 00:10:37,440
+so let's go to a more realistic example
+
+243
+00:10:35,279 --> 00:10:39,440
+running away from tigers is maybe
+
+244
+00:10:37,440 --> 00:10:41,040
+not so important in our daily lives but
+
+245
+00:10:39,440 --> 00:10:41,760
+how about another task the task of
+
+246
+00:10:41,040 --> 00:10:44,000
+driving
+
+247
+00:10:41,760 --> 00:10:45,279
+in driving your observations might
+
+248
+00:10:44,000 --> 00:10:48,000
+consist of
+
+249
+00:10:45,279 --> 00:10:49,440
+images from the cars camera and your
+
+250
+00:10:48,000 --> 00:10:51,120
+action might consist of how you turn the
+
+251
+00:10:49,440 --> 00:10:53,600
+steering wheel in order to keep the car
+
+252
+00:10:51,120 --> 00:10:53,600
+on the road
+
+253
+00:10:54,079 --> 00:10:58,959
+so let's uh kind of take an approach to
+
+254
+00:10:57,120 --> 00:11:00,720
+driving similar to what we might do
+
+255
+00:10:58,959 --> 00:11:02,880
+in uh you know for things like image
+
+256
+00:11:00,720 --> 00:11:04,880
+classification computer vision
+
+257
+00:11:02,880 --> 00:11:06,800
+and so on let's just take some label
+
+258
+00:11:04,880 --> 00:11:08,160
+data and use that label data
+
+259
+00:11:06,800 --> 00:11:10,480
+to learn a driving policy with
+
+260
+00:11:08,160 --> 00:11:13,279
+supervised learning so we'll get an
+
+261
+00:11:10,480 --> 00:11:14,959
+image from a person and their
+
+262
+00:11:13,279 --> 00:11:16,399
+corresponding motor commands so this
+
+263
+00:11:14,959 --> 00:11:17,680
+human driver will have
+
+264
+00:11:16,399 --> 00:11:19,120
+turned the steering wheel in some way
+
+265
+00:11:17,680 --> 00:11:19,839
+and will record what they saw from a
+
+266
+00:11:19,120 --> 00:11:22,240
+camera
+
+267
+00:11:19,839 --> 00:11:24,160
+and will record the steering command and
+
+268
+00:11:22,240 --> 00:11:27,040
+we'll collect a large data set
+
+269
+00:11:24,160 --> 00:11:28,560
+consisting of image and action tuples
+
+270
+00:11:27,040 --> 00:11:29,040
+and then we'll simply use supervised
+
+271
+00:11:28,560 --> 00:11:31,120
+learning
+
+272
+00:11:29,040 --> 00:11:32,640
+to learn to map from observations to
+
+273
+00:11:31,120 --> 00:11:34,959
+actions
+
+274
+00:11:32,640 --> 00:11:36,399
+this is called imitation learning and
+
+275
+00:11:34,959 --> 00:11:37,760
+this is a particular instance of
+
+276
+00:11:36,399 --> 00:11:38,480
+invitational learning that is sometimes
+
+277
+00:11:37,760 --> 00:11:41,279
+referred to
+
+278
+00:11:38,480 --> 00:11:42,880
+as behavioral cloning it's called
+
+279
+00:11:41,279 --> 00:11:43,600
+behavioral cloning because in a sense we
+
+280
+00:11:42,880 --> 00:11:46,720
+are cloning
+
+281
+00:11:43,600 --> 00:11:48,320
+the behavior of this human demonstrator
+
+282
+00:11:46,720 --> 00:11:50,320
+the demonstrators also sometimes refer
+
+283
+00:11:48,320 --> 00:11:51,600
+to as an expert because we assume that
+
+284
+00:11:50,320 --> 00:11:54,800
+they are better at this task
+
+285
+00:11:51,600 --> 00:11:56,800
+than the computer is all right
+
+286
+00:11:54,800 --> 00:11:58,079
+so this is a very simple approach and we
+
+287
+00:11:56,800 --> 00:12:00,959
+could ask the question well
+
+288
+00:11:58,079 --> 00:12:00,959
+does it actually work
+
+289
+00:12:01,120 --> 00:12:06,880
+um so this question has uh
+
+290
+00:12:05,120 --> 00:12:08,480
+has been studied for a very long time in
+
+291
+00:12:06,880 --> 00:12:10,560
+fact the original
+
+292
+00:12:08,480 --> 00:12:12,079
+deep imitation imitation learning system
+
+293
+00:12:10,560 --> 00:12:13,360
+or neural limitation learning system
+
+294
+00:12:12,079 --> 00:12:13,920
+something that would be familiar to us
+
+295
+00:12:13,360 --> 00:12:17,200
+today
+
+296
+00:12:13,920 --> 00:12:19,200
+was proposed all the way back in 1989
+
+297
+00:12:17,200 --> 00:12:20,560
+it was called alvin the autonomous land
+
+298
+00:12:19,200 --> 00:12:22,000
+vehicle and neural network
+
+299
+00:12:20,560 --> 00:12:25,040
+and alvin did some pretty interesting
+
+300
+00:12:22,000 --> 00:12:27,279
+things the network by current standards
+
+301
+00:12:25,040 --> 00:12:29,200
+was tiny had five hidden units
+
+302
+00:12:27,279 --> 00:12:31,600
+but it could do you know interesting
+
+303
+00:12:29,200 --> 00:12:33,760
+behaviors like staying on a road
+
+304
+00:12:31,600 --> 00:12:37,440
+and there were some attempts to even try
+
+305
+00:12:33,760 --> 00:12:37,440
+to drive it across america
+
+306
+00:12:37,519 --> 00:12:41,839
+so we could ask does this uh basic
+
+307
+00:12:40,240 --> 00:12:43,839
+principle work does this behavior
+
+308
+00:12:43,840 --> 00:12:49,600
+in general the answer is no and to give you a little bit of intuition
+
+309
+00:12:48,000 --> 00:12:55,510
+for why behavioral cloning might go wrong even while regular supervised learning would work
+
+310
+00:12:53,270 --> 00:13:00,000
+uh let's uh start with a very kind of abstract picture of a control problem
+
+311
+00:12:56,720 --> 00:13:05,760
+so i'll draw a lot of pictures like this in today's lecture
+
+312
+00:13:01,920 --> 00:13:10,560
+when i draw a picture like this  the axis on the left represents the state
+
+313
+00:13:08,950 --> 00:13:13,200
+now of course in general the state is not one-dimensional
+
+314
+00:13:12,000 --> 00:13:17,360
+but i'll have this axis be one-dimensional so that it's easier to visualize
+
+315
+00:13:15,270 --> 00:13:18,720
+and then the other axis represents time
+
+316
+00:13:17,360 --> 00:13:24,160
+so this black curve represents the trajectory through time at every point in time
+
+317
+00:13:21,920 --> 00:13:25,830
+there's a different value of the state
+
+318
+00:13:24,160 --> 00:13:29,680
+and let's say that this black trajectory represents our training data
+
+319
+00:13:28,070 --> 00:13:35,040
+so we're going to take this as our training data use it to train a policy
+
+320
+00:13:32,720 --> 00:13:39,680
+that goes from s to a and then we'll run that policy
+
+321
+00:13:37,200 --> 00:13:43,920
+so now in red i'm going to draw what this policy will do when we run it
+
+322
+00:13:41,830 --> 00:13:47,270
+initially the policy stays pretty close to the training data
+
+323
+00:13:45,600 --> 00:13:51,120
+because we're going to use a large neural network and will train it very well
+
+324
+00:13:48,720 --> 00:13:52,630
+but it does make some small mistakes
+
+325
+00:13:51,120 --> 00:13:57,830
+every learned model will make at least some small mistakes this is basically inevitable
+
+326
+00:13:55,760 --> 00:14:01,920
+the trouble is that when this model makes some small mistake
+
+327
+00:14:00,000 --> 00:14:05,600
+it will find itself in a state that's just a little bit different
+
+328
+00:14:03,360 --> 00:14:07,120
+than the states that it was trained on
+
+329
+00:14:05,600 --> 00:14:11,190
+and when it finds itself in a state that is unusual that is different from the training states
+
+330
+00:14:09,680 --> 00:14:15,600
+it'll make a bigger mistake because it doesn't quite know what to do there
+
+331
+00:14:13,120 --> 00:14:19,040
+and as these mistakes compound the state becomes more and more different
+
+332
+00:14:17,040 --> 00:14:20,880
+and the mistakes get bigger and bigger
+
+333
+00:14:19,040 --> 00:14:26,160
+until after a while the learned policy might end up doing something very different
+
+334
+00:14:24,000 --> 00:14:27,920
+from the demonstrated behavior
+
+335
+00:14:26,160 --> 00:14:29,360
+so you could imagine the car scenario
+
+336
+00:14:27,920 --> 00:14:31,920
+the car will veer a little to the left just a tiny bit
+
+337
+00:14:30,240 --> 00:14:33,360
+then see something unfamiliar and here
+
+338
+00:14:31,920 --> 00:14:37,040
+to the left a little more until eventually goes off the road
+
+339
+00:14:35,360 --> 00:14:44,320
+and we'll see we'll discard describe this phenomenon much more formally later on in in the lecture
+
+340
+00:14:41,920 --> 00:14:45,680
+but does this work in practice well
+
+341
+00:14:44,320 --> 00:14:47,760
+in practice actually sometimes it's pretty effective
+
+342
+00:14:45,680 --> 00:14:52,880
+so these videos are collected from a paper uh released by nvidia in 2016
+
+343
+00:14:51,510 --> 00:14:56,000
+and you can see that initially they had a lot of trouble with the system
+
+344
+00:14:54,070 --> 00:15:02,070
+it would kind of go off the road do some messy things run into cones
+
+345
+00:14:59,440 --> 00:15:04,800
+but after collecting a lot of data and using a few little tricks
+
+346
+00:15:03,600 --> 00:15:06,480
+they actually ended up with a system
+
+347
+00:15:04,800 --> 00:15:07,830
+that did something fairly sensible
+
+348
+00:15:06,480 --> 00:15:12,880
+that could autonomously drive between the cones
+
+349
+00:15:10,560 --> 00:15:18,560
+stay on the road and exhibit some you know fairly reasonable behavior
+
+350
+00:15:15,830 --> 00:15:22,560
+so why is that why is it that we can use behavioral cloning methods in practice
+
+351
+00:15:20,160 --> 00:15:26,320
+to train policies that actually do something fairly decent well
+
+352
+00:15:23,680 --> 00:15:30,390
+we'll discuss this in more detail in part two
+
+353
+00:15:28,240 --> 00:15:34,000
+but one of the things that i want to mention briefly now is
+
+354
+00:15:31,920 --> 00:15:39,680
+the particular technique that was used to address this issue in this paper by nvidia
+
+355
+00:15:37,750 --> 00:15:43,920
+so if we look at the paper and we look at the their description of their system
+
+356
+00:15:41,750 --> 00:15:48,070
+it mostly looks very much like what we expect so the there is a conv-net
+
+357
+00:15:45,120 --> 00:15:53,190
+the conv-net produces a steering angle
+
+358
+00:15:50,160 --> 00:16:00,070
+the you know the the car tracks that steering angle the conv-net takes this input
+
+359
+00:15:56,800 --> 00:16:03,120
+camera inputs but something that you might notice here is that
+
+360
+00:16:01,270 --> 00:16:06,000
+there's a center camera left camera and right camera
+
+361
+00:16:03,600 --> 00:16:08,630
+well it turns out that one of the tricks
+
+362
+00:16:07,120 --> 00:16:12,070
+that was used in this paper which turns out to be kind of important
+
+363
+00:16:10,390 --> 00:16:14,630
+is that you record three different camera images at the same time
+
+364
+00:16:13,680 --> 00:16:19,040
+one pointing forward one left and one right
+
+365
+00:16:17,440 --> 00:16:22,720
+the forward image is supervised with whatever steering angle the person had
+
+366
+00:16:20,720 --> 00:16:25,920
+the image looking to the left is supervised of the steering angle
+
+367
+00:16:24,390 --> 00:16:28,320
+that is a little bit to the right of what the person did
+
+368
+00:16:27,680 --> 00:16:32,160
+so that means that if the car saw an image that was going left off the road
+
+369
+00:16:30,390 --> 00:16:34,000
+it should steer to the right
+
+370
+00:16:32,160 --> 00:16:36,240
+and correspondingly the image pointed to
+
+371
+00:16:34,000 --> 00:16:39,440
+the right is supervised with a term to the left
+
+372
+00:16:37,680 --> 00:16:43,680
+now you can imagine how this particular trick in the special case of driving a car
+
+373
+00:16:42,160 --> 00:16:45,830
+would actually mitigate this drifting problem
+
+374
+00:16:43,680 --> 00:16:48,390
+because now these left and right images
+
+375
+00:16:46,480 --> 00:16:51,270
+are essentially teaching the policy how to correct little mistakes
+
+376
+00:16:50,160 --> 00:16:53,830
+and if i can correct those mistakes
+
+377
+00:16:51,270 --> 00:16:55,270
+then maybe they won't accumulate as much
+
+378
+00:16:53,830 --> 00:16:59,360
+now this is a special case of a more general principle
+
+379
+00:16:56,800 --> 00:17:03,360
+the more general principle is that while errors in the trajectory will compound
+
+380
+00:17:01,600 --> 00:17:05,030
+if you can somehow modify your training data
+
+381
+00:17:03,360 --> 00:17:07,910
+so that your training data illustrates little mistakes and
+
+382
+00:17:05,910 --> 00:17:11,360
+feedbacks to correct those mistakes
+
+383
+00:17:09,190 --> 00:17:14,950
+then perhaps the policy can learn those feedbacks and stabilize
+
+384
+00:17:13,670 --> 00:17:19,830
+and there are a number of different ways to do this some of them will discuss later on in the course
+
+385
+00:17:17,120 --> 00:17:24,880
+for example if you train a stable optimal feedback controller around the demonstration
+
+386
+00:17:22,950 --> 00:17:30,080
+and use that feedback controller as supervision you can actually get stable policies
+
+387
+00:17:28,960 --> 00:17:31,600
+that inherit that stability
+
+388
+00:17:30,080 --> 00:17:35,670
+or you can simply ask a person to potentially make mistakes and correct those mistakes
+
+389
+00:17:34,400 --> 00:17:37,520
+so there are little tricks like this
+
+390
+00:17:35,670 --> 00:17:39,840
+that we can use to try to patch the issue
+
+391
+00:17:40,790 --> 00:17:46,790
+but something that we could ask
+
+392
+00:17:44,640 --> 00:17:48,160
+also to derive a more general solution
+
+393
+00:17:46,790 --> 00:17:54,790
+is what's the kind of the underlying mathematical principle behind this drift
+
+394
+00:17:52,790 --> 00:17:57,360
+what's really going on here
+
+395
+00:17:54,790 --> 00:18:01,120
+well when we run the policy
+
+396
+00:17:57,360 --> 00:18:03,910
+we're sampling from pi theta a t given ot
+
+397
+00:18:01,120 --> 00:18:07,440
+and this distribution pi theta a t given ot
+
+398
+00:18:04,960 --> 00:18:08,080
+it was trained on some data distribution
+
+399
+00:18:07,440 --> 00:18:11,670
+and that data distribution we'll call it p data ot
+
+400
+00:18:10,320 --> 00:18:15,840
+this is basically the distribution of observations
+
+401
+00:18:12,720 --> 00:18:18,160
+seen in our training data
+
+402
+00:18:15,840 --> 00:18:19,280
+now we know from supervised learning theory that
+
+403
+00:18:18,160 --> 00:18:24,960
+when you train a particular model on a particular training distribution
+
+404
+00:18:22,720 --> 00:18:27,280
+and you get good training error and you don't over fit
+
+405
+00:18:24,960 --> 00:18:32,240
+fthen you would expect to also get good test error
+
+406
+00:18:30,400 --> 00:18:35,030
+if test points are drawn from the same distribution
+
+407
+00:18:32,240 --> 00:18:35,600
+so if we see new observations
+
+408
+00:18:35,030 --> 00:18:39,360
+that come from the same distribution as our training data
+
+409
+00:18:37,360 --> 00:18:42,400
+even if the observations themselves are not the same
+
+410
+00:18:40,240 --> 00:18:48,640
+we would expect our learned policy to produce the right action on those observations
+
+411
+00:18:45,910 --> 00:18:49,360
+however when we run our policy
+
+412
+00:18:48,640 --> 00:18:55,280
+the distribution over observations that we actually see is different
+
+413
+00:18:53,600 --> 00:18:58,640
+the observation over the the distribution of observations is different
+
+414
+00:18:57,200 --> 00:19:00,480
+because the policy takes different actions
+
+415
+00:18:58,640 --> 00:19:05,280
+which result in different observations
+
+416
+00:19:01,670 --> 00:19:08,960
+so after a while p pi theta o t
+
+417
+00:19:05,280 --> 00:19:10,240
+becomes very different from p data ot
+
+418
+00:19:08,960 --> 00:19:15,030
+and this is the reason for this compounding error problem
+
+419
+00:19:12,880 --> 00:19:19,360
+so can we somehow fix this can we make p data ot
+
+420
+00:19:16,160 --> 00:19:21,760
+equal to p pi theta ot if we could do this
+
+421
+00:19:20,080 --> 00:19:25,030
+then we know that our policy would produce good actions
+
+422
+00:19:23,280 --> 00:19:30,400
+simply from standard results in supervised learning theory
+
+423
+00:19:27,600 --> 00:19:34,480
+now one way to make p data ot equal to p pi theta ot
+
+424
+00:19:32,000 --> 00:19:36,160
+is to simply make the policy perfect
+
+425
+00:19:34,480 --> 00:19:39,670
+if the policy is perfect and it never makes mistakes
+
+426
+00:19:36,960 --> 00:19:42,880
+then these distributions will match
+
+427
+00:19:39,670 --> 00:19:45,840
+but that's of course very very hard
+
+428
+00:19:42,880 --> 00:19:48,640
+so what if instead of being clever about our policy
+
+429
+00:19:47,200 --> 00:19:53,760
+we're actually we can try to actually be clever about our data distribution
+
+430
+00:19:51,440 --> 00:19:55,440
+so let's maybe not change the policy in some clever way
+
+431
+00:19:53,760 --> 00:20:02,150
+but let's actually change our data to avoid this distributional shift problem
+
+432
+00:20:00,550 --> 00:20:08,480
+that's the basic idea behind a method called dagger
+
+433
+00:20:04,790 --> 00:20:11,440
+dagger stands for "Dataset Aggregation"
+
+434
+00:20:08,480 --> 00:20:12,640
+so in dagger, our goal is to collect training data
+
+435
+00:20:11,440 --> 00:20:18,790
+that comes from p pi theta ot instead of p data ot
+
+436
+00:20:16,400 --> 00:20:22,550
+because if we have observation action tuples
+
+437
+00:20:19,670 --> 00:20:26,960
+from p pi theta o t and we train on those observation action tuples
+
+438
+00:20:25,120 --> 00:20:31,760
+then the distributional shift problem will be gone
+
+439
+00:20:29,120 --> 00:20:33,030
+so here's how dagger accomplishes this
+
+440
+00:20:31,760 --> 00:20:36,400
+we're going to actually run
+
+441
+00:20:33,030 --> 00:20:38,640
+pi theta a t given ot
+
+442
+00:20:36,400 --> 00:20:40,960
+which will produce samples from p by theta ot
+
+443
+00:20:38,640 --> 00:20:47,120
+and then we'll request additional labels at those observations
+
+444
+00:20:44,000 --> 00:20:50,480
+so step one is to initialize our policy
+
+445
+00:20:47,120 --> 00:20:52,720
+by training on the human dataset
+
+446
+00:20:50,480 --> 00:20:54,240
+then we're going to run our policy to
+
+447
+00:20:52,720 --> 00:20:58,400
+collect an additional data set of observations
+
+448
+00:20:55,200 --> 00:21:00,000
+that i'm denoting here as d pi and
+
+449
+00:20:58,400 --> 00:21:03,520
+these observations now come from p by theta o t
+
+450
+00:21:00,000 --> 00:21:08,080
+then we'll ask a human to label all of these observations with optimal actions
+
+451
+00:21:06,320 --> 00:21:12,960
+so someone will literally watch the observations that the machine produced
+
+452
+00:21:11,280 --> 00:21:15,440
+and tell the machine what the optimal action
+
+453
+00:21:14,320 --> 00:21:18,880
+that they would have taken for those observations actually is
+
+454
+00:21:15,440 --> 00:21:19,840
+and then we will aggregate
+
+455
+00:21:18,880 --> 00:21:24,000
+we will actually merge these data sets
+
+456
+00:21:22,320 --> 00:21:25,670
+and then train the policy on it again
+
+457
+00:21:24,000 --> 00:21:28,880
+now when we train the policy again on this merged data set
+
+458
+00:21:27,760 --> 00:21:30,480
+the policy will change
+
+459
+00:21:28,880 --> 00:21:34,880
+which means that even though our observations in d pi came from p pi theta
+
+460
+00:21:32,400 --> 00:21:37,520
+now theta is different and p by theta is also different
+
+461
+00:21:35,440 --> 00:21:42,000
+so we have to repeat this process
+
+462
+00:21:39,840 --> 00:21:45,440
+but we can actually show and this is shown in the paper by ross at all
+
+463
+00:21:43,670 --> 00:21:49,840
+that introduced this algorithm that repeating this process enough times
+
+464
+00:21:47,280 --> 00:21:51,840
+eventually does extra converge
+
+465
+00:21:49,840 --> 00:21:59,910
+resulting in a final data set that does come from the same distribution as the policy asymptotically
+
+466
+00:21:56,790 --> 00:22:03,670
+so here's an example of a policy trained with dagger
+
+467
+00:22:00,240 --> 00:22:05,280
+flying a drone through a forest
+
+468
+00:22:03,670 --> 00:22:07,030
+this policy doesn't actually use a deep neural network
+
+469
+00:22:05,280 --> 00:22:10,320
+it actually uses some linear image features
+
+470
+00:22:08,790 --> 00:22:13,760
+but subsequent work has done this with deep neural networks as well
+
+471
+00:22:12,000 --> 00:22:18,080
+so this drone initially was not able to deflect far forest very well
+
+472
+00:22:15,760 --> 00:22:22,080
+but after a few iterations of soliciting additional labels from the human
+
+473
+00:22:20,080 --> 00:22:24,640
+it was able to navigate the forest quite proficiently
+
+474
+00:22:25,440 --> 00:22:29,280
+so what is the issue with dagger
+
+475
+00:22:27,670 --> 00:22:32,960
+why don't we always use this algorithm in invitation learning (imitaition?)
+
+476
+00:22:31,200 --> 00:22:37,440
+well a lot of the issues with dagger really come from step three
+
+477
+00:22:35,670 --> 00:22:40,240
+it's a little bit problem dependent
+
+478
+00:22:37,440 --> 00:22:43,030
+but in many cases asking a human to manually label dpi with optimal actions
+
+479
+00:22:40,240 --> 00:22:47,760
+can actually be quite onerous
+
+480
+00:22:45,200 --> 00:22:49,840
+imagine doing this yourself
+
+481
+00:22:47,760 --> 00:22:53,760
+imagine that you're watching a video of a drone flying through a forest
+
+482
+00:22:51,280 --> 00:22:56,480
+and you have to steer that drone provide optimal actions
+
+483
+00:22:55,200 --> 00:22:59,840
+without your actions actually affecting the drone in real time
+
+484
+00:22:58,150 --> 00:23:02,320
+that's very unnatural to humans because
+
+485
+00:22:59,840 --> 00:23:05,120
+humans don't just map observations to actions in open loop
+
+486
+00:23:03,520 --> 00:23:07,030
+we actually do feedback control
+
+487
+00:23:05,120 --> 00:23:08,240
+we watch the effect of our actions and compensate accordingly
+
+488
+00:23:07,030 --> 00:23:11,120
+when you can't see the effect of your actions
+
+489
+00:23:09,360 --> 00:23:12,720
+it can be a little hard to do this
+
+490
+00:23:11,120 --> 00:23:14,400
+so this is of course situational
+
+491
+00:23:12,720 --> 00:23:16,080
+in some domains providing optimal
+
+492
+00:23:14,400 --> 00:23:17,910
+actions for arbitrary observations
+
+493
+00:23:16,080 --> 00:23:20,400
+can be reasonably straightforward such
+
+494
+00:23:17,910 --> 00:23:21,520
+as an abstract decision making problems
+
+495
+00:23:20,400 --> 00:23:23,440
+like for example if you're doing
+
+496
+00:23:21,520 --> 00:23:24,240
+operations research inventory management
+
+497
+00:23:23,440 --> 00:23:26,240
+et cetera
+
+498
+00:23:24,240 --> 00:23:28,480
+it's easy to ask an expert you know if
+
+499
+00:23:26,240 --> 00:23:29,440
+your warehouse is in this state and your
+
+500
+00:23:28,480 --> 00:23:31,440
+prices are this
+
+501
+00:23:29,440 --> 00:23:33,440
+how should you change the prices but
+
+502
+00:23:31,440 --> 00:23:36,150
+it's comparatively much hard ask a human
+
+503
+00:23:33,440 --> 00:23:39,030
+if you see this image how should you
+
+504
+00:23:36,150 --> 00:23:39,030
+turn the steering wheel
+
+505
+00:23:39,200 --> 00:23:42,880
+all right
+

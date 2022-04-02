@@ -1,5 +1,5 @@
 
-# CS285_21_KOR_SUB <img align="left" width="13%" height="13%" src="./logo.png">
+# CS285_21_KOR_SUB [<img align="left" width="13%" height="13%" src="./logo.png">](https://drive.google.com/drive/folders/1Bc-O7nCRk_RYy0yrK9jFjUgdkOrTiBuW?usp=sharing)
 
 Korean Sub for CS285 2021 fall lecture
 
@@ -32,9 +32,9 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
 > STATUS - ✒️:1st Draft | 🔍:2nd Check
 
   <details>
-  <summary><b><u>Lecture 01~06</u></b></summary>
+  <summary><b><u>📚Lecture 01~06</u></b></summary>
       <details>
-      <summary><b>Lecture 01</b></summary>
+      <summary><b>📘Lecture 01</b></summary>
       <p><a href="https://youtu.be/JHrlF10v2Og">L1, Part 1 ✒️</a> 
       <a href="/English_srt/CS%20285%20Lecture%201%2C%20Part%201.srt">🇺🇸</a>
       <a href="/Korean_srt/CS%20285%20Lecture%201%2C%20Part%201.ko.srt">🇰🇷</a>
@@ -53,7 +53,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
       </p>
       </details>
       <details>
-      <summary><b>Lecture 02</b></summary>
+      <summary><b>📗Lecture 02</b></summary>
       <p><a href="https://youtu.be/HUzyjOsd2PA">L2, Part 1 ✒️</a> 
       <a href="/English_srt/CS%20285%20Lecture%202%2C%20Part%201.srt">🇺🇸</a>
       <a href="/Korean_srt/CS%20285%20Lecture%202%2C%20Part%201.ko.srt">🇰🇷</a>
@@ -80,7 +80,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
       </p>
       </details>
       <details>
-      <summary><b>Lecture 03</b></summary>
+      <summary><b>📕Lecture 03</b></summary>
       <p><a href="https://youtu.be/AOypIa_8RXg">L3, Part 1 </a>
       <a href="/English_srt/CS%20285%20Lecture%203%2C%20Part%201.srt">🇺🇸</a>
       <a href="/Korean_srt/CS%20285%20Lecture%203%2C%20Part%201.ko.srt">🇰🇷</a>
@@ -103,7 +103,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
       </p>
       </details>
       <details>
-      <summary><b>Lecture 04</b></summary>
+      <summary><b>📙Lecture 04</b></summary>
       <p><a href="https://youtu.be/jds0Wh9jTvE">L4, Part 1 </a>
       <a href="/English_srt/CS%20285%20Lecture%204%2C%20Part%201.srt">🇺🇸</a>
       <a href="/Korean_srt/CS%20285%20Lecture%204%2C%20Part%201.ko.srt">🇰🇷</a>
@@ -130,7 +130,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
       </p>
       </details>
       <details>
-      <summary><b>Lecture 05</b></summary>
+      <summary><b>📘Lecture 05</b></summary>
       <p><a href="https://youtu.be/GKoKNYaBvM0">L5, Part 1 </a>
       <a href="/English_srt/CS%20285%20Lecture%204%2C%20Part%201.srt">🇺🇸</a>
       <a href="/Korean_srt/CS%20285%20Lecture%204%2C%20Part%201.ko.srt">🇰🇷</a>
@@ -157,7 +157,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
       </p>
       </details>
       <details>
-      <summary><b>Lecture 06</b></summary>
+      <summary><b>📗Lecture 06</b></summary>
       <p><a href="https://youtu.be/wr00ef_TY6Q">L6, Part 1 </a>
       <a href="/English_srt/CS%20285%20Lecture%205%2C%20Part%201.srt">🇺🇸</a>
       <a href="/Korean_srt/CS%20285%20Lecture%205%2C%20Part%201.ko.srt">🇰🇷</a>
@@ -183,9 +183,9 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
   
   
   <details>
-  <summary><b><u>Lecture 07~12</u></b></summary>
+  <summary><b><u>📚Lecture 07~12</u></b></summary>
      <details>
-      <summary><b>Lecture 07</b></summary>
+      <summary><b>📘Lecture 07</b></summary>
       <p><a href="https://youtu.be/pP_67mTJbGw">L7, Part 1 </a>
       <a href="/English_srt/CS%20285%20Lecture%206%2C%20Part%201.srt">🇺🇸</a>
       <a href="/Korean_srt/CS%20285%20Lecture%206%2C%20Part%201.ko.srt">🇰🇷</a>
@@ -204,7 +204,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
       </p>
       </details>
       <details>
-      <summary><b>Lecture 08</b></summary>
+      <summary><b>📗Lecture 08</b></summary>
       <p><a href="https://youtu.be/7-D8RL3D6CI">L8, Part 1 </a>
       <a href="/English_srt/CS%20285%20Lecture%207%2C%20Part%201.srt">🇺🇸</a>
       <a href="/Korean_srt/CS%20285%20Lecture%207%2C%20Part%201.ko.srt">🇰🇷</a>
@@ -231,7 +231,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
       </p>
       </details>
       <details>
-      <summary><b>Lecture 09</b></summary>
+      <summary><b>📕Lecture 09</b></summary>
       <p><a href="https://youtu.be/ySenCHPsKJU">L9, Part 1 </a>
       <a href="/English_srt/CS%20285%20Lecture%208%2C%20Part%201.srt">🇺🇸</a>
       <a href="/Korean_srt/CS%20285%20Lecture%208%2C%20Part%201.ko.srt">🇰🇷</a>
@@ -250,7 +250,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
       </p>
       </details>
       <details>
-      <summary><b>Lecture 10</b></summary>
+      <summary><b>📙Lecture 10</b></summary>
       <p><a href="https://youtu.be/4SL0DnxC1GM">L10, Part 1 </a>
       <a href="/English_srt/CS%20285%20Lecture%209%2C%20Part%201.srt">🇺🇸</a>
       <a href="/Korean_srt/CS%20285%20Lecture%209%2C%20Part%201.ko.srt">🇰🇷</a>
@@ -273,13 +273,13 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
       </p>
       </details>
       <details>
-      <summary><b>Lecture 11</b></summary>
+      <summary><b>📘Lecture 11</b></summary>
       <p>
       tba
       </p>
       </details>
       <details>
-      <summary><b>Lecture 12</b></summary>
+      <summary><b>📗Lecture 12</b></summary>
       <p>
       tba
       </p>
@@ -287,7 +287,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
   </details>
   
   <details>
-  <summary><b><u>Lecture 13~18</u></b></summary>
+  <summary><b><u>📚Lecture 13~18</u></b></summary>
       <details>
       <summary><b>Lecture 13</b></summary>
       <p>
@@ -327,7 +327,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
   </details>
   
   <details>
-  <summary><b><u>Lecture 19~23</u></b></summary>
+  <summary><b><u>📚Lecture 19~23</u></b></summary>
       <details>
       <summary><b>Lecture 19</b></summary>
       <p>
@@ -361,7 +361,7 @@ Reinforcement Learning 대표 강의인 UC Berkely의 CS285에 한글자막이 �
   </details>
   
   <details>
-  <summary><b><u>Guest Talk</u></b></summary>
+  <summary><b><u>🗣Guest Talk</u></b></summary>
       <details>
       <summary><b>Mid Toggle</b></summary>
       <p>
